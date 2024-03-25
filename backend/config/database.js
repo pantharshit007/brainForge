@@ -9,7 +9,7 @@ exports.connect = async () => {
     } catch (err) {
         console.log("> Error connecting to DB:");
         console.error(err);
-        process.end(1);
+        process.exit(1);
     }
 
 }
