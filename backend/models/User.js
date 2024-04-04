@@ -21,6 +21,12 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
+    //these 2 are newly added fields
+    confirmPassword: {
+        type: String,
+        required: true,
+    },
+    // upto here
     accountType: {
         type: String,
         required: true,
@@ -43,6 +49,12 @@ const userSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "courseProgress",
     }],
+    token: {
+        type: String,
+    },
+    resetPasswordExpires: {
+        type: Date,
+    }
 
 });
 
