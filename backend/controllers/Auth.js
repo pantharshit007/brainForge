@@ -220,7 +220,7 @@ async function login(req, res) {
         const payload = {
             email: user.email,
             id: user._id,
-            role: user.role,
+            accountType: user.accountType,
         }
         const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '2h' });
         // Save token to user document in database
