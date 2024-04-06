@@ -1,6 +1,6 @@
 const Course = require("../models/Course");
 const User = require("../models/User");
-const Tag = require("../models/Tags");
+const Category = require("../models/Category");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
 require('dotenv').config();
 const IMG_FOLDER = process.env.IMG_FOLDER
@@ -10,13 +10,13 @@ const IMG_FOLDER = process.env.IMG_FOLDER
 async function createCourse(req, res) {
     try {
         // fetching data from body
-        const { courseName, courseDescription, whatYouWillLearn, price, tag } = req.body;
+        const { courseName, courseDescription, whatYouWillLearn, price, category } = req.body;
 
         //fetch the thumbnail Image
         const thumbnail = req.files.thumbnail;
 
         // validate the input data
-        if (!courseName || !courseDescription || !whatYouWillLearn || !price || !tag) {
+        if (!courseName || !courseDescription || !whatYouWillLearn || !price || !category) {
             return res.status(403).json({
                 success: false,
                 message: 'Please fill all the required fields.'
@@ -37,12 +37,12 @@ async function createCourse(req, res) {
             })
         }
 
-        // check the validity of the tag: using the tag ID which is used as a ref in Course Schema
-        const tagDetails = await Tag.findById(tag);
-        if (!tagDetails) {
+        // check the validity of the category: using the category ID which is used as a ref in Course Schema
+        const categoryDetails = await Category.findById(category);
+        if (!categoryDetails) {
             return res.status(404).json({
                 success: false,
-                message: 'No Tag found.'
+                message: 'No category found.'
             })
         }
 
@@ -56,7 +56,7 @@ async function createCourse(req, res) {
             instructor: instructorDetails._id,
             whatYouWillLearn,
             price,
-            tag: tagDetails._id,
+            category: categoryDetails._id,
             thumbnail: thumbnailImage,
         })
 
@@ -69,9 +69,9 @@ async function createCourse(req, res) {
             { new: true }
         );
 
-        //update tag schema: add new course to tags category
-        await Tag.findByIdAndUpdate(
-            { _id: tag },
+        //update category schema: add new course to categorys category
+        await Category.findByIdAndUpdate(
+            { _id: category },
             {
                 $push: { courses: newCourse._id }
             },
