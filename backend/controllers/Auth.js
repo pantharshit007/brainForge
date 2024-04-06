@@ -138,7 +138,7 @@ async function signup(req, res) {
         //Hashing the password in dB
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        //profile
+        //profile creation: when we update profile later we will just update it.
         const profileDetails = await Profile.create({
             gender: null,
             dateOfBirth: null,
