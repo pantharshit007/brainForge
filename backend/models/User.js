@@ -21,10 +21,10 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
-    //these 2 are newly added fields
+    //newly added field
     confirmPassword: {
         type: String,
-        required: true,
+        // required: true,
     },
     // upto here
     accountType: {
@@ -56,6 +56,8 @@ const userSchema = new Schema({
         type: Date,
     }
 
-});
+    // Add timestamps for when the document is created and last modified
+}, { timestamps: true },
+);
 
 module.exports = mongoose.model("User", userSchema);
