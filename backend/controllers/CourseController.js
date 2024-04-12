@@ -120,8 +120,69 @@ async function getAllCourses(req, res) {
     }
 }
 
+//fetch course detail (entirely)
+async function getCourseDetails(req, res) {
+    try {
+        //fetch course Id
+        const courseId = req.body.courseId;
+
+        // check validity
+        if (!courseId) {
+            return res.status(404).json({
+                success: false,
+                message: 'Course Id required',
+            })
+        }
+
+        //fetch course details
+        const courseDetails = await Course.findById(courseId)
+            .populate({
+                path: 'instructor',
+                populate: {
+                    path: 'additionalDetails',
+                }
+            })
+            .populate({
+                path: 'CourseContent',
+                populate: {
+                    path: 'subSection',
+                    select: '-videoUrl' //TODO: doubt on -vidroUrl
+                }
+            })
+            .populate('category')
+            .populate('ratingAndReviews')
+            .exec()
+
+
+        // check validity
+        if (!courseDetails || !courseDetails.length) {
+            return res.status(404).json({
+                success: false,
+                message: 'No course Found with id ' + courseId,
+            });
+        }
+
+        //response
+        return res.status(200).json({
+            success: true,
+            message: 'Course found',
+            data: {
+                courseDetails,
+            }
+        })
+
+    } catch (err) {
+        console.log("> Failed to retrieve Course Details: " + err.message)
+        return res.status(500).json({
+            success: false,
+            message: "Failed to retrieve Course Details: " + err.message,
+        })
+    }
+}
+
 
 module.exports = {
     createCourse,
-    getAllCourses
+    getAllCourses,
+    getCourseDetails
 }
