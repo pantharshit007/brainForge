@@ -23,12 +23,13 @@ async function resetPasswordToken(req, res) {
         }
 
         //generate token 
+        // const token = crypto.randomBytes(20).toString("hex");
         const token = crypto.randomUUID();
 
         //update the token in user dB with an expiry
         const updateUserDetails = await userSchema.findOneAndUpdate(email, {
             token: token,
-            resetPasswordExpires: Date.now() + 5 * 60 * 1000
+            resetPasswordExpires: Date.now() + (5 * 60 * 1000)
         }, { new: true });
         console.log("crypto token: " + updateUserDetails);
 

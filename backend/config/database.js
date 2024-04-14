@@ -1,4 +1,4 @@
-const mongoose = require('monoose');
+const mongoose = require('mongoose');
 require('dotenv').config();
 
 exports.connect = async () => {

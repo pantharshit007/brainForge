@@ -7,13 +7,13 @@ const OTPSchema = new mongoose.Schema({
         required: true,
     },
     otp: {
-        tyoe: String,
+        type: String,
         required: true,
     },
     createAt: {
         type: String,
-        default: Data.now(),
-        expires: 5 * 60,
+        default: Date.now(),
+        expires: 5 * 60,    // Automatically delete documents after 5 minutes
     },
 });
 
