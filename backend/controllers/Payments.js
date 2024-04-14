@@ -22,6 +22,7 @@ async function receivePayment(req, res) {
         }
 
         //fetching course details
+        // TODO: update controller to encorporate multiple course payment
         let courseDetails;
         try {
             courseDetails = await Course.findById(courseId);
@@ -175,6 +176,7 @@ async function verifySignature(req, res) {
     }
 }
 
+// TODO: enroll the student in the courses remove it from verifySignature and make a separate func
 
 module.exports = {
     receivePayment,

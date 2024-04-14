@@ -8,7 +8,7 @@ async function updateProfile(req, res) {
         const { gender, dataOfBirth = "", about = "", contactNumber, } = req.body;
 
         //fetching user Id from the payload send during login
-        const userId = req.body.id;
+        const userId = req.user.id;
 
         // validating the user info
         if (!userId || !contactNumber || !gender) {
