@@ -1,5 +1,5 @@
 const otpTemplate = (otp) => {
-    return `<!DOCTYPE html>
+	return `<!DOCTYPE html>
 	<html>
 	
 	<head>
@@ -66,7 +66,7 @@ const otpTemplate = (otp) => {
 	
 	<body>
 		<div class="container">
-			<a href="https://studynotion-edtech-project.vercel.app"><img class="logo"
+			<a href="https://github.com/pantharshit007/edtech"><img class="logo"
 					src="https://i.ibb.co/7Xyj3PC/logo.png" alt="StudyNotion Logo"></a>
 			<div class="message">OTP Verification Email</div>
 			<div class="body">

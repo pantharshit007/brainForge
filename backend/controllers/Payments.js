@@ -2,7 +2,7 @@ const { instance } = require('../config/razorpay');
 const Course = require('../models/Course')
 const User = require('../models/User');
 const mailSender = require('../utils/mailSender');
-const { courseEnrollmentTemplate } = require('../mail/courseEnrollmentTemplate');
+const { courseEnrollmentTemplate } = require('../mail/courseEnrollment');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
