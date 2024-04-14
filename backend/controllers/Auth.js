@@ -119,21 +119,21 @@ async function signup(req, res) {
         }
 
         //fetching the most recent otp from dB
-        // const storedOtp = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
-        // console.log('Stored otp: ' + storedOtp);
+        const storedOtp = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
+        console.log('Stored otp: ' + storedOtp);
 
-        // //validate OTP
-        // if (storedOtp.length == 0) {
-        //     return res.status(400).json({
-        //         success: false,
-        //         message: 'OTP NOT FOUND'
-        //     })
-        // } else if (storedOtp.otp !== otp) {
-        //     return res.status(400).json({
-        //         success: false,
-        //         message: "Invalid OTP, otp doesn't Match"
-        //     });
-        // }
+        //validate OTP
+        if (storedOtp.length == 0) {
+            return res.status(400).json({
+                success: false,
+                message: 'OTP NOT FOUND'
+            })
+        } else if (storedOtp.otp !== otp) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid OTP, otp doesn't Match"
+            });
+        }
 
         //Hashing the password in dB
         const hashedPassword = await bcrypt.hash(password, 10);
