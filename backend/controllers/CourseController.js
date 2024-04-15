@@ -146,7 +146,7 @@ async function getCourseDetails(req, res) {
                 path: 'CourseContent',
                 populate: {
                     path: 'subSection',
-                    select: '-videoUrl' //TODO: doubt on -vidroUrl
+                    select: '-videoUrl' //to exclude videoUrl from ppulating
                 }
             })
             .populate('category')
@@ -161,6 +161,8 @@ async function getCourseDetails(req, res) {
                 message: 'No course Found with id ' + courseId,
             });
         }
+
+        //TODO: find time duration of whole course
 
         //response
         return res.status(200).json({
@@ -180,9 +182,14 @@ async function getCourseDetails(req, res) {
     }
 }
 
+// fetch course details with user specific info: course Progress data
+async function getFullCourseDetails(req, res) {
+    return []
+}
 
 module.exports = {
     createCourse,
     getAllCourses,
-    getCourseDetails
+    getCourseDetails,
+    getFullCourseDetails
 }

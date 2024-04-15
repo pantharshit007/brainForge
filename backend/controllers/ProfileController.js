@@ -62,7 +62,7 @@ async function deleteProfile(req, res) {
         }
 
         // delete profile
-        await Profile.findByIdAndDelete({ _id: userDetails.additonalDetails });
+        await Profile.findByIdAndDelete({ _id: userDetails.additionalDetails });
 
         //TODO: before removing user remove user from all the enrolled Course
         // we can use courseId from user.courses within a for loop to remove user from respective courses.

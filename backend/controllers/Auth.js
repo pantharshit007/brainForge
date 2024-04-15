@@ -50,7 +50,7 @@ async function sendOtpMessage(req, res) {
         return res.status(200).json({
             success: true,
             message: 'OTP sent successfully',
-            otp
+            otp //TODO: remove this for sequrity reason since can be accessed in network tab
         })
 
     } catch (err) {

@@ -1,11 +1,11 @@
-// TODO: CREATE ROUTES FOR ALL THE ROUTER AND COMPLETE THE INDEX.js FILE
-
 const express = require('express')
 const app = express()
+
 //packages
 const cookieParser = require('cookie-parser')
 const fileUpload = require("express-fileupload");
 const cors = require("cors");
+
 //imports
 const rootRouter = require('./routes/rootRouter')
 const database = require('./config/database')
