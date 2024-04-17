@@ -17,13 +17,13 @@ const FE_URL = process.env.FE_URL
 
 app.use(express.json());
 app.use(cookieParser())
-// app.use(
-//     //only listen on this port for FE and postman
-//     cors({
-//         origin: FE_URL,
-//         credentials: true,
-//     })
-// )
+app.use(
+    //only listen on this port for FE and postman
+    cors({
+        origin: FE_URL,
+        credentials: true,
+    })
+)
 
 // allowing files to be store at a temporary location
 app.use(
