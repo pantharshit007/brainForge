@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 const sectionSchema = new Schema({
     sectionName: {
         type: String,
-        ref: 'Course',
     },
     subSection: [{
         type: mongoose.Schema.Types.ObjectId,

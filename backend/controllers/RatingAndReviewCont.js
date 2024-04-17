@@ -54,7 +54,7 @@ async function createRating(req, res) {
 
         //update the course with the new rating & review
         const updatedCourseDetails = await Course.findByIdAndUpdate(
-            { courseId },
+            { _id: courseId },
             {
                 $push: { ratingAndReviews: newRatingReview._id }
             },

@@ -41,7 +41,7 @@ async function sendOtpMessage(req, res) {
             });
             isUnique = await OTP.findOne({ otp });
         }
-        console.log('Genrated Otp: ' + otp);
+        // console.log('Genrated Otp: ' + otp);
 
         //create an entry in otp dB
         const otpPayload = { email, otp }
@@ -120,7 +120,8 @@ async function signup(req, res) {
 
         //fetching the most recent otp from dB
         const storedOtp = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
-        console.log('Stored otp: ' + storedOtp);
+        // console.log('Stored otp: ' + storedOtp[0]);
+        // console.log('otp: ' + storedOtp[0].otp);
 
         //validate OTP
         if (storedOtp.length == 0) {
@@ -128,7 +129,7 @@ async function signup(req, res) {
                 success: false,
                 message: 'OTP NOT FOUND'
             })
-        } else if (storedOtp.otp !== otp) {
+        } else if (storedOtp[0].otp !== otp) {
             return res.status(400).json({
                 success: false,
                 message: "Invalid OTP, otp doesn't Match"
@@ -199,7 +200,7 @@ async function login(req, res) {
         }
 
         //user exists
-        const user = await userSchema.findOne({ email }).populate("additonalDetails");
+        const user = await userSchema.findOne({ email }).populate("additionalDetails");
         if (!user) {
             return res.status(401).json({
                 success: false,
@@ -229,10 +230,10 @@ async function login(req, res) {
 
         //Generating cookies for token 
         const options = {
-            expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+            expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),    //expiry: 3d
             httpOnly: true,
         }
-        res.cookie("token", token, options).status(200).json({
+        return res.cookie("token", token, options).status(200).json({
             success: true,
             token: token,
             user: user,
@@ -240,10 +241,10 @@ async function login(req, res) {
         });
 
     } catch (err) {
-        console.log("> Error While Registering User: " + err.message)
+        console.log("> Error While Logging User: " + err.message)
         return res.status(500).json({
             success: false,
-            msg: "Login Failed, please try again" + err.message,
+            msg: "Login Failed, please try again: " + err.message,
 
         })
     }

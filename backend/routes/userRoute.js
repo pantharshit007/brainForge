@@ -21,7 +21,7 @@ router.post('/changepassword', auth, changePassword)
 //Route for generating reset password token
 router.post("/reset-password-token", resetPasswordToken)
 // Route for reseting user's password post verification
-router.post('resetpassword', resetPassword)
+router.post('/reset-password', resetPassword)
 
 
 module.exports = router;

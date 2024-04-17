@@ -12,7 +12,7 @@ const subSectionSchema = new Schema({
         type: String,
     },
     videoUrl: {
-        tyoe: String,
+        type: String,
     },
 
 });

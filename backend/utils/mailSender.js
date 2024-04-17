@@ -12,12 +12,12 @@ async function mailSender(email, title, body) {
         })
 
         let info = await transporter.sendMail({
-            from: 'StudyNotion@Verifcation',
+            from: 'EdTech@Verifcation.com',
             to: email,
             subject: title,
             html: body,
         })
-        console.log(info)
+        // console.log(info)
         return info
 
     } catch (error) {

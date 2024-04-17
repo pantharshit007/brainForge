@@ -2,6 +2,8 @@ const Course = require("../models/Course");
 const User = require("../models/User");
 const Category = require("../models/Category");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
+const { convertSecondsToDuration } = require("../utils/secConverter");
+const CourseProgress = require("../models/CourseProgress");
 require('dotenv').config();
 const MEDIA_FOLDER = process.env.MEDIA_FOLDER
 
@@ -9,24 +11,44 @@ const MEDIA_FOLDER = process.env.MEDIA_FOLDER
 //create Courses
 async function createCourse(req, res) {
     try {
+        const userId = req.user.id;
+
         // fetching data from body
         const { courseName, courseDescription, whatYouWillLearn, price, category } = req.body;
+        let { tag: _tag, instructions: _instructions, status } = req.body;
 
         //fetch the thumbnail Image
-        const thumbnail = req.files.thumbnail;
+        const thumbnail = req.files.thumbnailImage;
+
+        // Convert the tag and instructions from stringified Array to Array
+        const tag = JSON.parse(_tag)
+        const instructions = JSON.parse(_instructions)
 
         // validate the input data
-        if (!courseName || !courseDescription || !whatYouWillLearn || !price || !category) {
+        if (
+            !courseName ||
+            !courseDescription ||
+            !whatYouWillLearn ||
+            !price ||
+            !category ||
+            !thumbnail ||
+            !tag.length ||
+            !instructions.length
+        ) {
             return res.status(403).json({
                 success: false,
                 message: 'Please fill all the required fields.'
             })
         }
 
+        // update status if not provided
+        if (!status || status === undefined) {
+            status = "Draft"
+        }
+
         //fetching Instructo's data: userId is the same as instructorID since user is Instructore here
-        const userId = req.user.id;
-        const instructorDetails = await User.findById({ userId });
-        console.log('Instructor Details: ' + instructorDetails);
+        const instructorDetails = await User.findById(userId);
+        // console.log('Instructor Details: ' + instructorDetails);
         //TODO: to check if both id's are same or not 
 
         //though it's stupid to check since the ID is already authenticated before comming here.
@@ -57,7 +79,10 @@ async function createCourse(req, res) {
             whatYouWillLearn,
             price,
             category: categoryDetails._id,
-            thumbnail: thumbnailImage,
+            thumbnail: thumbnailImage.secure_url,
+            status,
+            tag,
+            instructions
         })
 
         //update user(Instructor)'s data of created course
@@ -81,15 +106,15 @@ async function createCourse(req, res) {
         return res.status(200).json({
             success: true,
             message: 'New Course created successfully',
-            data: newCourse
+            data: newCourse //ToRemove later
         });
 
 
     } catch (err) {
-        console.log('> Error while creating Course' + err.message)
+        console.log('> Error while creating Course: ' + err.message)
         return res.status(404).json({
             success: false,
-            message: 'Error while creating course' + err.message
+            message: 'Error while creating course: ' + err.message
         })
     }
 }
@@ -108,7 +133,7 @@ async function getAllCourses(req, res) {
         return res.status(200).json({
             success: true,
             message: 'Fetched all available courses',
-            data: allCourses
+            data: allCourses    //ToRemove later
         })
 
     } catch (err) {
@@ -125,6 +150,88 @@ async function getCourseDetails(req, res) {
     try {
         //fetch course Id
         const courseId = req.body.courseId;
+
+        // check validity
+        if (!courseId) {
+            return res.status(404).json({
+                success: false,
+                message: 'Course Id required',
+            })
+        }
+
+        //fetch course details
+        const courseDetails = await Course.findById(courseId)
+            .populate({
+                path: 'instructor',
+                populate: {
+                    path: 'additionalDetails',
+                }
+            })
+            .populate({
+                path: 'courseContent',
+                populate: {
+                    path: 'subSection',
+                    select: '-videoUrl' //to exclude videoUrl from ppulating
+                }
+            })
+            .populate('category')
+            .populate('ratingAndReviews')
+            .exec()
+
+        // check validity
+        if (!courseDetails) {
+            return res.status(404).json({
+                success: false,
+                message: 'No course Found with id ' + courseId,
+            });
+        }
+
+        // only show courses which are in published phase    
+        /*if (courseDetails.status === "Draft") {
+          return res.status(403).json({
+            success: false,
+            message: `Accessing a draft course is forbidden`,
+          });
+        }
+        */
+
+        let totalTimeInSeconds = 0;
+
+        courseDetails.courseContent.forEach((section) => {
+            section.subSection.forEach((subSection) => {
+                const timeDurationSeconds = parseInt(subSection.timeDuration)
+                totalTimeInSeconds += timeDurationSeconds;
+            })
+        })
+
+        //convert seconds to proper annotations
+        const totalDuration = convertSecondsToDuration(totalTimeInSeconds);
+
+        //response
+        return res.status(200).json({
+            success: true,
+            message: 'Course found!',
+            data: {             //ToRemove later
+                courseDetails,
+                totalDuration
+            }
+        })
+
+    } catch (err) {
+        console.log("> Failed to retrieve Course Details: " + err.message)
+        return res.status(500).json({
+            success: false,
+            message: "Failed to retrieve Course Details: " + err.message,
+        })
+    }
+}
+
+// fetch course details with user specific info: course Progress data
+async function getFullCourseDetails(req, res) {
+    try {
+        //fetch course Id
+        const courseId = req.body.courseId;
+        const userId = req.user.id;
 
         // check validity
         if (!courseId) {
@@ -162,14 +269,44 @@ async function getCourseDetails(req, res) {
             });
         }
 
-        //TODO: find time duration of whole course
+        //course Progress for specific user
+        let courseProgressStatus = await CourseProgress.findOne({
+            courseID: courseId,
+            userId: userId,
+        })
+
+        console.log("Course Progress", courseProgressStatus);
+
+        // only show courses which are in published phase    
+        /*if (courseDetails.status === "Draft") {
+          return res.status(403).json({
+            success: false,
+            message: `Accessing a draft course is forbidden`,
+          });
+        }
+        */
+
+
+        let totalTimeInSeconds = 0;
+
+        courseDetails.courseContent.forEach((section) => {
+            section.subSection.forEach((subSection) => {
+                const timeDurationSeconds = parseInt(subSection.timeDuration)
+                totalTimeInSeconds += timeDurationSeconds;
+            })
+        })
+
+        //convert seconds to proper annotations
+        const totalDuration = convertSecondsToDuration(totalTimeInSeconds);
 
         //response
         return res.status(200).json({
             success: true,
-            message: 'Course found',
-            data: {
+            message: 'Course found!',
+            data: {             //ToRemove later
                 courseDetails,
+                courseProgressStatus,
+                totalDuration
             }
         })
 
@@ -180,11 +317,6 @@ async function getCourseDetails(req, res) {
             message: "Failed to retrieve Course Details: " + err.message,
         })
     }
-}
-
-// fetch course details with user specific info: course Progress data
-async function getFullCourseDetails(req, res) {
-    return []
 }
 
 module.exports = {

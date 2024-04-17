@@ -1,6 +1,7 @@
 const userSchema = require('../models/User');
 const mailSender = require('../utils/mailSender');
 const bcrypt = require('bcrypt')
+const crypto = require('crypto');
 require('dotenv').config();
 const FE_URL = process.env.FE_URL
 
@@ -27,11 +28,12 @@ async function resetPasswordToken(req, res) {
         const token = crypto.randomUUID();
 
         //update the token in user dB with an expiry
-        const updateUserDetails = await userSchema.findOneAndUpdate(email, {
+        const updateUserDetails = await userSchema.findOneAndUpdate(
+            { email: email }, {
             token: token,
             resetPasswordExpires: Date.now() + (5 * 60 * 1000)
         }, { new: true });
-        console.log("crypto token: " + updateUserDetails);
+        console.log("crypto token: " + updateUserDetails.token);
 
         // custome URL for password reset page
         const URL = FE_URL + '/update-password/' + token;
@@ -48,10 +50,10 @@ async function resetPasswordToken(req, res) {
 
 
     } catch (err) {
-        console.log("> Something went wrong while sending password reset email" + err.message)
+        console.log("> Something went wrong while sending password reset email: " + err.message)
         return res.status(500).json({
             success: false,
-            message: "Something went wrong while sending password reset email" + err.message,
+            message: "Something went wrong while sending password reset email: " + err.message,
         })
 
     }
@@ -71,7 +73,7 @@ async function resetPassword(req, res) {
         }
 
         // fetch user details from dB using crypto token
-        const userDetails = await userSchema.findOne({ token });
+        const userDetails = await userSchema.findOne({ token: token });
 
         if (!userDetails) {
             res.status(404).json({
@@ -88,13 +90,18 @@ async function resetPassword(req, res) {
             })
         }
 
-        const newHashedPassword = bcrypt.hash(password, 10);
+        const newHashedPassword = await bcrypt.hash(password, 10);
 
-        await userSchema.findOne(
+        await userSchema.findOneAndUpdate(
             { token: token },
-            { password: newHashedPassword },
+            {
+                password: newHashedPassword,
+                $unset: { token: 1, resetPasswordExpires: 1 } // Unset token and expiry fields
+            },
             { new: true }
         );
+
+        //TODO: send a mail to user notifing about password updation
 
         return res.status(200).json({
             success: true,
@@ -102,10 +109,10 @@ async function resetPassword(req, res) {
         })
 
     } catch (err) {
-        console.log("> Something went wrong while reseting the password" + err.message)
+        console.log("> Something went wrong while reseting the password: " + err.message)
         return res.status(500).json({
             success: false,
-            message: "Something went wrong while reseting the password" + err.message,
+            message: "Something went wrong while reseting the password: " + err.message,
         })
 
     }

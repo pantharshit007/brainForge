@@ -1,5 +1,6 @@
 const Course = require('../models/Course');
 const Section = require('../models/Section');
+const SubSection = require('../models/SubSection');
 
 // Section Creation
 async function createSection(req, res) {
@@ -21,7 +22,7 @@ async function createSection(req, res) {
 
         // update section ID in Course Schema
         const updatedCourse = await Course.findByIdAndUpdate(
-            { courseId },
+            courseId,
             {
                 $push: { courseContent: newSection._id }
             },
@@ -52,6 +53,7 @@ async function createSection(req, res) {
 // Section Updation
 async function updateSection(req, res) {
     try {
+        // TODO: Add Picture update functionality also: hint subSection Update
         // fetching required input data
         const { sectionName, sectionId } = req.body;
 
@@ -65,7 +67,7 @@ async function updateSection(req, res) {
 
         //section update
         const updateSection = await Section.findByIdAndUpdate(
-            { sectionId }, { sectionName }, { new: true }
+            { _id: sectionId }, { sectionName }, { new: true }
         )
 
         return res.status(200).json({
@@ -86,12 +88,50 @@ async function updateSection(req, res) {
 // Section Deletion
 async function deleteSection(req, res) {
     try {
-        //section ID: from URl using params
-        const { sectionId } = req.params
+        //section ID: from URL using params/body
+        const { sectionId, courseId } = req.body
 
-        // TODO: delete the section id reference form courseSchema
-        //deleting the section from dB
+        if (!courseId || !sectionId) {
+            return res.status(404).json({
+                success: false,
+                message: 'No course ID/ section ID specified.'
+            })
+        }
+
+        // validate section Id: unnecessary db call I think!
+        const section = await Section.findById(sectionId);
+        if (!section) {
+            return res.status(404).json({
+                success: false,
+                message: "Section not Found",
+            })
+        }
+
+        //deleting the section from Course:dB      
+        await Course.findByIdAndUpdate(courseId, {
+            $pull: {
+                courseContent: sectionId
+            }
+        })
+
+        //delete sub-section under section:dB: NOT REQUIRED AUTO REMOVAL 
+        /*await SubSection.deleteMany({
+            _id: {
+                $in: section.subSection
+            }
+        })*/
+
+        //deleting the section from Section:dB 
         await Section.findByIdAndDelete(sectionId)
+
+        //find the updated course and return 
+        /*const course = await Course.findById(courseId).populate({
+            path:"courseContent",
+            populate: {
+                path: "subSection"
+            }
+        })
+        .exec();*/
 
         return res.status(200).json({
             success: true,

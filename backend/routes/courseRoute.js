@@ -26,9 +26,9 @@ const { createRating, avgRating, getAllRatingAndReview, getCourseRatingAndReview
 // create course router: INSTRUCTOR
 router.post('/createCourse', auth, isInstructor, createCourse)
 // get all courses router
-router.get('/getAllCourses', getAllCourses)
+router.get('/getAllCourses', getAllCourses)     //TODO: add auth before deploy
 // get course details
-router.get('/getCourseDetails', getCourseDetails)
+router.get('/getCourseDetails', getCourseDetails)   //TODO: add auth before deploy
 // get Full Course details (user specific) 
 router.get('/getFullCourseDetails', auth, getFullCourseDetails)
 
@@ -55,18 +55,18 @@ router.delete('/deleteSubSection', auth, isInstructor, deleteSubSection)
 // create category router: ADMIN
 router.post('/createCategory', auth, isAdmin, createCategory)
 // fetch all category router: 
-router.get('/getAllCatogories', getAllCategorys)
+router.get('/getAllCatogories', getAllCategorys)    //TODO: add auth before deploy
 // fetch category based courses router
-router.get('/getCategoryPageDetails', categoryPageDetails)
+router.get('/getCategoryPageDetails', categoryPageDetails)  //TODO: add auth before deploy
 
 // -------- Rating and Review Routes -------- //
 
 // add rating routes: ISSTUDENT
 router.post('/createRating', auth, isStudent, createRating)
 // Average rating routes: ISSTUDENT
-router.get('getAverageRating', avgRating)
+router.get('getAverageRating', avgRating)   //TODO: add auth before deploy
 // fetch all Rating and Review
-router.get('/getReviews', getAllRatingAndReview)
+router.get('/getReviews', getAllRatingAndReview)    //TODO: add auth before deploy
 // fetch course Specific Rating and Review
 router.get('/getCourseReviews', getCourseRatingAndReview)   //TODO: add this route in Postman
 

@@ -2,20 +2,20 @@ const SubSection = require('../models/SubSection');
 const Section = require('../models/Section');
 const { uploadImageToCloudinary } = require('../utils/imageUploader');
 require('dotenv').config();
-const MEDIA_FOLDER = process.env.MEDIA_FOLDER
+const VIDEO_FOLDER = process.env.VIDEO_FOLDER
 
 // Section Creation
 async function createSubSection(req, res) {
 
     try {
         //fetching data
-        const { sectionId, title, description, timeDuration, videoUrl } = req.body;
+        const { sectionId, title, description } = req.body;
 
         //extracting file data
-        const video = req.file.video;
+        const video = req.files.video;
 
         //validate input data
-        if (!sectionId || !title || !description || !timeDuration || !videoUrl) {
+        if (!sectionId || !title || !description || !video) {
             return res.status(400).json({
                 success: false,
                 message: 'All fields are required',
@@ -23,7 +23,7 @@ async function createSubSection(req, res) {
         }
 
         // upload the video on cloudinary.
-        const uploadedVideoDetails = await uploadImageToCloudinary(video, MEDIA_FOLDER);
+        const uploadedVideoDetails = await uploadImageToCloudinary(video, VIDEO_FOLDER);
 
         //create a new Sub-Section in dB
         const newSubSection = await SubSection.create({
@@ -35,7 +35,7 @@ async function createSubSection(req, res) {
 
         // update sub section ID in section Schema
         const updatedSection = await Section.findByIdAndUpdate(
-            { sectionId },
+            { _id: sectionId },
             {
                 $push: { subSection: newSubSection._id }
             },
@@ -45,7 +45,7 @@ async function createSubSection(req, res) {
         return res.status(201).json({
             success: true,
             message: 'Sub-Section Created successfully',
-            updatedSection: updatedSection
+            updatedSection: updatedSection  //ToRemove later
         })
 
     } catch (err) {
@@ -61,10 +61,17 @@ async function createSubSection(req, res) {
 async function updateSubSection(req, res) {
     try {
         // fetching required input data
-        const { subSectionId, title, description } = req.body;
-        const video = req.file.video || req.file;
+        const { sectionId, subSectionId, title, description } = req.body;
+        // const video = req.files.video || req.files;  //produces error if not provided
 
         //validate input data
+        if (!subSectionId) {
+            return res.status(404).json({
+                success: false,
+                message: 'No Sub-Section ID found.',
+            })
+        }
+
         const subSectionDetails = await SubSection.findById(subSectionId)
         if (!subSectionDetails) {
             return res.status(404).json({
@@ -81,8 +88,10 @@ async function updateSubSection(req, res) {
             subSectionDetails.description = description
         }
         //check if video got an update?
-        if (video !== undefined) {
-            const updateVideoDetails = await uploadImageToCloudinary(video, MEDIA_FOLDER);
+        if (req.files && req.files.video !== undefined) {
+            const video = req.files.video;
+            const updateVideoDetails = await uploadImageToCloudinary(video, VIDEO_FOLDER);
+
             subSectionDetails.videoUrl = updateVideoDetails.secure_url;
             subSectionDetails.timeDuration = `${updateVideoDetails.duration}`
         }
@@ -90,9 +99,9 @@ async function updateSubSection(req, res) {
         await subSectionDetails.save();
 
         //section update
-        // const updateSection = await Section.findByIdAndUpdate(
-        //     { sectionId }, { sectionName }, { new: true }
-        // )
+        // const updatedSection = await Section.findById(sectionId).populate(
+        //     "subSection"
+        //   )
 
         return res.status(200).json({
             success: true,
@@ -109,7 +118,7 @@ async function updateSubSection(req, res) {
     }
 }
 
-// Section Deletion
+// Sub Section Deletion
 async function deleteSubSection(req, res) {
     try {
         //section ID: from URl using params
@@ -123,7 +132,7 @@ async function deleteSubSection(req, res) {
 
         //deleting the Sub-section from section dB
         const updatedSection = await Section.findByIdAndUpdate(
-            { sectionId },
+            { _id: sectionId },
             { $pull: { subSection: subSectionId } }
         ).populate("subSection");
 
@@ -133,7 +142,7 @@ async function deleteSubSection(req, res) {
         return res.status(200).json({
             success: true,
             message: 'Sub-Section deleted successfully',
-            sectionData: updatedSection
+            sectionData: updatedSection     //ToRemove later
         })
 
     } catch (err) {

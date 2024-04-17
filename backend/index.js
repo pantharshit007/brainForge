@@ -9,7 +9,7 @@ const cors = require("cors");
 //imports
 const rootRouter = require('./routes/rootRouter')
 const database = require('./config/database')
-const cloudinaryConnect = require('./config/cloudinary')
+const cloudinary = require('./config/cloudinary')
 
 require('dotenv').config()
 const PORT = process.env.PORT || 3000
@@ -49,4 +49,4 @@ app.listen(PORT, () => {
 database.connect();
 
 //connect cloudinary
-// cloudinaryConnect();
+cloudinary.cloudinaryConnect();
