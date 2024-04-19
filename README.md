@@ -1,0 +1,3 @@
+# EdTech Project
+
+### MERN Based
