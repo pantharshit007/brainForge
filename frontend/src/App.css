@@ -49,3 +49,7 @@ body {
             rgba(17, 30, 50, 0.38) 104.96%);
     /* backdrop-filter: blur(26px); */
 }
+
+.homepage_bg {
+    background: url('./assets/Images/bghome.svg');
+}
