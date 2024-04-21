@@ -9,7 +9,7 @@ function CodeBlocks({
     return (
         <div className={`flex ${position} justify-between flex-col my-20 lg:gap-10 gap-10 `}>
             {/* Box 1 */}
-            <div className='w-[50%] flex flex-col gap-8'>
+            <div className='lg:w-[50%] flex flex-col gap-8'>
                 {heading}
                 <div className=' text-base font-bold text-richblack-300 w-[85%] -mt-3'>
                     {subheading}
@@ -30,9 +30,7 @@ function CodeBlocks({
             </div>
 
             {/* Box 2 */}
-            <div className='h-fit flex flex-row text-[10px] sm:text-base w-[100%] py-3 lg:w-[470px] leading-[18px] 
-                sm:leading-6 relative code-border '>
-                {/* TODO: Add moving BG gradient */}
+            <div className='h-fit flex flex-row text-[10px] sm:text-sm w-[100%] py-3 lg:w-[470px] leading-[18px] sm:leading-6 relative code-border '>
                 {backgroundGradient}
 
                 {/* Indexing */}
