@@ -121,7 +121,7 @@ function Home() {
                 <div className='homepage_bg h-[320px]'>
 
                     <div className='w-11/12 max-w-maxContent flex flex-col justify-center items-center gap-5 mx-auto'>
-                        <div className='lg:h-[150px]'></div>
+                        <div className='lg:h-[170px]'></div>
                         {/* Buttons */}
                         <div className='flex flex-row gap-7 text-white'>
                             <CTAButton active={true} linkTo={'/signup'}>
