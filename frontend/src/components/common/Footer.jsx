@@ -187,7 +187,7 @@ const Footer = () => {
                     </div>
 
                     {/* right side */}
-                    <div className="text-center">Made with ❤️ <HightlightText text={" pantharshit007"} />  © 2024 EdTech</div>
+                    <div className="text-center">Made with ❤️ <HightlightText text={" pantharshit007"} />  © 2024 brainForge</div>
                 </div>
             </div>
         </div>

@@ -1,3 +1,3 @@
-# EdTech Project
+# BrainForge Project
 
 ### MERN Based

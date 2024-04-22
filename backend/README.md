@@ -1,4 +1,4 @@
-## BACKEND OF EDTECH WEBSITE: StudyNotion
+## BACKEND OF BRAINfORGE WEBSITE: StudyNotion
 
 - Schema Structure
   ![Schema Structure](./assets/Schema.png)

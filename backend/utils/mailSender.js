@@ -12,7 +12,7 @@ async function mailSender(email, title, body) {
         })
 
         let info = await transporter.sendMail({
-            from: 'EdTech@Verifcation.com',
+            from: 'brainforge@Verifcation.com',
             to: email,
             subject: title,
             html: body,
