@@ -32,7 +32,7 @@ async function createCategory(req, res) {
 // fetching all the category present
 async function getAllCategorys(req, res) {
     try {
-        const allCategorys = await Category.find({}, { name: true, description: true });
+        const allCategorys = await Category.find({});
 
         return res.status(200).json({
             success: true,
