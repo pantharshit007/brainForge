@@ -1,0 +1,8 @@
+  // TODO: Implement an upword arrow which bring user to top of the page.
+
+  // TODO: Change the setUser in authAPI.js so that we only include user ID in it and store only that data instead of whole user info  
+  // TODO: try storing user Info or Id's in session instead of local storage. ✅
+  // TODO: update the otp/register message so when registerd user try to re-register it giver already registered error.
+  // TODO: fix bottom of login page when inspects.
+
+  //⚠️ TODO: update all backend error responses with throw new error.

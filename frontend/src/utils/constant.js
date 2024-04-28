@@ -3,3 +3,5 @@ export const ACCOUNT_TYPE = {
     INSTRUCTOR: "Instructor",
     ADMIN: "Admin",
 }
+
+export const toastPostion = { position: "top-right" }

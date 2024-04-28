@@ -2,7 +2,7 @@ import React from 'react'
 
 function ProfileDropDown() {
     return (
-        <div>ProfileDropDown</div>
+        <div className='text-white'>ProfileDropDown</div>
     )
 }
 

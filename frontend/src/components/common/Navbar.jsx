@@ -11,13 +11,13 @@ import ProfileDropDown from '../core/Auth/ProfileDropDown'
 import { apiConnector } from '../../services/apiConnector'
 import { categories } from '../../services/apis'
 
-
 function Navbar() {
     const { token } = useSelector(state => state.auth)
     const { user } = useSelector(state => state.profile)
     const { totalItems } = useSelector(state => state.cart)
 
     const [subLinks, setSubLinks] = useState([])
+    const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
     async function fetchCategory() {
         try {
@@ -42,7 +42,7 @@ function Navbar() {
     }
 
     return (
-        <div className='flex h-14 items-center justify-center border-b-[1px] border-b-richblack-700 '>
+        <div className='flex h-14 items-center justify-center border-b-[1px] border-b-richblack-700 z-10 '>
             <div className='w-11/12 max-w-maxContent flex items-center justify-between'>
                 {/* Image */}
                 <Link to={'/'}>
@@ -58,12 +58,17 @@ function Navbar() {
                             <li key={index}>{
                                 link.title === "Catalog" ? (
                                     // For catalog
-                                    <div className='relative flex items-center gap-2 group cursor-pointer '>
+                                    <div className='relative flex items-center gap-2 group cursor-pointer'
+                                        onMouseOver={() => setIsDropdownVisible(true)}
+                                        onMouseOut={() => setIsDropdownVisible(false)}
+                                    >
                                         {link.title}
-                                        <BsChevronDown />
+                                        <BsChevronDown className={`${isDropdownVisible ? '-rotate-90' : ''} transition-transform duration-200`} />
 
                                         {/* Hover Box */}
-                                        <div className='invisible absolute left-[50%] top-[50%] z-[1000] flex w-[150px] translate-x-[-50%] translate-y-[3em] flex-col rounded-lg bg-richblack-5 p-3 text-richblack-900 opacity-0 transition-all duration-150 group-hover:visible group-hover:translate-y-[1.65em] group-hover:opacity-100 lg:w-[250px]'>
+                                        <div className='invisible absolute left-[50%] top-[50%] z-[1000] flex w-[150px] translate-x-[-50%] translate-y-[3em] flex-col rounded-lg bg-richblack-5 p-3 text-richblack-900 opacity-0 transition-all duration-150 group-hover:visible group-hover:translate-y-[1.65em] group-hover:opacity-100 lg:w-[250px]'
+                                        >
+                                            {/* white upword arrow */}
                                             <div className="absolute left-[50%] top-0 -z-10 h-6 w-6 translate-x-[80%] translate-y-[-40%] rotate-45 select-none rounded bg-richblack-5"></div>
 
                                             {subLinks && subLinks.length ? (

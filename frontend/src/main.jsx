@@ -8,7 +8,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import rootReducer from './reducer/Store.jsx'
 import { Toaster } from "react-hot-toast"
 
-// combined store for all the reducers
+// combined store for all the reducers with thunk middleware applied
 const store = configureStore({
   reducer: rootReducer
 });

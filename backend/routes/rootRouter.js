@@ -7,6 +7,7 @@ const courseRoutes = require('./courseRoute')
 const paymentRoutes = require('./paymentRoute')
 const contactRoutes = require('./contactRoute')
 
+// TODO: ADD A isDemo ROUTE FOR DEMO ACCOUNT 
 router.use('/auth', userRoutes)
 router.use('/profile', profileRoutes)
 router.use('/course', courseRoutes)

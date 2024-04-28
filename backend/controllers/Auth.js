@@ -18,10 +18,11 @@ async function sendOtpMessage(req, res) {
         const isUserExists = await userSchema.findOne({ email });
 
         if (isUserExists) {
-            return res.status(401).json({
-                success: false,
-                message: 'User already exists',
-            })
+            throw new Error('User already exists')
+            // return res.status(401).json({
+            //     success: false,
+            //     message: 'User already exists',
+            // })
         }
 
         //generate OTP: ⚠️ Not a good code since we are making calls on dB in loops
@@ -57,7 +58,7 @@ async function sendOtpMessage(req, res) {
         console.log('> Error sending OTP: ' + err.message)
         return res.status(500).json({
             success: false,
-            message: 'Error sending OTP: ' + err.message,
+            message: err.message,
         })
     }
 }
@@ -77,10 +78,11 @@ async function signup(req, res) {
     try {
         const { success } = signupBody.safeParse(req.body);
         if (!success) {
-            return res.status(411).json({
-                success: false,
-                msg: 'Incorrect Inputs'
-            })
+            throw new error('Incorrect Inputs')
+            // return res.status(411).json({
+            //     success: false,
+            //     msg: 'Incorrect Inputs'
+            // })
         }
 
         const {
@@ -112,16 +114,15 @@ async function signup(req, res) {
         //checking if user already exists
         const existingUser = await userSchema.findOne({ email: email });
         if (existingUser) {
-            return res.status(400).json({
-                success: false,
-                message: 'User already exists',
-            });
+            throw new Error('User already exists')
+            // return res.status(400).json({
+            //     success: false,
+            //     message: 'User already exists',
+            // });
         }
 
         //fetching the most recent otp from dB
         const storedOtp = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
-        // console.log('Stored otp: ' + storedOtp[0]);
-        // console.log('otp: ' + storedOtp[0].otp);
 
         //validate OTP
         if (storedOtp.length == 0) {
@@ -130,10 +131,11 @@ async function signup(req, res) {
                 message: 'OTP NOT FOUND'
             })
         } else if (storedOtp[0].otp !== otp) {
-            return res.status(400).json({
-                success: false,
-                message: "Invalid OTP, otp doesn't Match"
-            });
+            throw new Error("Invalid OTP")
+            // return res.status(400).json({
+            //     success: false,
+            //     message: "Invalid OTP, otp doesn't Match"
+            // });
         }
 
         //Hashing the password in dB
@@ -167,7 +169,7 @@ async function signup(req, res) {
         console.log("> Error: User registration failed: " + err.message)
         return res.status(500).json({
             success: false,
-            message: "User registration failed: " + err.message,
+            message: err.message,
         });
 
     }
@@ -230,7 +232,7 @@ async function login(req, res) {
 
         //Generating cookies for token 
         const options = {
-            expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),    //expiry: 3d
+            expires: new Date(Date.now() + 3 * 60 * 60 * 1000),    //expiry: 3h
             httpOnly: true,
         }
         return res.cookie("token", token, options).status(200).json({
@@ -262,10 +264,11 @@ async function changePassword(req, res) {
     try {
         const { success } = signupBody.safeParse(req.body);
         if (!success) {
-            return res.status(411).json({
-                success: false,
-                msg: 'Incorrect Inputs'
-            })
+            throw new Error('Incorrect Inputs')
+            // return res.status(411).json({
+            //     success: false,
+            //     msg: 'Incorrect Inputs'
+            // })
         }
 
         // get old and new password with confirm New password from body

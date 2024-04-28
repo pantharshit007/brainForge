@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { toast } from 'react-hot-toast'
+import { toastPostion } from "../../utils/constant"
 
 const localTotalItems = localStorage.getItem('totalItems')  // fetching totalItems from localStorage
 const localCart = localStorage.getItem('cart')  // fetching Itmes in Cart from LS
 const localTotal = localStorage.getItem('total')    // fetching total Price from LS
 
-const toastPostion = { position: "top-right" }
+// const toastPostion = { position: "top-right" }
 
 const initialState = {
     totalItems: localTotalItems ? JSON.parse(localTotalItems) : 0,
@@ -81,5 +82,5 @@ const cartSlice = createSlice({
     }
 })
 
-export const { } = cartSlice.actions;
+export const { addToCart, removeFromCart, resetCart } = cartSlice.actions;
 export default cartSlice.reducer;
