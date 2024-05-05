@@ -13,16 +13,22 @@ const JWT_SECRET = process.env.JWT_SECRET;
 async function sendOtpMessage(req, res) {
     try {
         const { email } = req.body;
+        if (!email) {
+            return res.json({
+                success: false,
+                message: "Email Not Found"
+            })
+        }
 
         //check if user already exists 
         const isUserExists = await userSchema.findOne({ email });
 
         if (isUserExists) {
-            throw new Error('User already exists')
-            // return res.status(401).json({
-            //     success: false,
-            //     message: 'User already exists',
-            // })
+            // throw new Error('User already exists')
+            return res.status(401).json({
+                success: false,
+                message: 'User already exists',
+            })
         }
 
         //generate OTP: ⚠️ Not a good code since we are making calls on dB in loops
@@ -69,20 +75,21 @@ async function signup(req, res) {
     const signupBody = zod.object({
         firstName: zod.string(),
         lastName: zod.string(),
-        email: zod.string().email(),
+        email: zod.string().email({ message: "Invalid email address" }),
         password: zod.string(),
         confirmPassword: zod.string(),
         // contactNumber: zod.number(),
     })
 
     try {
-        const { success } = signupBody.safeParse(req.body);
+        const { success, error } = signupBody.safeParse(req.body);
         if (!success) {
-            throw new error('Incorrect Inputs')
-            // return res.status(411).json({
-            //     success: false,
-            //     msg: 'Incorrect Inputs'
-            // })
+            // throw new error('Incorrect Inputs')
+            const errorMessage = error?.errors[0]?.message;
+            return res.status(411).json({
+                success: false,
+                message: errorMessage || "Incorrect Inputs",
+            })
         }
 
         const {
@@ -114,11 +121,11 @@ async function signup(req, res) {
         //checking if user already exists
         const existingUser = await userSchema.findOne({ email: email });
         if (existingUser) {
-            throw new Error('User already exists')
-            // return res.status(400).json({
-            //     success: false,
-            //     message: 'User already exists',
-            // });
+            // throw new Error('User already exists')
+            return res.status(400).json({
+                success: false,
+                message: 'User already exists',
+            });
         }
 
         //fetching the most recent otp from dB
@@ -128,18 +135,22 @@ async function signup(req, res) {
         if (storedOtp.length == 0) {
             return res.status(400).json({
                 success: false,
-                message: 'OTP NOT FOUND'
+                message: "OTP Not found",
             })
         } else if (storedOtp[0].otp !== otp) {
-            throw new Error("Invalid OTP")
-            // return res.status(400).json({
-            //     success: false,
-            //     message: "Invalid OTP, otp doesn't Match"
-            // });
+            // throw new Error("Invalid OTP")
+            return res.status(400).json({
+                success: false,
+                message: "Invalid OTP, otp doesn't Match"
+            });
         }
 
         //Hashing the password in dB
         const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Create the user
+        let approved = ""
+        approved === "Instructor" ? (approved = false) : (approved = true)
 
         //profile creation: when we update profile later we will just update it.
         const profileDetails = await Profile.create({
@@ -156,6 +167,7 @@ async function signup(req, res) {
             email,
             password: hashedPassword,
             accountType,
+            approved: approved,
             additionalDetails: profileDetails._id,
             image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName}%20${lastName}`
         })
@@ -246,7 +258,7 @@ async function login(req, res) {
         console.log("> Error While Logging User: " + err.message)
         return res.status(500).json({
             success: false,
-            msg: "Login Failed, please try again: " + err.message,
+            message: "Login Failed, please try again: " + err.message,
 
         })
     }
@@ -267,7 +279,7 @@ async function changePassword(req, res) {
             throw new Error('Incorrect Inputs')
             // return res.status(411).json({
             //     success: false,
-            //     msg: 'Incorrect Inputs'
+            //     message: 'Incorrect Inputs'
             // })
         }
 

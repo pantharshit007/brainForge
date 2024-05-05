@@ -10,8 +10,11 @@ const profileSlice = createSlice({
     name: 'profile',
     initialState,
     reducers: {
+        // set the user value received from BE via value and update storge also
         setUser(state, value) {
             state.user = value.payload;
+            localStorage.setItem("user", JSON.stringify(value.payload))
+            sessionStorage.setItem("user", JSON.stringify(value.payload))
         },
 
     }

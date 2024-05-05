@@ -76,17 +76,18 @@ async function resetPassword(req, res) {
         const userDetails = await userSchema.findOne({ token: token });
 
         if (!userDetails) {
-            res.status(404).json({
-                success: false,
-                message: 'Invalid token. Try again!',
-            })
+            throw new Error('Invalid token or Already used. Regenerate Token!')    // if no token found the below method crashes backend!
+            // res.status(404).json({
+            //     success: false,
+            //     message: 'Invalid token. Try again!',
+            // })
         }
 
         // check token expiry time if it still valids.: 4:00 < 5:00
         if (userDetails.resetPasswordExpires < Date.now()) {
             return res.status(403).json({
                 success: false,
-                message: 'Token expired. Try again!',
+                message: 'Token expired. Regenerate Token!',
             })
         }
 
@@ -96,7 +97,7 @@ async function resetPassword(req, res) {
             { token: token },
             {
                 password: newHashedPassword,
-                $unset: { token: 1, resetPasswordExpires: 1 } // Unset token and expiry fields
+                $unset: { token: 1, resetPasswordExpires: 1 } // Unset token and expiry fields (remove)
             },
             { new: true }
         );
@@ -112,7 +113,7 @@ async function resetPassword(req, res) {
         console.log("> Something went wrong while reseting the password: " + err.message)
         return res.status(500).json({
             success: false,
-            message: "Something went wrong while reseting the password: " + err.message,
+            message: err.message,
         })
 
     }

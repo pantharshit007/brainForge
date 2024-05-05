@@ -13,9 +13,11 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        // set the token value received from BE via value
+        // set the token value received from BE via value and update storge also
         setToken(state, value) {
             state.token = value.payload;
+            localStorage.setItem("token", JSON.stringify(value.payload))
+            sessionStorage.setItem("token", JSON.stringify(value.payload))
         },
         // new User Sign-up Info
         setSignupData(state, value) {

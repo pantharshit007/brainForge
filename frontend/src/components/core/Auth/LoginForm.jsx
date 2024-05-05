@@ -42,6 +42,7 @@ function LoginForm() {
                     name="email"
                     value={email}
                     onChange={handleOnChange}
+                    autoComplete="email"
                     placeholder="Enter email address"
                     style={{
                         boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
@@ -62,7 +63,7 @@ function LoginForm() {
                     value={password}
                     onChange={handleOnChange}
                     placeholder="Enter Password"
-                    autoComplete="true"
+                    autoComplete="current-password"
                     style={{
                         boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
                     }}

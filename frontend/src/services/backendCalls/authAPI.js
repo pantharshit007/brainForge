@@ -27,7 +27,7 @@ export function sendOtp(email, navigate) {
         try {
             // MAKE BACKEDN CALL ON ROUTE SENDOTP_API
             const response = await apiConnector('POST', SENDOTP_API, { email })
-            console.log('> OTP SENT: ', JSON.stringify(response))
+            // console.log('> OTP SENT: ', JSON.stringify(response))
 
             if (!response.data.success) {
                 throw new Error(response.data.message)
@@ -38,7 +38,7 @@ export function sendOtp(email, navigate) {
 
         } catch (err) {
             console.log('> OTP API Failure: ' + err?.response?.data?.message)
-            toast.error(err?.response?.data?.message, toastPostion)
+            toast.error(err?.response?.data?.message || 'Sending OTP Failed', toastPostion)
 
         } finally {
             dispatch(setLoading(false));
@@ -87,7 +87,7 @@ export function signUp(
 
         } catch (err) {
             console.log('> Signup API Failure: ', err?.response?.data?.message)
-            toast.error(err?.response?.data?.message)
+            toast.error(err?.response?.data?.message || 'Signup Failed')
             navigate('/signup')
 
         } finally {
@@ -101,7 +101,6 @@ export function signUp(
 export function login(email, password, navigate) {
     //REDUX THUMK MIDDLEWARE
     return async (dispatch) => {
-        console.log('1')
 
         // SETTING LOADING STATE
         const toastId = toast.loading('Loading..', toastPostion);
@@ -110,7 +109,7 @@ export function login(email, password, navigate) {
         try {
             // SENDING BACKEND CALL ON ROUTE /loading
             const response = await apiConnector('POST', LOGIN_API, { email, password });
-            console.log('> Login API: ', response)
+            // console.log('> Login API: ', response)
 
             if (!response.data.success) {
                 throw new Error(response.data.message);
@@ -120,21 +119,17 @@ export function login(email, password, navigate) {
 
             // UPDATE JWT TOKEN IN LOCAL STORAGE VIA STORE
             dispatch(setToken(response.data.token));
-            // UPDATE USER img 
-            const userImg = response.data?.user?.image
-                ? response.data.user.image
-                : "https://api.dicebear.com/5.x/initials/svg?seed=" + response.data.user.firstName + " " + response.data.user.lastName;
 
             //  UPDATE USER STATE WITH USER DATA
             dispatch(setUser({ ...response.data.user, image: userImg }))
 
-            // UPDATE TOKEN AND USER IN LOCALSTORAGE
-            localStorage.setItem("token", JSON.stringify(response.data.token))
-            localStorage.setItem("user", JSON.stringify(response.data.user))
+            // UPDATE TOKEN AND USER IN LOCALSTORAGE : Now directly getting updated in Slices
+            // localStorage.setItem("token", JSON.stringify(response.data.token))
+            // localStorage.setItem("user", JSON.stringify(response.data.user))
 
             // Use sessionStorage instead of localStorage
-            sessionStorage.setItem("token", JSON.stringify(response.data.token))
-            sessionStorage.setItem("user", JSON.stringify(response.data.user))
+            // sessionStorage.setItem("token", JSON.stringify(response.data.token))
+            // sessionStorage.setItem("user", JSON.stringify(response.data.user))
 
             navigate('/dashboard/my-profile');
 
@@ -169,14 +164,93 @@ export function logout(navigate) {
 // PASSWORD RESET TOKEN BACKEND CALL
 export function getPasswordResetToken(email, setEmailSent) {
     //REDUX THUMK MIDDLEWARE
+    return async (dispatch) => {
+
+        // SETTING LOADING STATE
+        const toastId = toast.loading('Loading..', toastPostion);
+        dispatch(setLoading(true));
+
+        try {
+            // SENDING BACKEND CALL ON ROUTE /reset-password-token
+            const response = await apiConnector('POST', RESETPASSTOKEN_API, { email })
+            console.log("Reset pass token:", response);
+
+            if (!response.data.success) {
+                throw new Error(response?.data?.message);
+            }
+
+            toast.success('Email Sent. Check Inbox!', toastPostion)
+            setEmailSent(true);
+
+        } catch (err) {
+            console.log("> RESET PASSWORN TOKEN API FAILURE: " + err?.response?.data?.message)
+            toast.error(err?.response?.data?.message || 'Failed to send Reset Email', toastPostion)
+
+        } finally {
+            toast.dismiss(toastId)
+            dispatch(setLoading(false));
+        }
+    }
 }
 
 // RESET PASSWORD BACKEND CALL
-export function resetPassword(password, confirmPassword, token) {
+export function resetPassword(password, confirmPassword, token, setResetComplete) {
     //REDUX THUMK MIDDLEWARE
+    return async (dispatch) => {
+
+        // SETTING LOADING STATE
+        const toastId = toast.loading('Loading..', toastPostion);
+        dispatch(setLoading(true));
+
+        try {
+            const response = await apiConnector('POST', RESETPASSWORD_API, { password, confirmPassword, token });
+
+            if (!response.data.success) {
+                throw new Error(response.data.message);
+            }
+
+            setResetComplete(true); //TO UPDATE UPDATE-PASSWORD PAGE UI
+            toast.success('Password Updated!')
+
+        } catch (err) {
+            console.log('> RESET PASSWORD API ERROR: ' + err?.response?.data?.message);
+            toast.error(err?.response?.data?.message, toastPostion)
+
+        } finally {
+            toast.dismiss(toastId)
+            dispatch(setLoading(false))
+        }
+    }
 }
 
 // FORGOT PASSWORD BACKEND CALL: same as getPasswordRestToken
-export function forgotPassword(email, sentEmailSent) {
+export function forgotPassword(email, setEmailSent) {
     //REDUX THUMK MIDDLEWARE
+    return async (dispatch) => {
+
+        // SETTING LOADING STATE
+        const toastId = toast.loading('Loading..', toastPostion);
+        dispatch(setLoading(true));
+
+        try {
+            // SENDING BACKEND CALL ON ROUTE /reset-password-token
+            const response = await apiConnector('POST', RESETPASSTOKEN_API, { email })
+            console.log("Forgot pass token:", response);
+
+            if (!response.data.success) {
+                throw new Error(response.data.message);
+            }
+
+            toast.success('Email Sended!', toastPostion)
+            setEmailSent(true);
+
+        } catch (err) {
+            console.log("Forgot password token Failure: " + err?.response?.data?.message)
+            toast.error(err?.response?.data?.message || 'Failed to send Reset Email', toastPostion)
+
+        } finally {
+            toast.dismiss(toastId)
+            dispatch(setLoading(false));
+        }
+    }
 }

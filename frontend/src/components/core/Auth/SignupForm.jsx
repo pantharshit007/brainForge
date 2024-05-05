@@ -143,6 +143,7 @@ function SignupForm() {
                         name="email"
                         value={email}
                         onChange={handleOnChange}
+                        autoComplete='email'
                         placeholder="Enter email address"
                         style={{
                             boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
@@ -165,7 +166,7 @@ function SignupForm() {
                             value={password}
                             onChange={handleOnChange}
                             placeholder="Enter Password"
-                            autoComplete="true"
+                            autoComplete="new-password"
                             style={{
                                 boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
                             }}
@@ -198,7 +199,7 @@ function SignupForm() {
                             value={confirmPassword}
                             onChange={handleOnChange}
                             placeholder="Confirm Password"
-                            autoComplete="true"
+                            autoComplete="new-password"
                             style={{
                                 boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
                             }}
