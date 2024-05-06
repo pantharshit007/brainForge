@@ -43,6 +43,7 @@ function LoginForm() {
                     value={email}
                     onChange={handleOnChange}
                     autoComplete="email"
+                    autoFocus
                     placeholder="Enter email address"
                     style={{
                         boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",

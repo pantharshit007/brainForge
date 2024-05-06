@@ -6,6 +6,7 @@ import { BiArrowBack } from "react-icons/bi";
 import { RxCountdownTimer } from "react-icons/rx";
 
 import { sendOtp, signUp } from '../services/backendCalls/authAPI';
+import OTPImage from '../assets/Images/otp.svg';
 
 function VerifyEmail() {
     const { loading, signupData } = useSelector(state => state.auth);
@@ -40,8 +41,8 @@ function VerifyEmail() {
             {loading
                 ? (<div className="spinner"></div>)
                 : (
-                    <div className="max-w-[500px] p-4 lg:p-8">
-                        <div>
+                    <div className="max-w-[500px] p-4 lg:p-8 flex relative">
+                        <div className="max-w-[500px] p-4 lg:p-8">
                             <h1 className="text-richblack-5 font-semibold text-[1.875rem] leading-[2.375rem]">
                                 Verify Email
                             </h1>
@@ -89,9 +90,10 @@ function VerifyEmail() {
                             </div>
                         </div>
 
-                        {/* <div>
-                            <img src="" alt="" />
-                        </div> */}
+                        <div className='absolute -right-[70%] top-[30%] translate-x-7 translate-y-28 hidden lg:block'>
+                            <img src={OTPImage} alt="otpImage" loading='lazy'
+                                className='w-[400px] ' />
+                        </div>
                     </div>
                 )
             }

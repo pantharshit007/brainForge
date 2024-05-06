@@ -106,6 +106,8 @@ function SignupForm() {
                             name="firstName"
                             value={firstName}
                             onChange={handleOnChange}
+                            autoComplete='given-name'
+                            autoFocus
                             placeholder="Enter first name"
                             style={{
                                 boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
@@ -123,6 +125,7 @@ function SignupForm() {
                             name="lastName"
                             value={lastName}
                             onChange={handleOnChange}
+                            autoComplete='family-name'
                             placeholder="Enter last name"
                             style={{
                                 boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",

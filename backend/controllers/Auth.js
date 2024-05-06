@@ -196,11 +196,12 @@ async function login(req, res) {
     })
 
     try {
-        const { success } = loginBody.safeParse(req.body)
+        const { success, error } = loginBody.safeParse(req.body)
+        const errorMessage = error?.errors[0]?.message;
         if (!success) {
             return res.status(411).json({
                 success: false,
-                message: "Incorrect inputs"
+                message: errorMessage || "Incorrect inputs"
             })
         }
 

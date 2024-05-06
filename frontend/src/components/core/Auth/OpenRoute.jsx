@@ -1,14 +1,20 @@
+
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux'
-import { Navigate } from "react-router-dom"
+import { useNavigate } from 'react-router-dom'
 
 function OpenRoute({ children }) {
     const { token } = useSelector(state => state.auth)
+    const navigate = useNavigate();
 
     // USER IS NOT LOGGED IN YET
-    if (token === null) {
-        return children
-    } else {
-        return <Navigate to="/dashboard/my-profile" />
-    }
+    useEffect(() => {
+        if (token === null) {
+            return
+        } else {
+            navigate('/dashboard/my-profile')
+        }
+    })
+    return children
 }
 export default OpenRoute;

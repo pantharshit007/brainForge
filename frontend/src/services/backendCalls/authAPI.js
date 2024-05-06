@@ -121,7 +121,7 @@ export function login(email, password, navigate) {
             dispatch(setToken(response.data.token));
 
             //  UPDATE USER STATE WITH USER DATA
-            dispatch(setUser({ ...response.data.user, image: userImg }))
+            dispatch(setUser(response.data.user))
 
             // UPDATE TOKEN AND USER IN LOCALSTORAGE : Now directly getting updated in Slices
             // localStorage.setItem("token", JSON.stringify(response.data.token))
@@ -157,7 +157,7 @@ export function logout(navigate) {
         localStorage.removeItem('user')
 
         toast.success('Logout Success!', toastPostion)
-        navigate('/')
+        navigate('/login')
     }
 }
 

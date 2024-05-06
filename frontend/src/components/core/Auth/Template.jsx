@@ -1,7 +1,6 @@
 import React from 'react'
 import { useSelector } from "react-redux"
 
-import frameImg from "../../../assets/Images/frame.png"
 import SignupForm from './SignupForm'
 import LoginForm from './LoginForm'
 
@@ -41,13 +40,6 @@ function Template({ title, description1, description2, image, formType }) {
 
                     {/* RIGHT PANEL */}
                     <div className=" mx-auto w-11/12 max-w-[650px] md:mx-0">
-                        {/* <img
-                            src={frameImg}
-                            alt="Pattern"
-                            width={558}
-                            height={504}
-                            loading="lazy"
-                        /> */}
                         <img
                             src={image}
                             alt="Students"
