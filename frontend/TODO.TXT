@@ -10,3 +10,5 @@
   // TODO: Mobile view of NavBar
 
   //⚠️ TODO: update all backend error responses with throw new error.
+
+  // BACKEND TODO: Check if cookies are even working on the backend side and twik with their expiry time.
