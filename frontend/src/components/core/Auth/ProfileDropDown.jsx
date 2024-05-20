@@ -13,10 +13,10 @@ function ProfileDropDown() {
     const dispatch = useDispatch();
     const { user } = useSelector(state => state.profile);
     const [open, setOpen] = useState(false)
-    const clickRef = useRef(null)
+    const dropdownRef = useRef(null)
 
     // Monitor click outside the component
-    useOnClickOutside(clickRef, () => setOpen(false));
+    useOnClickOutside(dropdownRef, () => setOpen(false));
 
     if (!user) return null
 
@@ -33,7 +33,7 @@ function ProfileDropDown() {
 
                 {/* DROP DOWN MENU */}
                 {open &&
-                    <div onClick={(e) => e.stopPropagation()} ref={clickRef}
+                    <div onClick={(e) => e.stopPropagation()} ref={dropdownRef}
                         className="absolute top-[118%] right-0 z-[1000] divide-y-[1px] divide-richblack-700 overflow-hidden rounded-md border-[1px] border-richblack-700 bg-richblack-800">
                         {/* DASHBOARD */}
                         <Link to={'/dashboard/my-profile'} onClick={() => setOpen(false)}

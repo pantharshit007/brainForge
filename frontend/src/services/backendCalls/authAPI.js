@@ -1,7 +1,7 @@
 import { toast } from "react-hot-toast";
 
 import { endpoints } from "../apis";
-import { toastPostion } from "../../utils/constant";
+import { errorToastPosition, toastPostion } from "../../utils/constant";
 import { setLoading, setToken } from "../../reducer/slices/authSlice";
 import { apiConnector } from "../apiConnector";
 import { setUser } from "../../reducer/slices/profileSlice";
@@ -38,7 +38,7 @@ export function sendOtp(email, navigate) {
 
         } catch (err) {
             console.log('> OTP API Failure: ' + err?.response?.data?.message)
-            toast.error(err?.response?.data?.message || 'Sending OTP Failed', toastPostion)
+            toast.error(err?.response?.data?.message || 'Sending OTP Failed', errorToastPosition)
 
         } finally {
             dispatch(setLoading(false));
@@ -87,7 +87,7 @@ export function signUp(
 
         } catch (err) {
             console.log('> Signup API Failure: ', err?.response?.data?.message)
-            toast.error(err?.response?.data?.message || 'Signup Failed')
+            toast.error(err?.response?.data?.message || 'Signup Failed', errorToastPosition)
             navigate('/signup')
 
         } finally {
@@ -135,7 +135,7 @@ export function login(email, password, navigate) {
 
         } catch (err) {
             console.log('> LOGIN API ERROR: ' + err?.response?.data?.message);
-            toast.error(err?.response?.data?.message, toastPostion)
+            toast.error(err?.response?.data?.message, errorToastPosition)
 
         } finally {
             dispatch(setLoading(false));
@@ -184,7 +184,7 @@ export function getPasswordResetToken(email, setEmailSent) {
 
         } catch (err) {
             console.log("> RESET PASSWORN TOKEN API FAILURE: " + err?.response?.data?.message)
-            toast.error(err?.response?.data?.message || 'Failed to send Reset Email', toastPostion)
+            toast.error(err?.response?.data?.message || 'Failed to send Reset Email', errorToastPosition)
 
         } finally {
             toast.dismiss(toastId)
@@ -214,7 +214,7 @@ export function resetPassword(password, confirmPassword, token, setResetComplete
 
         } catch (err) {
             console.log('> RESET PASSWORD API ERROR: ' + err?.response?.data?.message);
-            toast.error(err?.response?.data?.message, toastPostion)
+            toast.error(err?.response?.data?.message, errorToastPosition)
 
         } finally {
             toast.dismiss(toastId)
@@ -246,7 +246,7 @@ export function forgotPassword(email, setEmailSent) {
 
         } catch (err) {
             console.log("Forgot password token Failure: " + err?.response?.data?.message)
-            toast.error(err?.response?.data?.message || 'Failed to send Reset Email', toastPostion)
+            toast.error(err?.response?.data?.message || 'Failed to send Reset Email', errorToastPosition)
 
         } finally {
             toast.dismiss(toastId)

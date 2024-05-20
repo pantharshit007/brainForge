@@ -9,6 +9,7 @@ import OpenRoute from './components/core/Auth/OpenRoute'
 import ForgotPassword from './pages/ForgotPassword'
 import UpdatePassword from './pages/UpdatePassword'
 import VerifyEmail from './pages/VerifyEmail'
+import About from './pages/About'
 
 function App() {
   // TODO: Implement an upword arrow which bring user to top of the page.
@@ -53,6 +54,7 @@ function App() {
             } />
 
           <Route path="update-password/:id" element={<UpdatePassword />} />
+          <Route path="about" element={<About />} />
 
 
         </Routes>

@@ -4,6 +4,6 @@ const { contactUser } = require('../controllers/ContactUs')
 
 // -------- Contact Routes -------- //
 
-router.post('/contact', contactUser);
+router.post('/contactUs', contactUser);
 
 module.exports = router;
