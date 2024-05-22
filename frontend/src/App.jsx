@@ -1,6 +1,6 @@
-import { useState } from 'react'
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
+
 import Home from './pages/Home'
 import Navbar from './components/common/Navbar'
 import Signup from './pages/Signup'
@@ -10,6 +10,7 @@ import ForgotPassword from './pages/ForgotPassword'
 import UpdatePassword from './pages/UpdatePassword'
 import VerifyEmail from './pages/VerifyEmail'
 import About from './pages/About'
+import Contact from './pages/Contact'
 
 function App() {
   // TODO: Implement an upword arrow which bring user to top of the page.
@@ -55,6 +56,7 @@ function App() {
 
           <Route path="update-password/:id" element={<UpdatePassword />} />
           <Route path="about" element={<About />} />
+          <Route path="contact" element={<Contact />} />
 
 
         </Routes>

@@ -1,14 +1,16 @@
 import React from 'react'
 import HightlightText from '../HomePage/HightlightText'
+import CustomHighlightText from './CustomHighlightText'
 
 function Quote() {
     return (
-        <div>
+        <div className=" text-xl md:text-4xl font-semibold mx-auto py-5 pb-20 text-center text-white">
             We are passionate about revolutionizing the way we learn. Our innovative platform
             <HightlightText text={" combines technology"} />,
-            <span className="text-orange-400">{" "}expertise</span>
+            <CustomHighlightText text={" expertise"} type={"orange"} />
             , and community to create an
-            <span className="text-orange-400">{" "}unparalleled educational experience.</span>
+            <CustomHighlightText text={" unparalleled educational experience."} type={"yellow"} />
+
         </div>
     )
 }

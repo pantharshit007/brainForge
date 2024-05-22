@@ -4,7 +4,7 @@ import { toast } from "react-hot-toast";
 
 import { apiConnector } from '../../services/apiConnector';
 import { contactusEndpoint } from '../../services/apis';
-import { errorToastPosition } from '../../utils/constant';
+import { errorToastPosition, toastPostion } from '../../utils/constant';
 import CountryCode from '../../data/countrycode.json'
 
 function ContactUsForm() {
@@ -18,13 +18,12 @@ function ContactUsForm() {
 
     // submitting the data 
     const submitContactForm = async (data) => {
-        console.log(data);
         try {
             // start loader
             setLoading(true);
             const response = await apiConnector("POST", contactusEndpoint.CONTACT_US_API, data);
-            // const response = { status: 200 }
-            console.log("response", response);
+            // console.log("response", response);
+            toast.success('Message sent successfully!', toastPostion)
 
         } catch (err) {
             console.log("> Error in Contactus:", err.message);
@@ -50,7 +49,9 @@ function ContactUsForm() {
     }, [reset, isSubmitSuccessful])
 
     return (
-        <form onSubmit={handleSubmit(submitContactForm)}>
+        <form onSubmit={handleSubmit(submitContactForm)}
+            className="flex flex-col gap-7"
+        >
             {/* NAME */}
             <div className="flex flex-col gap-5 lg:flex-row ">
                 {/* FIRST NAME */}
@@ -192,8 +193,15 @@ function ContactUsForm() {
             </div>
 
             {/* BUTTON */}
-            <button type='submit'
-                className='rounded-md bg-indigo-600 text-neutral-50 px-6 py-3 text-center text-[13px] font-bold shadow-[2px_2px_0px_0px_rgba(255,255,255,0.18)] mt-3'
+            <button
+                type='submit'
+                disabled={loading}
+                className={`rounded-md bg-indigo-600 text-neutral-50 px-6 py-3 text-center text-[13px] font-bold shadow-[2px_2px_0px_0px_rgba(255,255,255,0.18)] mt-3 outline-none disabled:bg-richblack-500 sm:text-[16px]
+                ${!loading
+                        ? "hover:scale-95 hover:shadow-white transition-all duration-200 shadow-[2px_2px_0px_0px_rgba(255,255,255,0.18)]"
+                        : 'cursor-wait'
+                    }
+                `}
             >
                 Send Message!
             </button>

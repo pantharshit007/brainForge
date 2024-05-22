@@ -12,7 +12,7 @@ router.use('/auth', userRoutes)
 router.use('/profile', profileRoutes)
 router.use('/course', courseRoutes)
 router.use('/payment', paymentRoutes)
-router.use('/reach', contactRoutes)
+router.use('/contact', contactRoutes)
 
 
 module.exports = router;

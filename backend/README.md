@@ -1,4 +1,4 @@
-## BACKEND OF BRAINfORGE WEBSITE: StudyNotion
+## BACKEND OF BRAINfORGE WEBSITE: BrainForge
 
 - Schema Structure
   ![Schema Structure](./assets/Schema.png)

@@ -4,8 +4,8 @@ const { contactUsEmail } = require('../mail/contactForm')
 exports.contactUser = async (req, res) => {
     try {
         const { email,
-            firstname,
-            lastname,
+            firstName,
+            lastName,
             message,
             phoneNo,
         } = req.body;
@@ -18,16 +18,16 @@ exports.contactUser = async (req, res) => {
         }
 
         // Send Mail to student regarding Email confirmation
-        const titleStudent = "Mail Received"
-        const verificationMail = await mailSender(email, titleStudent, contactUsEmail(email, firstname, lastname, message, phoneNo))
-        console.log("verificationMail: " + verificationMail)
+        const titleStudent = "Message Received"
+        const verificationMail = await mailSender(email, titleStudent, contactUsEmail(email, firstName, lastName, message, phoneNo))
+        // console.log("verificationMail:", verificationMail)
 
         //send Mail to MOD 
         const titleMod = "Contact Us Mail Details"
         const modEmail = "modEmail@gmail.com"
         const body = `
             <h2>Student Contact Details</h2>
-            <p>Name: ${firstname} ${lastname}</p>
+            <p>Name: ${firstName} ${lastName}</p>
             <p>Email: ${email}</p>
             <p>Phone Number: ${phoneNo}</p>
             <p>Message: ${message}</p>
@@ -36,7 +36,7 @@ exports.contactUser = async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            message: 'Email sent successfully'
+            message: 'Your message has been sent successfully'
         })
 
     } catch (err) {
