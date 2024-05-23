@@ -41,10 +41,10 @@ async function getAllCategorys(req, res) {
         });
 
     } catch (err) {
-        console.log('> Error while fetching all Category' + err.message)
+        console.log('> Error while fetching all Category: ' + err.message)
         return res.status(404).json({
             success: false,
-            message: 'Error while fetching all Category' + err.message
+            message: 'Error while fetching all Category: ' + err.message
         })
     }
 }

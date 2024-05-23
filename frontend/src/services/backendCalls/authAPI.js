@@ -135,7 +135,7 @@ export function login(email, password, navigate) {
 
         } catch (err) {
             console.log('> LOGIN API ERROR: ' + err?.response?.data?.message);
-            toast.error(err?.response?.data?.message, errorToastPosition)
+            toast.error(err?.response?.data?.message || 'Login Failed', errorToastPosition)
 
         } finally {
             dispatch(setLoading(false));

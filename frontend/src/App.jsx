@@ -5,16 +5,19 @@ import Home from './pages/Home'
 import Navbar from './components/common/Navbar'
 import Signup from './pages/Signup'
 import Login from './pages/Login'
-import OpenRoute from './components/core/Auth/OpenRoute'
 import ForgotPassword from './pages/ForgotPassword'
 import UpdatePassword from './pages/UpdatePassword'
 import VerifyEmail from './pages/VerifyEmail'
 import About from './pages/About'
 import Contact from './pages/Contact'
+import Dashboard from './pages/Dashboard'
+import Error from './pages/Error'
+import OpenRoute from './components/core/Auth/OpenRoute'
+import PrivateRoute from './components/core/Auth/PrivateRoute'
 
 function App() {
   // TODO: Implement an upword arrow which bring user to top of the page.
-  // TODO: in Navbar
+  // TODO: Navbar for Mobile
   return (
     <>
       <div className='w-screen min-h-screen flex flex-col font-inter bg-bgBlue '>
@@ -54,11 +57,22 @@ function App() {
               </OpenRoute>
             } />
 
+          <Route path="dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            } >
+
+          </Route>
+
           <Route path="update-password/:id" element={<UpdatePassword />} />
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
 
 
+          {/* Error Route */}
+          <Route path="*" element={<Error />} />
         </Routes>
       </div>
     </>

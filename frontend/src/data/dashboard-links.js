@@ -1,4 +1,4 @@
-import { ACCOUNT_TYPE } from "../utils/constants";
+import { ACCOUNT_TYPE } from "../utils/constant";
 export const sidebarLinks = [
   {
     id: 1,
@@ -39,6 +39,13 @@ export const sidebarLinks = [
     name: "Your Cart",
     path: "/dashboard/cart",
     type: ACCOUNT_TYPE.STUDENT,
+    icon: "VscBookmark",
+  },
+  {
+    id: 7,
+    name: "Admin Panel",
+    path: "/dashboard/admin-panel",
+    type: ACCOUNT_TYPE.ADMIN,
     icon: "VscHistory",
   },
 ];

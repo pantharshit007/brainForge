@@ -9,5 +9,7 @@
   // TODO: Mobile view of NavBar
   // TODO: try Implementing tilting effect on images similar to hkirat website.
   //⚠️ TODO: update all backend error responses with throw new error.
+  // TODO: Update the Error page.
+  // TODO: create a horizontal Navbar for Mobile View of Dashboard.
 
   // BACKEND TODO: Check if cookies are even working on the backend side and twik with their expiry time.
