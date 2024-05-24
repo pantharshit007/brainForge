@@ -1,14 +1,24 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from "react-router-dom"
+import { VscSignOut } from "react-icons/vsc"
 
 import { sidebarLinks } from '../../../data/dashboard-links'
 import { logout } from '../../../services/backendCalls/authAPI'
 import SidebarLink from './SidebarLink';
+import ConfirmationModal from '../../common/ConfirmationModal'
 
 function Sidebar() {
     const { user, loading: profileLoading } = useSelector(state => state.profile);
     const { loading: authLoading } = useSelector(state => state.auth);
 
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    // store the Modal data
+    const [confirmationModal, setConfirmationModal] = useState(null);
+
+    // Loading screen
     if (authLoading || profileLoading) {
         return (
             <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
@@ -39,9 +49,26 @@ function Sidebar() {
                         link={{ name: "Settings", path: "/dashboard/settings" }}
                         iconName="VscSettingsGear"
                     />
-                </div>
 
+                    <button
+                        className="px-8 py-2 text-sm font-medium text-richblack-300"
+                        onClick={() => setConfirmationModal({
+                            text1: "Are you sure?",
+                            text2: "You will be logged out of your account.",
+                            btnText1: "Logout",
+                            btnText2: "Cancel",
+                            btn1handler: () => dispatch(logout(navigate)),
+                            btn2handler: () => setConfirmationModal(null)
+                        })}
+                    >
+                        <div className="flex items-center gap-x-2">
+                            <VscSignOut className="text-lg" />
+                            <span>Logout</span>
+                        </div>
+                    </button>
+                </div>
             </div>
+            {confirmationModal && <ConfirmationModal modalData={confirmationModal} />}
 
             {/* MOBILE SIDEBAR */}
             <div className='flex md:hidden fixed bottom-0 justify-between items-center -pl-4 py-1 bg-richblack-900 z-50 w-full'>

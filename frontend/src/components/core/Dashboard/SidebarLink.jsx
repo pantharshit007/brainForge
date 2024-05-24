@@ -17,13 +17,13 @@ function SidebarLink({ link, iconName }) {
     return (
         <NavLink
             to={link.path}
-            onClick={console.log(link.path)}
+            // onClick={console.log(link.path)}
             className={`relative px-8 py-2 text-sm font-medium transition-all duration-200 
             ${matchRoute(link.path) ? 'bg-yellow-800 text-yellow-50' : 'bg-opacity-0 text-richblack-300'}`}
         >
             {/* HIGHLIGHT BAR */}
             <span
-                className={`absolute left-0 md:top-0 h-[0.2rem] md:h-full w-full md:w-[0.15rem] bg-yellow-50 
+                className={`absolute left-0 md:top-0 bottom-0 h-[0.2rem] md:h-full w-full md:w-[0.15rem] bg-yellow-50 
                 ${matchRoute(link.path) ? "opacity-100" : "opacity-0"}`}
             ></span>
 

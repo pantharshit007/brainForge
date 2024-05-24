@@ -14,6 +14,7 @@ import Dashboard from './pages/Dashboard'
 import Error from './pages/Error'
 import OpenRoute from './components/core/Auth/OpenRoute'
 import PrivateRoute from './components/core/Auth/PrivateRoute'
+import MyProfile from './components/core/Dashboard/MyProfile'
 
 function App() {
   // TODO: Implement an upword arrow which bring user to top of the page.
@@ -63,7 +64,7 @@ function App() {
                 <Dashboard />
               </PrivateRoute>
             } >
-
+            <Route path="my-profile" element={<MyProfile />} />
           </Route>
 
           <Route path="update-password/:id" element={<UpdatePassword />} />
