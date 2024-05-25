@@ -7,6 +7,7 @@ import { sidebarLinks } from '../../../data/dashboard-links'
 import { logout } from '../../../services/backendCalls/authAPI'
 import SidebarLink from './SidebarLink';
 import ConfirmationModal from '../../common/ConfirmationModal'
+import Backdrop from '../../common/Backdrop'
 
 function Sidebar() {
     const { user, loading: profileLoading } = useSelector(state => state.profile);
@@ -68,7 +69,13 @@ function Sidebar() {
                     </button>
                 </div>
             </div>
-            {confirmationModal && <ConfirmationModal modalData={confirmationModal} />}
+
+            {/* IF MODAL IS OPEN THEN BACKDROP WILL BE PLACED AND OVER BACKDROP CONFIRMATIONMODAL IS PLACED */}
+            {confirmationModal &&
+                <Backdrop onClick={confirmationModal.btn2handler}>
+                    <ConfirmationModal modalData={confirmationModal} />
+                </Backdrop>
+            }
 
             {/* MOBILE SIDEBAR */}
             <div className='flex md:hidden fixed bottom-0 justify-between items-center -pl-4 py-1 bg-richblack-900 z-50 w-full'>

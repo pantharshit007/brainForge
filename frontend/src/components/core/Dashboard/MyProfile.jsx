@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { RiEditBoxLine } from "react-icons/ri"
 
 import IconBtn from '../../common/IconBtn';
+import { formattedDate } from '../../../utils/dateFormatter';
 
 function MyProfile() {
     const { user } = useSelector(state => state.profile)
@@ -25,7 +26,7 @@ function MyProfile() {
                     />
 
                     <div className="space-y-1">
-                        <p className="text-lg font-semibold text-richblack-5">
+                        <p className="text-lg font-semibold text-richblack-5 uppercase">
                             {user?.firstName + " " + user?.lastName}
                         </p>
                         <p className="text-sm text-richblack-300">
@@ -35,12 +36,14 @@ function MyProfile() {
                 </div>
 
                 {/* EDIT */}
-                <IconBtn
-                    onClick={() => navigate("dashboard/settings")}
-                    text={"Edit"}
-                >
-                    <RiEditBoxLine />
-                </IconBtn>
+                <div className='md:block hidden'>
+                    <IconBtn
+                        onClick={() => navigate("dashboard/settings")}
+                        text={"Edit"}
+                    >
+                        <RiEditBoxLine />
+                    </IconBtn>
+                </div>
             </div>
 
             {/* SECTION-2 */}
@@ -80,34 +83,36 @@ function MyProfile() {
                     </IconBtn>
                 </div>
 
-                <div className="flex max-w-[500px] justify-between text-white">
+                <div className="flex max-w-[500px] justify-between ">
                     <div className="flex flex-col gap-y-5">
                         <div>
-                            <p className="mb-2 text-lg text-richblack-600">First Name</p>
+                            <p className="mb-2 text-lg text-richblack-500">First Name</p>
                             <p className="text-sm font-medium text-richblack-5">{user?.firstName}</p>
                         </div>
                         <div>
-                            <p className="mb-2 text-lg text-richblack-600">Email</p>
+                            <p className="mb-2 text-lg text-richblack-500">Email</p>
                             <p className="text-sm font-medium text-richblack-5">{user?.email}</p>
                         </div>
                         <div>
-                            <p className="mb-2 text-lg text-richblack-600">Gender</p>
+                            <p className="mb-2 text-lg text-richblack-500">Gender</p>
                             <p className="text-sm font-medium text-richblack-5">{user?.additionalDetails?.gender ?? "Add Gender"}</p>
                         </div>
                     </div>
 
                     <div className="flex flex-col gap-y-5">
                         <div>
-                            <p className="mb-2 text-lg text-richblack-600">Last Name</p>
+                            <p className="mb-2 text-lg text-richblack-500">Last Name</p>
                             <p className="text-sm font-medium text-richblack-5">{user?.lastName}</p>
                         </div>
                         <div>
-                            <p className="mb-2 text-lg text-richblack-600">Phone No.</p>
+                            <p className="mb-2 text-lg text-richblack-500">Phone No.</p>
                             <p className="text-sm font-medium text-richblack-5">{user?.additionalDetails?.contactNumber ?? "Add Contact Number"}</p>
                         </div>
                         <div>
-                            <p className="mb-2 text-lg text-richblack-600">Date of Birth</p>
-                            <p className="text-sm font-medium text-richblack-5">{user?.additionalDetails?.dateOfBirth ?? "Add Date Of Birth"}</p>
+                            <p className="mb-2 text-lg text-richblack-500">Date of Birth</p>
+                            <p className="text-sm font-medium text-richblack-5">
+                                {formattedDate(user?.additionalDetails?.dateOfBirth) ?? "Add Date Of Birth"}
+                            </p>
                         </div>
                     </div>
                 </div>

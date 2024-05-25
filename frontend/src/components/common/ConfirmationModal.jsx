@@ -1,10 +1,41 @@
 import React from 'react'
+import { motion } from "framer-motion"
+
 import IconBtn from './IconBtn'
+
+const dropIn = {
+    hidden: {
+        y: "-100vh",
+        opacity: 0,
+    },
+    visible: {
+        y: "0",
+        opacity: 1,
+        transition: {
+            duration: 0.5,
+            type: "spring",
+            damping: 55,
+            stiffness: 500,
+        },
+    },
+    exit: {
+        y: "100vh",
+        opacity: 0,
+    },
+};
 
 function ConfirmationModal({ modalData }) {
     return (
-        <div className="fixed inset-0 z-[1000] !mt-0 grid place-items-center overflow-auto bg-opacity-10 backdrop-blur-sm">
-            <div className="w-11/12 max-w-[350px] rounded-lg border border-richblack-400 bg-richblack-800 p-6">
+        <motion.div className="fixed inset-0 z-[1000] !mt-0 grid place-items-center overflow-auto bg-opacity-10 "
+            initial="hidden"
+            animate="visible"
+            exit={{ opacity: 0 }}
+            variants={dropIn}
+
+        >
+            <div className="w-11/12 max-w-[350px] rounded-lg border border-richblack-400 bg-richblack-800 p-6"
+                onClick={(e) => e.stopPropagation()}
+            >
                 <h1 className="text-2xl font-semibold text-richblack-5">
                     {modalData.text1}
                 </h1>
@@ -29,7 +60,7 @@ function ConfirmationModal({ modalData }) {
                     </button>
                 </div>
             </div>
-        </div>
+        </motion.div>
     )
 }
 

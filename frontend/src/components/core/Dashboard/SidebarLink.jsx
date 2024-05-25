@@ -19,11 +19,11 @@ function SidebarLink({ link, iconName }) {
             to={link.path}
             // onClick={console.log(link.path)}
             className={`relative px-8 py-2 text-sm font-medium transition-all duration-200 
-            ${matchRoute(link.path) ? 'bg-yellow-800 text-yellow-50' : 'bg-opacity-0 text-richblack-300'}`}
+            ${matchRoute(link.path) ? 'bg-indigo-950 text-richblack-25' : 'bg-opacity-0 text-richblack-300'}`}
         >
             {/* HIGHLIGHT BAR */}
             <span
-                className={`absolute left-0 md:top-0 bottom-0 h-[0.2rem] md:h-full w-full md:w-[0.15rem] bg-yellow-50 
+                className={`absolute md:left-0 -translate-x-[25%] md:top-0 bottom-0 h-[0.2rem] md:h-[70%] my-auto w-[70%] mx-auto md:w-[0.2rem] bg-indigo-600 
                 ${matchRoute(link.path) ? "opacity-100" : "opacity-0"}`}
             ></span>
 

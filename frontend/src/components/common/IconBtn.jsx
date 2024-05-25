@@ -14,17 +14,18 @@ function IconBtn({
             disabled={disabled}
             onClick={onClick}
             type={type}
-            className={`flex items-center cursor-pointer gap-x-2 rounded-md py-2 px-5 font-semibold text-richblack-900 ${customClasses}
+            className={`flex items-center cursor-pointer gap-x-2 rounded-md py-2 px-5 font-semibold text-richblack-25 ${customClasses}
                 ${outline
-                    ? "border border-yellow-50 bg-transparent"
-                    : "bg-yellow-50"
+                    ? "border border-indigo-600 bg-transparent"
+                    : "bg-indigo-600"
                 }`}
         >
             {children ?
                 <>
-                    <span className={outline && "text-yellow-50"}>
+                    <span className={outline ? "text-indigo-600" : undefined} >
                         {text}
                     </span>
+                    {children}
                 </>
                 : (text)
             }
