@@ -3,11 +3,13 @@ import { FiTrash2 } from "react-icons/fi"
 import Backdrop from '../../../common/Backdrop'
 import ConfirmationModal from '../../../common/ConfirmationModal'
 import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { deleteAccount } from '../../../../services/backendCallFunction/settingAPI'
 
 function DeleteAccount() {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+
     const { token } = useSelector(state => state.auth);
     const [isClicked, setIsClicked] = useState(false)
 
@@ -21,8 +23,11 @@ function DeleteAccount() {
     }
 
     async function handleDeleteAccount() {
-        setIsClicked(false);
-        deleteAccount(token, navigate);
+        try {
+            dispatch(deleteAccount(token, navigate, setIsClicked));
+        } catch (err) {
+            console.log('Error deleting account: ', err.message)
+        }
     }
 
     return (

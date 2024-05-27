@@ -75,7 +75,7 @@ export function signUp(
                 confirmPassword,
                 otp,
             })
-            console.log("SIGN UP: ", response)
+            // console.log("SIGN UP: ", response)
 
             // CHECK IF AN ERROR OCCURED
             if (!response.data.success) {

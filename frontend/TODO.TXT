@@ -11,7 +11,6 @@
   // TODO: Update the Error page.
   // TODO: Check why are we using dispatch in SideBarLink
   // TODO: set the condition in auth slice so whenever the token expires, it removes token from local/session storage, we can use the backend error message or status like 408 only then it will call logout function.
-  // TODO: create outer ring on profile pic in my profile pfp.
   // TODO: for myprofile and setting part add a react router navigation link which directly navigate to the specific section of the setting page [profileEdit -> Edit profile section]. Do similar if needed anywhere also. 
 
   // BACKEND TODO: Check if cookies are even working on the backend side and twik with their expiry time.

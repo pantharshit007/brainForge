@@ -103,6 +103,7 @@ function SignupForm() {
                         <input
                             required
                             type="text"
+                            id="firstName"
                             name="firstName"
                             value={firstName}
                             onChange={handleOnChange}
@@ -122,6 +123,7 @@ function SignupForm() {
                         <input
                             required
                             type="text"
+                            id="lastName"
                             name="lastName"
                             value={lastName}
                             onChange={handleOnChange}
@@ -143,6 +145,7 @@ function SignupForm() {
                     <input
                         required
                         type="text"
+                        id="email"
                         name="email"
                         value={email}
                         onChange={handleOnChange}
@@ -165,6 +168,7 @@ function SignupForm() {
                         <input
                             required
                             type={showPassword ? "text" : "password"}
+                            id="password"
                             name="password"
                             value={password}
                             onChange={handleOnChange}
@@ -198,6 +202,7 @@ function SignupForm() {
                         <input
                             required
                             type={showConfirmPassword ? "text" : "password"}
+                            id="confirmPassword"
                             name="confirmPassword"
                             value={confirmPassword}
                             onChange={handleOnChange}

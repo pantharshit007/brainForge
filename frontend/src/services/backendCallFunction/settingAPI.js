@@ -75,7 +75,7 @@ export function updateProfileInformation(token, formData, setLoading) {
             toast.success("Profile Info Updated!", toastPosition);
 
         } catch (err) {
-            console.log('> Failed to update Profile:', err?.response?.data?.message);
+            console.log('> UPDATE PROFILE API FAILURE:', err?.response?.data?.message);
             toast.error(err?.response?.data?.message || 'Failed to update Profile', errorToastPosition);
 
         } finally {
@@ -118,15 +118,15 @@ export function changePassword(token, formData, setLoading) {
 }
 
 // DELETE ACCOUNT BACKEND CALL
-export function deleteAccount(token, navigate) {
+export function deleteAccount(token, navigate, setIsClicked) {
     return async (dispatch) => {
         const toastId = toast.loading('Deleting...');
-        const headers = { Autherization: 'Bearer ' + token };
+        const headers = { Authorization: 'Bearer ' + token };
 
         try {
             // calling the backend URL: /profile/deleteProfile
             const response = await apiConnector('DELETE', DELETE_PROFILE_API, null, headers)
-            console.log("Delete profile: ", response)
+            // console.log("Delete profile: ", response)
 
             // ENCOUNTER AN ERROR
             if (!response.data.success) {
@@ -134,6 +134,7 @@ export function deleteAccount(token, navigate) {
             }
 
             toast.success('Accound Deleted!', toastPosition);
+            setIsClicked(false);
             dispatch(logout(navigate))
 
         } catch (err) {

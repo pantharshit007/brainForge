@@ -31,28 +31,27 @@ async function sendOtpMessage(req, res) {
             })
         }
 
-        //generate OTP: ⚠️ Not a good code since we are making calls on dB in loops
-        let otp = otpGenerator.generate(6, {
-            upperCaseAlphabets: false,
-            lowerCaseAlphabets: false,
-            specialChars: false
-        })
+        // Generate a unique OTP: ⚠️ Not a good code since we are making calls on dB in loops
+        let otp;
+        let isUnique = false;
 
-        // check OTP is unique or not
-        const isUnique = await OTP.findOne({ otp });
-        while (isUnique) {
+        while (!isUnique) {
             otp = otpGenerator.generate(6, {
                 upperCaseAlphabets: false,
                 lowerCaseAlphabets: false,
                 specialChars: false
             });
-            isUnique = await OTP.findOne({ otp });
+
+            const existingOtp = await OTP.findOne({ otp });
+            if (!existingOtp) {
+                isUnique = true;
+            }
         }
         // console.log('Genrated Otp: ' + otp);
 
         //create an entry in otp dB
         const otpPayload = { email, otp }
-        const otpBody = await OTP.create(otpPayload);
+        await OTP.create(otpPayload);
 
         return res.status(200).json({
             success: true,
@@ -135,7 +134,7 @@ async function signup(req, res) {
         if (storedOtp.length == 0) {
             return res.status(400).json({
                 success: false,
-                message: "OTP Not found",
+                message: "OTP Not found! Re-try Please",
             })
         } else if (storedOtp[0].otp !== otp) {
             // throw new Error("Invalid OTP")

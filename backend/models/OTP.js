@@ -32,7 +32,7 @@ async function sendVerificationEmail(email, otp) {
     }
 }
 
-//pre function: send before DB call
+//pre function: send email before saving the document
 OTPSchema.pre('save', async function (next) {
     // console.log("New OTP document saved to database");
 

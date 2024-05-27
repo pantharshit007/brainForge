@@ -45,7 +45,7 @@ function ConfirmationModal({ modalData }) {
                 </p>
 
                 <div className="flex items-center gap-x-4">
-                    {/* LOGOUT BTN */}
+                    {/* MAIN FUNCTION BTN */}
                     <IconBtn
                         onClick={modalData?.btn1handler}
                         text={modalData?.btnText1}

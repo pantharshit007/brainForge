@@ -56,11 +56,13 @@ function VerifyEmail() {
                                     value={otp}
                                     onChange={setOtp}
                                     numInputs={6}
+                                    shouldAutoFocus={true}
                                     renderSeparator={<span>-</span>}
                                     renderInput={(props) =>
                                         <input
                                             {...props}
                                             placeholder="-"
+                                            name='otp'
                                             autoComplete='one-time-code'
                                             style={{ boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)", }}
                                             className="w-[48px] lg:w-[60px] border-0 bg-richblack-800 rounded-[0.5rem] text-richblack-5 aspect-square text-center focus:border-0 focus:outline-2 focus:outline-indigo-600"
