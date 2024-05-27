@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { login } from '../../../services/backendCalls/authAPI'
+import { login } from '../../../services/backendCallFunction/authAPI'
 
 function LoginForm() {
     const navigate = useNavigate()

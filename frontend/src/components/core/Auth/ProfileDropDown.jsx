@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { VscDashboard, VscSignOut } from "react-icons/vsc"
 import { AiOutlineCaretDown } from "react-icons/ai"
 
-import { logout } from '../../../services/backendCalls/authAPI';
+import { logout } from '../../../services/backendCallFunction/authAPI';
 import useOnClickOutside from '../../../hooks/useOnClickOutside';
 
 function ProfileDropDown() {

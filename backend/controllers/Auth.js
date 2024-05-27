@@ -271,11 +271,10 @@ async function changePassword(req, res) {
     const changePassBody = zod.object({
         oldPassword: zod.string(),
         newPassword: zod.string(),
-        confirmNewPassword: zod.string()
     })
 
     try {
-        const { success } = signupBody.safeParse(req.body);
+        const { success } = changePassBody.safeParse(req.body);
         if (!success) {
             throw new Error('Incorrect Inputs')
             // return res.status(411).json({
@@ -284,10 +283,10 @@ async function changePassword(req, res) {
             // })
         }
 
-        // get old and new password with confirm New password from body
-        const { oldPassword, newPassword, confirmNewPassword } = req.body;
+        // get old and new password from body
+        const { oldPassword, newPassword } = req.body;
 
-        if (!oldPassword || !newPassword || !confirmNewPassword) {
+        if (!oldPassword || !newPassword) {
             return res.status(403).json({
                 success: false,
                 message: "All fields are required",
@@ -320,9 +319,12 @@ async function changePassword(req, res) {
             const body = `
                 <h1>Hello! ${updatedUserDetails.firstName}!</h1> 
                 <h3>You account password has been updated.</h3>
+                </br>
+                <h5>If it's not done by you then contact us imediately at <a href="mailto:info@brainforge.com">info@brainforge.com</a>.</h5>
+
             `
             const emailResponse = await mailSender(updatedUserDetails.email, title, body)
-            console.log("Email Response: " + emailResponse.response);
+            // console.log("Email Response: ", emailResponse?.response);
 
         } catch (err) {
             console.log("> Error occurred while sending email: " + err.message);

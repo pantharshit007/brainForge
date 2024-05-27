@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { VscSignOut } from "react-icons/vsc"
 
 import { sidebarLinks } from '../../../data/dashboard-links'
-import { logout } from '../../../services/backendCalls/authAPI'
+import { logout } from '../../../services/backendCallFunction/authAPI'
 import SidebarLink from './SidebarLink';
 import ConfirmationModal from '../../common/ConfirmationModal'
 import Backdrop from '../../common/Backdrop'
@@ -20,13 +20,21 @@ function Sidebar() {
     const [confirmationModal, setConfirmationModal] = useState(null);
 
     // Loading screen
-    if (authLoading || profileLoading) {
+    if (authLoading) {
         return (
             <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
                 <div className="spinner"></div>
             </div>
         )
     }
+    //TODO: need to change this with what we see in YT loading...
+    // if (profileLoading) {
+    //     return (
+    //         <div className="bg-slate-400 text-black top-0 absolute">
+    //             wait!!!
+    //         </div>
+    //     )
+    // }
 
     return (
         <>

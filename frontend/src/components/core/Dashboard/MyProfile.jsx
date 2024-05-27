@@ -38,8 +38,8 @@ function MyProfile() {
                 {/* EDIT */}
                 <div className='md:block hidden'>
                     <IconBtn
-                        onClick={() => navigate("dashboard/settings")}
-                        text={"Edit"}
+                        onClick={() => navigate("/dashboard/settings")}
+                        text="Edit"
                     >
                         <RiEditBoxLine />
                     </IconBtn>
@@ -53,7 +53,7 @@ function MyProfile() {
 
                     {/* EDIT */}
                     <IconBtn
-                        onClick={() => navigate("dashboard/settings")}
+                        onClick={() => navigate("/dashboard/settings")}
                         text={"Edit"}
                     >
                         <RiEditBoxLine />
@@ -76,38 +76,43 @@ function MyProfile() {
                     <h1 className="text-lg font-semibold text-richblack-5">Personal Details</h1>
                     {/* EDIT */}
                     <IconBtn
-                        onClick={() => navigate("dashboard/settings")}
+                        onClick={() => navigate("/dashboard/settings")}
                         text={"Edit"}
                     >
                         <RiEditBoxLine />
                     </IconBtn>
                 </div>
 
-                <div className="flex max-w-[500px] justify-between ">
-                    <div className="flex flex-col gap-y-5">
+                <div className="grid grid-cols-1 max-w-[500px] gap-y-5">
+                    <div className="grid md:grid-cols-2 grid-cols-1 gap-x-24 gap-y-5">
                         <div>
                             <p className="mb-2 text-lg text-richblack-500">First Name</p>
                             <p className="text-sm font-medium text-richblack-5">{user?.firstName}</p>
                         </div>
                         <div>
-                            <p className="mb-2 text-lg text-richblack-500">Email</p>
-                            <p className="text-sm font-medium text-richblack-5">{user?.email}</p>
-                        </div>
-                        <div>
-                            <p className="mb-2 text-lg text-richblack-500">Gender</p>
-                            <p className="text-sm font-medium text-richblack-5">{user?.additionalDetails?.gender ?? "Add Gender"}</p>
-                        </div>
-                    </div>
-
-                    <div className="flex flex-col gap-y-5">
-                        <div>
                             <p className="mb-2 text-lg text-richblack-500">Last Name</p>
                             <p className="text-sm font-medium text-richblack-5">{user?.lastName}</p>
+                        </div>
+
+                    </div>
+
+                    <div className="grid md:grid-cols-2 grid-cols-1 gap-x-24 gap-y-5">
+                        <div>
+                            <p className="mb-2 text-lg text-richblack-500">Email</p>
+                            <p className="text-sm font-medium text-richblack-5">{user?.email}</p>
                         </div>
                         <div>
                             <p className="mb-2 text-lg text-richblack-500">Phone No.</p>
                             <p className="text-sm font-medium text-richblack-5">{user?.additionalDetails?.contactNumber ?? "Add Contact Number"}</p>
                         </div>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 grid-cols-1 gap-x-24 gap-y-5 ">
+                        <div>
+                            <p className="mb-2 text-lg text-richblack-500">Gender</p>
+                            <p className="text-sm font-medium text-richblack-5">{user?.additionalDetails?.gender ?? "Add Gender"}</p>
+                        </div>
+
                         <div>
                             <p className="mb-2 text-lg text-richblack-500">Date of Birth</p>
                             <p className="text-sm font-medium text-richblack-5">

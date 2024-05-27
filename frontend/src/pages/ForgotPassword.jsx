@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { BiArrowBack } from "react-icons/bi"
-import { getPasswordResetToken } from '../services/backendCalls/authAPI';
+import { getPasswordResetToken } from '../services/backendCallFunction/authAPI';
 
 function ForgotPassword() {
     // Loading State

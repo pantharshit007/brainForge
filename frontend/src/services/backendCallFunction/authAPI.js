@@ -1,7 +1,7 @@
 import { toast } from "react-hot-toast";
 
 import { endpoints } from "../apis";
-import { errorToastPosition, toastPostion } from "../../utils/constant";
+import { errorToastPosition, toastPosition } from "../../utils/constant";
 import { setLoading, setToken } from "../../reducer/slices/authSlice";
 import { apiConnector } from "../apiConnector";
 import { setUser } from "../../reducer/slices/profileSlice";
@@ -21,7 +21,7 @@ export function sendOtp(email, navigate) {
     return async (dispatch) => {
 
         // SETTING LOADING STATE
-        const toastId = toast.loading('Loading..', toastPostion);
+        const toastId = toast.loading('Loading..', toastPosition);
         dispatch(setLoading(true));
 
         try {
@@ -33,7 +33,7 @@ export function sendOtp(email, navigate) {
                 throw new Error(response.data.message)
             }
 
-            toast.success('OTP Sent!', toastPostion)
+            toast.success('OTP Sent!', toastPosition)
             navigate('/verify-email')
 
         } catch (err) {
@@ -61,7 +61,7 @@ export function signUp(
     return async (dispatch) => {
 
         // SETTING LOADING STATE
-        const toastId = toast.loading("loading..", toastPostion)
+        const toastId = toast.loading("loading..", toastPosition)
         dispatch(setLoading(true));
 
         try {
@@ -82,7 +82,7 @@ export function signUp(
                 throw new Error(response.data.message)
             }
 
-            toast.success('Signup success!', toastPostion)
+            toast.success('Signup success!', toastPosition)
             navigate('/login')    // navigate to login page
 
         } catch (err) {
@@ -103,7 +103,7 @@ export function login(email, password, navigate) {
     return async (dispatch) => {
 
         // SETTING LOADING STATE
-        const toastId = toast.loading('Loading..', toastPostion);
+        const toastId = toast.loading('Loading..', toastPosition);
         dispatch(setLoading(true));
 
         try {
@@ -115,7 +115,7 @@ export function login(email, password, navigate) {
                 throw new Error(response.data.message);
             }
 
-            toast.success('Login Success!', toastPostion);
+            toast.success('Login Success!', toastPosition);
 
             // UPDATE JWT TOKEN IN LOCAL STORAGE VIA STORE
             dispatch(setToken(response.data.token));
@@ -156,7 +156,7 @@ export function logout(navigate) {
         localStorage.removeItem('token')
         localStorage.removeItem('user')
 
-        toast.success('Logout Success!', toastPostion)
+        toast.success('Logout Success!', toastPosition)
         navigate('/login')
     }
 }
@@ -167,7 +167,7 @@ export function getPasswordResetToken(email, setEmailSent) {
     return async (dispatch) => {
 
         // SETTING LOADING STATE
-        const toastId = toast.loading('Loading..', toastPostion);
+        const toastId = toast.loading('Loading..', toastPosition);
         dispatch(setLoading(true));
 
         try {
@@ -179,7 +179,7 @@ export function getPasswordResetToken(email, setEmailSent) {
                 throw new Error(response?.data?.message);
             }
 
-            toast.success('Email Sent. Check Inbox!', toastPostion)
+            toast.success('Email Sent. Check Inbox!', toastPosition)
             setEmailSent(true);
 
         } catch (err) {
@@ -199,7 +199,7 @@ export function resetPassword(password, confirmPassword, token, setResetComplete
     return async (dispatch) => {
 
         // SETTING LOADING STATE
-        const toastId = toast.loading('Loading..', toastPostion);
+        const toastId = toast.loading('Loading..', toastPosition);
         dispatch(setLoading(true));
 
         try {
@@ -229,7 +229,7 @@ export function forgotPassword(email, setEmailSent) {
     return async (dispatch) => {
 
         // SETTING LOADING STATE
-        const toastId = toast.loading('Loading..', toastPostion);
+        const toastId = toast.loading('Loading..', toastPosition);
         dispatch(setLoading(true));
 
         try {
@@ -241,7 +241,7 @@ export function forgotPassword(email, setEmailSent) {
                 throw new Error(response.data.message);
             }
 
-            toast.success('Email Sended!', toastPostion)
+            toast.success('Email Sended!', toastPosition)
             setEmailSent(true);
 
         } catch (err) {

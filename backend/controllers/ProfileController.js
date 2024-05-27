@@ -7,14 +7,15 @@ const USER_PFP = process.env.USER_PFP
 
 //update Profile: we aren't creating here because its already created in auth.js/controllers
 async function updateProfile(req, res) {
+
     try {
         //fetch data
-        const { gender, dateOfBirth = "", about = "", contactNumber, } = req.body;
+        const { firstName, lastName, gender, dateOfBirth = "", about = "", contactNumber, } = req.body;
 
         //fetching user Id from the payload send during login
         const userId = req.user.id;
 
-        // TODO: update validation with zod on only mobile if provided
+        // TODO: update validation with zod on only mobile if provided: don't find any use as of now or forgotten.
         // validating the user info 
         // if (!userId || !contactNumber || !gender) {
         //     return res.status(403).json({
@@ -28,26 +29,36 @@ async function updateProfile(req, res) {
         const profileId = userInfo.additionalDetails;
         const profileDetails = await Profile.findById(profileId);
 
-        // Validate gender: Male | Female | Others
-        if (!['Male', 'Female', 'Others'].includes(gender)) {
+        // Validate gender: Male | Female | Others | Prefer not ot say | Transgender
+        if (!["Male", "Female", "Transgender", "Prefer not to say", "Other"].includes(gender)) {
             return res.status(400).json({
                 success: false,
                 message: 'Invalid gender value. Gender must be one of: Male, Female, Others',
             });
         }
 
+        // update user data
+        userInfo.firstName = firstName;
+        userInfo.lastName = lastName;
+
         // update profile data
         profileDetails.gender = gender;
         profileDetails.dateOfBirth = dateOfBirth;
         profileDetails.about = about;
         profileDetails.contactNumber = contactNumber;
+
         //save the update dB changes
+        userInfo.save();
         profileDetails.save();
+
+        // updated user data
+        const updatedUserInfo = await User.findById(userId)
+            .populate("additionalDetails").exec()
 
         return res.status(200).json({
             success: true,
             message: 'Profile updated successfully',
-            data: profileDetails    //ToRemove later
+            data: updatedUserInfo    //ToRemove later: Not possible we are using this
         })
 
     } catch (err) {
@@ -125,21 +136,34 @@ async function updateProfilePicture(req, res) {
     try {
         // receive image from body-file
         const displayPicture = req.files.displayPicture
-        const userId = req.user.id
 
-        // validate picture to be jpg, jpeg, png
-        const supportingType = ['jpg', 'png', 'jpeg'];
-        const fileType = displayPicture.name.split('.')[1].toLowerCase();
-
-        if (!supportingType.includes(fileType)) {
+        if (!displayPicture) {
+            console.log('> No display picture found')
             return res.status(404).json({
                 success: false,
-                message: 'File type not supported.'
+                message: 'No display picture found'
             })
         }
+        const userId = req.user.id
+
+        const userInfo = await User.findById(userId)
+        const email = userInfo.email
+        const username = email.split('@')[0]
+        const PFP_LOCATION = USER_PFP + '/' + username
+
+        // validate picture to be jpg, jpeg, png: NOT NEEDED NOW SINCE WE ARE CHECKING FROM FE
+        //// const supportingType = ['jpg', 'png', 'jpeg', 'gif'];
+        //// const fileType = displayPicture.name.split('.')[1].toLowerCase();
+        //
+        //// if (!supportingType.includes(fileType)) {
+        ////     return res.status(404).json({
+        ////         success: false,
+        ////         message: 'File type not supported.'
+        ////     })
+        //// }
 
         // upload image to cloudinary 
-        const uploadedImg = await uploadImageToCloudinary(displayPicture, USER_PFP, 1000, 1000)
+        const uploadedImg = await uploadImageToCloudinary(displayPicture, PFP_LOCATION, 1000, 1000)
 
         // update User schema with new Img url
         const updateProfileImg = await User.findByIdAndUpdate(
@@ -152,17 +176,20 @@ async function updateProfilePicture(req, res) {
         return res.status(200).json({
             success: true,
             message: 'Profile Picture updated!',
-            data: updateProfileImg  //ToRemove later
+            data: updateProfileImg  //TODO: ToRemove later
         })
 
     } catch (err) {
-        console.log('> Failer to upload PFP: ' + err.message)
+        console.log('> Failed to upload PFP: ' + err.message)
         return res.status(500).json({
             success: false,
-            message: 'Failer to upload PFP: ' + err.message,
+            message: 'Failed to upload PFP: ' + err.message,
         })
     }
 }
+
+// * getEnrolledCourses
+// * instructorDashboard
 
 module.exports = {
     updateProfile,

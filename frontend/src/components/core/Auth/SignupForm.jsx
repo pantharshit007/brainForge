@@ -4,9 +4,9 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
-import { ACCOUNT_TYPE, toastPostion } from '../../../utils/constant'
+import { ACCOUNT_TYPE, toastPosition } from '../../../utils/constant'
 import { setSignupData } from '../../../reducer/slices/authSlice'
-import { sendOtp } from '../../../services/backendCalls/authAPI'
+import { sendOtp } from '../../../services/backendCallFunction/authAPI'
 import Tab from '../../common/Tab'
 
 function SignupForm() {
@@ -46,7 +46,7 @@ function SignupForm() {
         e.preventDefault()
 
         if (password !== confirmPassword) {
-            toast.error("Password Do Not Match", toastPostion)
+            toast.error("Password Do Not Match", toastPosition)
             return
         }
 

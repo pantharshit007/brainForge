@@ -4,7 +4,7 @@ import { toast } from "react-hot-toast";
 
 import { apiConnector } from '../../services/apiConnector';
 import { contactusEndpoint } from '../../services/apis';
-import { errorToastPosition, toastPostion } from '../../utils/constant';
+import { errorToastPosition, toastPosition } from '../../utils/constant';
 import CountryCode from '../../data/countrycode.json'
 
 function ContactUsForm() {
@@ -23,7 +23,7 @@ function ContactUsForm() {
             setLoading(true);
             const response = await apiConnector("POST", contactusEndpoint.CONTACT_US_API, data);
             // console.log("response", response);
-            toast.success('Message sent successfully!', toastPostion)
+            toast.success('Message sent successfully!', toastPosition)
 
         } catch (err) {
             console.log("> Error in Contactus:", err.message);

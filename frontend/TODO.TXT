@@ -8,8 +8,12 @@
   // TODO: if token is expired and not present in LocalStorage, then remove user data from local storage. 
   // TODO: Mobile view of NavBar
   // TODO: try Implementing tilting effect on images similar to hkirat website.
-  //⚠️ TODO: update all backend error responses with throw new error.
   // TODO: Update the Error page.
-  // TODO: create a horizontal Navbar for Mobile View of Dashboard.
+  // TODO: Check why are we using dispatch in SideBarLink
+  // TODO: set the condition in auth slice so whenever the token expires, it removes token from local/session storage, we can use the backend error message or status like 408 only then it will call logout function.
+  // TODO: create outer ring on profile pic in my profile pfp.
+  // TODO: for myprofile and setting part add a react router navigation link which directly navigate to the specific section of the setting page [profileEdit -> Edit profile section]. Do similar if needed anywhere also. 
 
   // BACKEND TODO: Check if cookies are even working on the backend side and twik with their expiry time.
+  //⚠️ TODO: update all backend error responses with throw new error.
+  //❗ TODO: when a user deleted his account delete related data from cloudinary also and when a user updates his dp delete previous data from cloudinary.

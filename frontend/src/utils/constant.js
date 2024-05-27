@@ -4,7 +4,7 @@ export const ACCOUNT_TYPE = {
     ADMIN: "Admin",
 }
 
-export const toastPostion = { position: "top-right" }
+export const toastPosition = { position: "top-right" }
 
 export const errorToastPosition = {
     position: "bottom-right", style: {

@@ -12,7 +12,6 @@ router.put('/updateProfile', auth, updateProfile)
 router.delete('/deleteProfile', auth, deleteProfile)
 // fetch all user profle details router
 router.get('/getUserDetails', auth, getAllUsersDetail)
-
 // update display picture router
 router.put('/updateDisplayPicture', auth, updateProfilePicture)
 // Get Enrolled Courses router

@@ -15,6 +15,7 @@ import Error from './pages/Error'
 import OpenRoute from './components/core/Auth/OpenRoute'
 import PrivateRoute from './components/core/Auth/PrivateRoute'
 import MyProfile from './components/core/Dashboard/MyProfile'
+import Setting from './components/core/Dashboard/Settings/Setting'
 
 function App() {
   // TODO: Implement an upword arrow which bring user to top of the page.
@@ -58,13 +59,14 @@ function App() {
               </OpenRoute>
             } />
 
-          <Route path="dashboard"
+          <Route
             element={
               <PrivateRoute>
                 <Dashboard />
               </PrivateRoute>
             } >
-            <Route path="my-profile" element={<MyProfile />} />
+            <Route path="dashboard/my-profile" element={<MyProfile />} />
+            <Route path="dashboard/settings" element={<Setting />} />
           </Route>
 
           <Route path="update-password/:id" element={<UpdatePassword />} />

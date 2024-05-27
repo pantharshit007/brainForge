@@ -23,7 +23,14 @@ async function auth(req, res, next) {
 
         } catch (err) {
             console.log("> Token is invalid: " + err.message);
-            return res.status(401).json({
+            if (err.message === 'jwt expired') {
+                return res.status(408).json({
+                    success: false,
+                    message: "Re-Login: " + err.message
+                })
+            }
+
+            return res.status(408).json({
                 success: false,
                 message: "Token is invalid: " + err.message
             })

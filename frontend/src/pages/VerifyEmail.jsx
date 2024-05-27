@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
 import { RxCountdownTimer } from "react-icons/rx";
 
-import { sendOtp, signUp } from '../services/backendCalls/authAPI';
+import { sendOtp, signUp } from '../services/backendCallFunction/authAPI';
 import OTPImage from '../assets/Images/otp.svg';
 
 function VerifyEmail() {

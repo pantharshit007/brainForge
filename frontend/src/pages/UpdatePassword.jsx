@@ -4,9 +4,9 @@ import { Link, useLocation } from 'react-router-dom';
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
 import { BiArrowBack } from "react-icons/bi"
 
-import { resetPassword } from '../services/backendCalls/authAPI';
+import { resetPassword } from '../services/backendCallFunction/authAPI';
 import toast from 'react-hot-toast';
-import { toastPostion } from '../utils/constant';
+import { toastPosition } from '../utils/constant';
 
 function UpdatePassword() {
     const { loading } = useSelector(state => state.auth)
@@ -35,7 +35,7 @@ function UpdatePassword() {
             // calling reset password backend call.
             dispatch(resetPassword(password, confirmPassword, token, setResetComplete))
         } else {
-            toast.error("Password Doesn't Match", toastPostion)
+            toast.error("Password Doesn't Match", toastPosition)
         }
     }
 

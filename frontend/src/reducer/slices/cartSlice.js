@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { toast } from 'react-hot-toast'
-import { toastPostion } from "../../utils/constant"
+import { toastPosition } from "../../utils/constant"
 
 const localTotalItems = localStorage.getItem('totalItems')  // fetching totalItems from localStorage
 const localCart = localStorage.getItem('cart')  // fetching Itmes in Cart from LS
 const localTotal = localStorage.getItem('total')    // fetching total Price from LS
 
-// const toastPostion = { position: "top-right" }
+// const toastPosition = { position: "top-right" }
 
 const initialState = {
     totalItems: localTotalItems ? JSON.parse(localTotalItems) : 0,
@@ -26,7 +26,7 @@ const cartSlice = createSlice({
 
             // check if already in cart
             if (isAlreadyInCart >= 0) {
-                toast.error("Course already in cart", toastPostion);
+                toast.error("Course already in cart", toastPosition);
                 return
             }
 
@@ -41,7 +41,7 @@ const cartSlice = createSlice({
             localStorage.setItem('totalItems', JSON.stringify(state.totalItems));
             localStorage.setItem('total', JSON.stringify(state.total));
 
-            toast.success('Course added to cart', toastPostion);
+            toast.success('Course added to cart', toastPosition);
 
         },
 
@@ -62,7 +62,7 @@ const cartSlice = createSlice({
                 localStorage.setItem("totalItems", JSON.stringify(state.totalItems));
                 localStorage.setItem("total", JSON.stringify(state.total));
 
-                toast.success("Course Removed from cart", toastPostion);
+                toast.success("Course Removed from cart", toastPosition);
             }
         },
 

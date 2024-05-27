@@ -24,6 +24,18 @@ async function createCourse(req, res) {
         const tag = JSON.parse(_tag)
         const instructions = JSON.parse(_instructions)
 
+        // check if the course is new: No duplicates are allowed
+        const isNewCourse = await Course.findOne({ courseName: courseName })
+        if (isNewCourse) {
+            return res.status(406).json({
+                success: false,
+                message: 'Course already exists',
+            })
+        }
+
+        // updating the upload location
+        const THUMBNAIL_LOCATION = MEDIA_FOLDER + '/' + courseName
+
         // validate the input data
         if (
             !courseName ||
@@ -49,7 +61,7 @@ async function createCourse(req, res) {
         //fetching Instructo's data: userId is the same as instructorID since user is Instructore here
         const instructorDetails = await User.findById(userId);
         // console.log('Instructor Details: ' + instructorDetails);
-        //TODO: to check if both id's are same or not 
+        //TODO: to check if both id's are same or not : no need since already authenticated via middleware
 
         //though it's stupid to check since the ID is already authenticated before comming here.
         if (!instructorDetails) {
@@ -69,7 +81,7 @@ async function createCourse(req, res) {
         }
 
         //upload thumbnail Image to cloudinary
-        const thumbnailImage = await uploadImageToCloudinary(thumbnail, MEDIA_FOLDER);
+        const thumbnailImage = await uploadImageToCloudinary(thumbnail, THUMBNAIL_LOCATION);
 
         //creating entry for a new Course in dB
         const newCourse = await Course.create({
@@ -106,7 +118,7 @@ async function createCourse(req, res) {
         return res.status(200).json({
             success: true,
             message: 'New Course created successfully',
-            data: newCourse //ToRemove later
+            data: newCourse //TODO: ToRemove later
         });
 
 

@@ -3,18 +3,27 @@ import { useSelector } from "react-redux"
 import { Outlet } from 'react-router-dom'
 
 import Sidebar from '../components/core/Dashboard/Sidebar'
+import toast from 'react-hot-toast'
 
 function Dashboard() {
     const { loading: authLoading } = useSelector(state => state.auth)
     const { loading: profileLoading } = useSelector(state => state.profile)
 
-    if (authLoading || profileLoading) {
+    if (authLoading) {
         return (
             <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
                 <div className="spinner"></div>
             </div>
         )
     }
+    //TODO: will change this will what we saw in YT loading...
+    // if (profileLoading) {
+    //     return (
+    //         <div className="bg-slate-400 text-black top-0 absolute">
+    //             wait!!!
+    //         </div>
+    //     )
+    // }
 
     return (
         <div className='relative flex min-h-[calc(100vh-3.5rem)]'>
