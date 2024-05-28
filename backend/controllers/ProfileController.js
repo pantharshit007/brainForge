@@ -1,5 +1,6 @@
 const Profile = require("../models/Profile");
 const User = require("../models/User");
+const { deleteFolder } = require("../utils/deleteContent");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
 
 require('dotenv').config();
@@ -88,6 +89,13 @@ async function deleteProfile(req, res) {
         // delete profile
         await Profile.findByIdAndDelete({ _id: userDetails.additionalDetails });
 
+        // removing all the images of Display Picture from cloudinary
+        const email = userDetails.email
+        const username = email.split('@')[0]
+        const PFP_LOCATION = USER_PFP + '/@' + username
+
+        await deleteFolder(PFP_LOCATION)
+
         //TODO: before removing user remove user from all the enrolled Course
         // we can use courseId from user.courses within a for loop to remove user from respective courses.
 
@@ -149,7 +157,7 @@ async function updateProfilePicture(req, res) {
         const userInfo = await User.findById(userId)
         const email = userInfo.email
         const username = email.split('@')[0]
-        const PFP_LOCATION = USER_PFP + '/' + username
+        const PFP_LOCATION = USER_PFP + '/@' + username
 
         // validate picture to be jpg, jpeg, png: NOT NEEDED NOW SINCE WE ARE CHECKING FROM FE
         //// const supportingType = ['jpg', 'png', 'jpeg', 'gif'];
@@ -163,7 +171,8 @@ async function updateProfilePicture(req, res) {
         //// }
 
         // upload image to cloudinary 
-        const uploadedImg = await uploadImageToCloudinary(displayPicture, PFP_LOCATION, 1000, 1000)
+        const tag = ['dp']
+        const uploadedImg = await uploadImageToCloudinary(displayPicture, PFP_LOCATION, 1000, 1000, tag)
 
         // update User schema with new Img url
         const updateProfileImg = await User.findByIdAndUpdate(

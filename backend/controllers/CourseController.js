@@ -33,8 +33,9 @@ async function createCourse(req, res) {
             })
         }
 
-        // updating the upload location
+        // updating the upload location and adding tag
         const THUMBNAIL_LOCATION = MEDIA_FOLDER + '/' + courseName
+        const imageTag = [courseName]
 
         // validate the input data
         if (
@@ -81,7 +82,7 @@ async function createCourse(req, res) {
         }
 
         //upload thumbnail Image to cloudinary
-        const thumbnailImage = await uploadImageToCloudinary(thumbnail, THUMBNAIL_LOCATION);
+        const thumbnailImage = await uploadImageToCloudinary(thumbnail, THUMBNAIL_LOCATION, null, null, imageTag);
 
         //creating entry for a new Course in dB
         const newCourse = await Course.create({

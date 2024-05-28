@@ -1,6 +1,7 @@
 const SubSection = require('../models/SubSection');
 const Section = require('../models/Section');
 const { uploadImageToCloudinary } = require('../utils/imageUploader');
+const Course = require('../models/Course');
 require('dotenv').config();
 const VIDEO_FOLDER = process.env.VIDEO_FOLDER
 
@@ -22,11 +23,21 @@ async function createSubSection(req, res) {
             })
         }
 
-        // updating the video upload path
+        //Finding the courseName
+        const courseName = await Course.findOne({ courseContent: courseName }).populate('courseContent');
+        if (!courseName) {
+            return res.status(404).json({
+                success: false,
+                message: 'Course not found'
+            });
+        }
+
+        // updating the video upload path and tag
         const SUBSECTION_LOCATION = VIDEO_FOLDER + '/' + 'SubSection/' + sectionId
+        const tag = [courseName]
 
         // upload the video on cloudinary.
-        const uploadedVideoDetails = await uploadImageToCloudinary(video, SUBSECTION_LOCATION);
+        const uploadedVideoDetails = await uploadImageToCloudinary(video, SUBSECTION_LOCATION, null, null, tag);
 
         //create a new Sub-Section in dB
         const newSubSection = await SubSection.create({
