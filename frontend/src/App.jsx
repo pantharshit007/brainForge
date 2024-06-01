@@ -1,5 +1,6 @@
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 import Home from './pages/Home'
 import Navbar from './components/common/Navbar'
@@ -14,12 +15,17 @@ import Dashboard from './pages/Dashboard'
 import Error from './pages/Error'
 import OpenRoute from './components/core/Auth/OpenRoute'
 import PrivateRoute from './components/core/Auth/PrivateRoute'
-import MyProfile from './components/core/Dashboard/MyProfile'
+import MyProfile from './components/core/Dashboard/MyProfile/MyProfile'
 import Setting from './components/core/Dashboard/Settings/Setting'
+import EnrolledCourses from './components/core/Dashboard/EnrolledCourses/EnrolledCourses'
+import Cart from './components/core/Dashboard/Cart/Cart'
+import { ACCOUNT_TYPE } from './utils/constant'
 
 function App() {
   // TODO: Implement an upword arrow which bring user to top of the page.
   // TODO: Navbar for Mobile
+
+  const { user } = useSelector(state => state.profile);
   return (
     <>
       <div className='w-screen min-h-screen flex flex-col font-inter bg-bgBlue '>
@@ -67,6 +73,22 @@ function App() {
             } >
             <Route path="dashboard/my-profile" element={<MyProfile />} />
             <Route path="dashboard/settings" element={<Setting />} />
+
+            {/* STUDENT ROUTES */}
+            {user?.accountType === ACCOUNT_TYPE.STUDENT && (
+              <>
+                <Route path="dashboard/enrolled-courses" element={<EnrolledCourses />} />
+                <Route path="dashboard/cart" element={<Cart />} />
+              </>
+            )}
+
+            {/* INSTRUCTOR ROUTES */}
+            {user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
+              <>
+
+              </>
+            )}
+
           </Route>
 
           <Route path="update-password/:id" element={<UpdatePassword />} />

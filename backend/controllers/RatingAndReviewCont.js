@@ -17,7 +17,7 @@ async function createRating(req, res) {
             })
         }
 
-        // check user Enrollment in the Course: TODO: can also use $elemMatch
+        // check user Enrollment in the Course: can also use $elemMatch
         const courseDetails = await Course.findOne(
             {
                 _id: courseId,

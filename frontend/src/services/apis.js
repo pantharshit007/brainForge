@@ -18,6 +18,13 @@ export const endpoints = {
     RESETPASSWORD_API: BASE_URL + "/auth/reset-password",
 }
 
+// PROFILE ENDPOINTS
+export const profileEndPoints = {
+    GET_USER_DETAILS_API: BASE_URL + "/profile/getUserDetails",
+    GET_USER_ENROLLED_COURSES_API: BASE_URL + "/profile/getEnrolledCourses",
+    GET_INSTRUCTOR_DATA_API: BASE_URL + "/profile/instructorDashboard",
+}
+
 // CATEGORIES API
 export const categories = {
     CATEGORIES_API: BASE_URL + '/course/getAllCatogories'

@@ -26,7 +26,7 @@ function ProfileDropDown() {
                 <div className="flex items-center gap-x-1">
                     <img src={user?.image}
                         alt={`profile-${user?.firstName}`}
-                        className='aspect-square w-[30px] rounded-full object-cover'
+                        className='aspect-square w-[30px] rounded-full object-cover ring-1 ring-indigo-600'
                     />
                     <AiOutlineCaretDown className={`text-sm text-richblack-100 transition-transform duration-200 ${open ? '-rotate-180' : 'rotate-0'}`} />
                 </div>

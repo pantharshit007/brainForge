@@ -5,6 +5,7 @@ import { apiConnector } from "../apiConnector";
 import { errorToastPosition, toastPosition } from "../../utils/constant";
 import { setUser } from "../../reducer/slices/profileSlice";
 import { logout } from "./authAPI";
+import { loginTimeOut } from "./globalAPI";
 
 const {
     UPDATE_DISPLAY_PICTURE_API,
@@ -50,7 +51,7 @@ export function updateDisplayPicture(token, formData) {
 }
 
 // UPDATE PROFILE INFO BACKEND CALL
-export function updateProfileInformation(token, formData, setLoading) {
+export function updateProfileInformation(token, formData, setLoading, navigate) {
     return async (dispatch) => {
 
         // SETTING LOADING STATE
@@ -77,6 +78,11 @@ export function updateProfileInformation(token, formData, setLoading) {
         } catch (err) {
             console.log('> UPDATE PROFILE API FAILURE:', err?.response?.data?.message);
             toast.error(err?.response?.data?.message || 'Failed to update Profile', errorToastPosition);
+
+            // IF TOKEN EXPIRES
+            if (err?.response?.status === 408) {
+                dispatch(loginTimeOut(err?.response?.data?.message, navigate))
+            }
 
         } finally {
             setLoading(false);

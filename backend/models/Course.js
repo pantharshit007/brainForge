@@ -54,6 +54,12 @@ const courseSchema = new Schema({
         type: String,
         enum: ["Draft", "Published", "Archived"],
         //? TODO: default:'Draft' how about this and Archived addition?
+    },
+    createdAt: {
+        type: Date,
+    },
+    updatedAt: {
+        type: Date,
     }
 
 

@@ -47,15 +47,15 @@ const cartSlice = createSlice({
 
         //remove from cart
         removeFromCart: (state, action) => {
-            courseId = action.payload;
-            const coursePosition = state.cart.findIndex(item => item._id === courseId);
+            const courseId = action.payload;
+            const courseIndex = state.cart.findIndex(item => item._id === courseId);
 
             // check if course is available
-            if (coursePosition >= 0) {
+            if (courseIndex >= 0) {
                 // update cart, total Items and total Price
-                state.cart.splice(coursePosition, 1);  //coursePosition: position in array: 0,1,2,3,..
+                state.cart.splice(courseIndex, 1);  //courseIndex: position in array: 0,1,2,3,..
                 state.totalItems--;
-                state.total -= state.cart[coursePosition].price;
+                state.total -= state.cart[courseIndex].price;
 
                 // update Local Storage
                 localStorage.setItem("cart", JSON.stringify(state.cart));

@@ -10,8 +10,13 @@
 // TODO: try Implementing tilting effect on images similar to hkirat website.
 // TODO: Update the Error page.
 // TODO: Check why are we using dispatch in SideBarLink
-// TODO: set the condition in auth slice so whenever the token expires, it removes token from local/session storage, we can use the backend error message or status like 408 only then it will call logout function.
+// TODO: auto logout when token expires : already written the login need to implement
 // TODO: for myprofile and setting part add a react router navigation link which directly navigate to the specific section of the setting page [profileEdit -> Edit profile section]. Do similar if needed anywhere also.
+// TODO: create a purchase History tab in side Bar
+// TODO: try implementing a 3 option module in Enrolled course which shows [ALL, PENDING, COMPLETED] courses with filter.
+// TODO: add skeleton data in enrolled courses and everywhere we need it.
+// TODO: make the enrolled courses section a grid similar to [https://www.udemy.com/home/my-courses/learning/]
+// TODO: add logic for adding rating in RenderCartCourses
 
 //  TODO BACKEND: Check if cookies are even working on the backend side and twik with their expiry time.
 //? TODO: update all backend error responses with throw new error.
@@ -19,6 +24,7 @@
 // TODO: add a limit on the size of video/picture to be uploaded if not followed give an error.
 //! TODO: add tag to the course->section->sub-section videos so that we can delete once instructor account is deleted with option of deletion given to the instructor.
 //above TODO: it can be done by using courses[] in user's dB (Instructor specific) and finding the courseName then deleting all resourses related to that tag.
+//! TODO: ADDED CUSTOM COURSE IN MAIN ACCOUNT REMOVE IT BEFORE TESTING {PYTHON ONE}
 
 //? <<<<<<< END TODO >>>>>>>> //
 //! TODO: change tag of all the sample ID's data:images/videos: dp/sub-section videos

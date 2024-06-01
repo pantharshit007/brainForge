@@ -112,7 +112,7 @@ function Navbar() {
                             <AiOutlineShoppingCart className="text-2xl text-richblack-100" />
                             {
                                 totalItems > 0 && (
-                                    <span className="absolute -bottom-2 -right-2 grid h-5 w-5 place-items-center overflow-hidden rounded-full bg-richblack-600 text-center text-xs font-bold text-yellow-100">
+                                    <span className="absolute bottom-3 -right-2 grid h-5 w-5 place-items-center overflow-hidden rounded-full bg-indigo-600 text-center text-xs font-extrabold text-richblack-25">
                                         {totalItems}
                                     </span>
                                 )

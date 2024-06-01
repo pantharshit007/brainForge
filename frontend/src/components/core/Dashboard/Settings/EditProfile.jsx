@@ -20,7 +20,7 @@ function EditProfile() {
     const [loading, setLoading] = useState(false);
 
     async function submitHandler(data) {
-        dispatch(updateProfileInformation(token, data, setLoading));
+        dispatch(updateProfileInformation(token, data, setLoading, navigate));
     }
 
     return (

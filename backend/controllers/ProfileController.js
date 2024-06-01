@@ -1,7 +1,10 @@
+const Course = require("../models/Course");
+const CourseProgress = require("../models/CourseProgress");
 const Profile = require("../models/Profile");
 const User = require("../models/User");
 const { deleteFolder } = require("../utils/deleteContent");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
+const { convertSecondsToDuration } = require("../utils/secConverter");
 
 require('dotenv').config();
 const USER_PFP = process.env.USER_PFP
@@ -197,12 +200,182 @@ async function updateProfilePicture(req, res) {
     }
 }
 
-// * getEnrolledCourses
-// * instructorDashboard
+// fetch user enrolled courses: OPTIMISED without timeDuration
+async function getEnrolledCourses(req, res) {
+    try {
+        // fetching user details
+        const userId = req.user.id
+
+        // User->Course->courseContent[section]->subSection
+        const userDetails = await User.findById(userId)
+            .populate({
+                path: "courses",
+                select: "courseName thumbnail courseDescription",   // choose only specific rows
+                populate: {
+                    path: "courseContent",
+                    select: "subSection"    // only require subSection
+                }
+            })
+            .lean();    // return plain JavaScript objects instead of Mongoose document
+
+        if (!userDetails) {
+            return res.status(400).json({
+                success: false,
+                message: 'No User Found',
+            });
+        }
+
+        // calculation progress of course
+        const currentProgress = userDetails.courses.map(async (course) => {
+            const courseProgressCount = await CourseProgress.findOne({
+                courseID: course._id,
+                userId: userId
+            }).select("completedVideos").lean();
+
+            course.courseProgress = courseProgressCount ? courseProgressCount?.completedVideos.length : 0;
+
+            return course
+        })
+
+        userDetails.courses = await Promise.all(currentProgress)
+
+        return res.json({
+            success: true,
+            message: 'Enrolled Courses',
+            data: userDetails.courses
+        })
+
+    } catch (err) {
+        console.log('> Failed to fetch Enrolled Courses:', err)
+        return res.status(500).json({
+            success: false,
+            message: 'Failed fetching Enrolled Courses: ' + err.message,
+        })
+
+    }
+}
+
+// fetch Instructor's Dashboard Data
+async function instructorDashboard(req, res) {
+    try {
+        // user:instructor id
+        const instructorId = req.user.id
+
+        // fetching courses created by the instructor
+        const courseDetails = await Course.find({ instructor: instructorId });
+
+        //fetching course details with total students enrolled and revenue generated
+        const courseData = courseDetails.map((course) => {
+            const totalStudentEnrolled = course.studentEnrolled.length;
+            const totalRevenue = totalStudentEnrolled * course.price
+
+            // create a new object which encompasses all the necessary only fields
+            const courseStats = {
+                _id: course.id,
+                courseName: course.name,
+                courseDescription: course.description,
+                // new properties
+                studentsEnrolled: totalStudentEnrolled,
+                revenueGenerated: totalRevenue,
+            }
+
+            return courseStats;
+        })
+
+        return res.status(200).json({
+            success: true,
+            message: 'Instructor Dashboard Data',
+            courses: courseData
+        })
+
+    } catch (err) {
+        console.log('> Failed to fetch Instructors Dashboard data:', err.data);
+        return res.status(500).json({
+            success: false,
+            message: 'Failed fetching Instructor Data: ' + err.message
+        })
+    }
+}
+
+// optimized fetch user enrolled courses + totalDuration Calculation
+// async function getEnrolledCourses(req, res) {
+//     try {
+//         const userId = req.user.id;
+
+//         // Fetch user courses and course content with necessary fields
+//         let userDetails = await User.findOne({ _id: userId })
+//             .populate({
+//                 path: "courses",
+//                 select: "courseName thumbnail courseDescription",
+//                 populate: {
+//                     path: "courseContent",
+//                     select: "subSection",
+//                     populate: {
+//                         path: "subSection",
+//                         select: "timeDuration"
+//                     }
+//                 }
+//             })
+//             .lean();    // converting to plain js object
+
+//         if (!userDetails) {
+//             return res.status(400).json({
+//                 success: false,
+//                 message: `No user found`
+//             });
+//         }
+
+//         // Calculate total duration and progress for each course
+//         const coursePromises = userDetails.courses.map(async (course) => {
+//             let totalDurationInSeconds = 0;
+//             let subSectionCount = 0;
+
+//             course.courseContent.forEach(section => {
+//                 section.subSection.forEach(subSection => {
+//                     // adding subSection's video duration
+//                     totalDurationInSeconds += parseInt(subSection.timeDuration);
+//                 });
+//                 // adding total subSection count
+//                 subSectionCount += section.subSection.length;
+//             });
+
+//             // converting sec's to min/hr
+//             course.totalDuration = convertSecondsToDuration(totalDurationInSeconds);
+
+//             const courseProgress = await CourseProgress.findOne({
+//                 courseID: course._id,
+//                 userId: userId
+//             }).select("completedVideos").lean();
+
+//             const completedCount = courseProgress ? courseProgress.completedVideos.length : 0;
+//             // adding progressPercentage matric with 2 decimal point
+//             course.progressPercentage = subSectionCount > 0
+//                 ? Math.round((completedCount / subSectionCount) * 10000) / 100
+//                 : 100;
+
+//             return course;
+//         });
+
+//         // promise all to handle multiple asynchronous operations in parallel
+//         userDetails.courses = await Promise.all(coursePromises);
+
+//         return res.status(200).json({
+//             success: true,
+//             data: userDetails.courses
+//         });
+//     } catch (error) {
+//         return res.status(500).json({
+//             success: false,
+//             message: error.message
+//         });
+//     }
+// }
 
 module.exports = {
     updateProfile,
     deleteProfile,
     getAllUsersDetail,
-    updateProfilePicture
+    updateProfilePicture,
+    getEnrolledCourses,
+    instructorDashboard
 }
