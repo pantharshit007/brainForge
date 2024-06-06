@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { getUserEnrolledCourses } from '../../../../services/backendCallFunction/profileAPI'
 import EnrolledCourseTable from './EnrolledCourseTable'
+import Tab from '../../../common/Tab'
+import { COURSE_COMPLETION_STATUS } from '../../../../utils/constant'
 
 function EnrolledCourses() {
     const token = useSelector(state => state.auth.token)
@@ -10,6 +12,7 @@ function EnrolledCourses() {
     const navigate = useNavigate();
 
     const [enrolledCourses, setEnrolledCourses] = useState(null)
+    const [filter, setFilter] = useState(COURSE_COMPLETION_STATUS.ALL)
 
     // calling backend function
     async function getFunction() {
@@ -245,7 +248,8 @@ function EnrolledCourses() {
         //         "updatedAt": "2023-10-14T15:18:30.818Z",
         //         "totalDuration": "1m 12s",
         //         "progressPercentage": 33.33,
-        //         "courseProgress": 4
+        //         "courseProgress": 4,
+        //         "courseStatus": "Pending"
         //     },
         //     {
         //         "_id": "65153490518bb5ec7615b247",
@@ -394,7 +398,8 @@ function EnrolledCourses() {
         //         "updatedAt": "2023-10-22T08:20:13.496Z",
         //         "totalDuration": "54s",
         //         "progressPercentage": 0,
-        //         "courseProgress": 4
+        //         "courseProgress": 4,
+        //         "courseStatus": "Pending"
         //     },
         //     {
         //         "_id": "652a6f14f0823ac900285e52",
@@ -561,7 +566,8 @@ function EnrolledCourses() {
         //         "updatedAt": "2023-10-15T08:04:53.007Z",
         //         "totalDuration": "48s",
         //         "progressPercentage": 0,
-        //         "courseProgress": 4
+        //         "courseProgress": 4,
+        //         "courseStatus": "Completed"
         //     },
         //     {
         //         "_id": "653cf307cc8880682f939b23",
@@ -672,7 +678,8 @@ function EnrolledCourses() {
         //         "updatedAt": "2023-11-12T02:42:10.586Z",
         //         "totalDuration": "30s",
         //         "progressPercentage": 0,
-        //         "courseProgress": 4
+        //         "courseProgress": 4,
+        //         "courseStatus": "Completed"
         //     },
         //     {
         //         "_id": "652a6f14f0823ac900285e52",
@@ -839,7 +846,8 @@ function EnrolledCourses() {
         //         "updatedAt": "2023-10-15T08:04:53.007Z",
         //         "totalDuration": "48s",
         //         "progressPercentage": 0,
-        //         "courseProgress": 4
+        //         "courseProgress": 4,
+        //         "courseStatus": "Pending"
         //     },
         //     {
         //         "_id": "653cf307cc8880682f939b23",
@@ -950,7 +958,8 @@ function EnrolledCourses() {
         //         "updatedAt": "2023-11-12T02:42:10.586Z",
         //         "totalDuration": "30s",
         //         "progressPercentage": 0,
-        //         "courseProgress": 4
+        //         "courseProgress": 4,
+        //         "courseStatus": "Completed"
         //     }
         // ]
         setEnrolledCourses(res)
@@ -959,6 +968,35 @@ function EnrolledCourses() {
     useEffect(() => {
         getFunction()
     }, [])
+
+    // Filter function
+    const filterCourses = (courses, filter) => {
+        if (filter === COURSE_COMPLETION_STATUS.ALL) {
+            return courses;
+        }
+        return courses.filter(course => course.courseStatus === filter);
+    };
+
+    // Apply filter to enrolledCourses
+    const filteredCourses = enrolledCourses ? filterCourses(enrolledCourses, filter) : [];
+
+    const tabData = [
+        {
+            id: 1,
+            tabName: "All",
+            type: COURSE_COMPLETION_STATUS.ALL,
+        },
+        {
+            id: 2,
+            tabName: "Pending",
+            type: COURSE_COMPLETION_STATUS.PENDING,
+        },
+        {
+            id: 3,
+            tabName: "Completed",
+            type: COURSE_COMPLETION_STATUS.COMPLETED,
+        },
+    ]
 
     return (
         <>
@@ -983,10 +1021,13 @@ function EnrolledCourses() {
                         // ENROLLED COURSES
                         : (
                             <div className="my-8 text-richblack-5">
+                                {/* TAB SECTION TO FILTER COURSE BASED ON PROGRESS */}
+                                <Tab tabData={tabData} field={filter} setField={setFilter} />
+
                                 {/* COURSE CARDS */}
                                 <div className='grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 md:px-0 sm:px-20 px-10 gap-x-4 gap-y-7 '>
                                     {
-                                        enrolledCourses.map((course, index) => {
+                                        filteredCourses.map((course, index) => {
                                             return (
                                                 <EnrolledCourseTable course={course} index={index} key={index} />
                                             )

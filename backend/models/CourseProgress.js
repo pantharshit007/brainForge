@@ -14,7 +14,7 @@ const courseProgressSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "SubSection"
     }],
-    status: {
+    courseStatus: {
         type: String,
         enum: ['Pending', 'Completed'],
         default: 'Pending',

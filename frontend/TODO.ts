@@ -19,7 +19,9 @@
 ///// TODO: add rating in grid cards in EnrolledCourseTable
 ///// TODO: hide menu Bar in my-profile
 // TODO: create a separate API point for category from Navbar: CATEGORY_API
+// TODO: ADD GOOGLE AUTHENTICATION FEATURE in signupForm
 
+//? <<<<<<< BACKEND TODO >>>>>>>> //
 //  TODO BACKEND: Check if cookies are even working on the backend side and twik with their expiry time.
 //? TODO: update all backend error responses with throw new error.
 /////! TODO: when a user deleted his account delete related data from cloudinary also and when a user updates his dp delete previous data from cloudinary.
@@ -30,3 +32,4 @@
 
 //? <<<<<<< END TODO >>>>>>>> //
 //! TODO: change tag of all the sample ID's data:images/videos: dp/sub-section videos
+//! TODO: remove testData from enrolledCourses

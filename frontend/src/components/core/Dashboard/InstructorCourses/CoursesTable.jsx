@@ -89,7 +89,6 @@ function CoursesTable({ courses, setCourses }) {
                             {/* 1st COLUMN */}
                             <Td colSpan={1} className="flex flex-1 md:flex-row flex-col gap-x-4 p-3">
                                 {/* IMAGE - THUMBNAIL */}
-                                {/* CHANGE IMAGE SIZE IN SMALLER VERSIONS */}
                                 <img
                                     src={course?.thumbnail}
                                     alt={course?.courseName}

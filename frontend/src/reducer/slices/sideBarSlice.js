@@ -11,7 +11,6 @@ const sideBarSlice = createSlice({
     reducers: {
         // setting the state of sidebar: open/close
         setOpenSidebar(state, value) {
-            console.log("sidebar changed:", value.payload);
             state.openSidebar = value.payload;
         },
 

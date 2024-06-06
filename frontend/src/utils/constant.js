@@ -9,6 +9,12 @@ export const COURSE_STATUS = {
     PUBLISHED: "Published",
 }
 
+export const COURSE_COMPLETION_STATUS = {
+    ALL: "All",
+    PENDING: "Pending",
+    COMPLETED: "Completed",
+}
+
 export const toastPosition = { position: "top-right" }
 
 export const errorToastPosition = {

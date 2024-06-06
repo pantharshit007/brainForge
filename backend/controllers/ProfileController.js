@@ -230,7 +230,7 @@ async function getEnrolledCourses(req, res) {
             const courseProgressCount = await CourseProgress.findOne({
                 courseID: course._id,
                 userId: userId
-            }).select("completedVideos").lean();
+            }).select("completedVideos courseStatus").lean();
 
             course.courseProgress = courseProgressCount ? courseProgressCount?.completedVideos.length : 0;
 
