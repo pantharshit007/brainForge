@@ -18,7 +18,7 @@ function SidebarLink({ link, iconName }) {
         <NavLink
             to={link.path}
             // onClick={console.log(link.path)}
-            className={`relative px-8 py-2 text-sm font-medium transition-all duration-200 
+            className={`relative px-8 py-2 text-sm font-medium transition-all duration-200 whitespace-nowrap
             ${matchRoute(link.path) ? 'bg-indigo-800/40 text-richblack-25' : 'bg-opacity-0 text-richblack-300'}`}
         >
             {/* HIGHLIGHT BAR */}

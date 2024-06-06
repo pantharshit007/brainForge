@@ -5,7 +5,15 @@ const router = express.Router()
 const { auth, isInstructor, isAdmin, isStudent } = require('../middleware/authMiddleware');
 
 // Cousrse controller
-const { createCourse, getAllCourses, getCourseDetails, getFullCourseDetails } = require('../controllers/CourseController');
+const {
+    createCourse,
+    getAllCourses,
+    getCourseDetails,
+    getFullCourseDetails,
+    getInstructorCourses,
+    updateCourse,
+    deleteCourse
+} = require('../controllers/CourseController');
 
 // Section controller
 const { createSection, updateSection, deleteSection } = require('../controllers/SectionContoller');
@@ -31,6 +39,12 @@ router.get('/getAllCourses', getAllCourses)     //TODO: add auth before deploy
 router.get('/getCourseDetails', getCourseDetails)   //TODO: add auth before deploy
 // get Full Course details (user specific) 
 router.get('/getFullCourseDetails', auth, getFullCourseDetails)
+// get all courses router (Instructor specific)
+router.get('/getInstructorCourses', auth, isInstructor, getInstructorCourses)
+// update Course router: INSTRUCTOR
+router.put('/updateCourse', auth, isInstructor, updateCourse)
+// delete course router: INSTRUCTOR
+router.delete('/deleteCourse', auth, isInstructor, deleteCourse)
 
 // -------- Section Routes -------- //
 
@@ -55,9 +69,9 @@ router.delete('/deleteSubSection', auth, isInstructor, deleteSubSection)
 // create category router: ADMIN
 router.post('/createCategory', auth, isAdmin, createCategory)
 // fetch all category router: 
-router.get('/getAllCatogories', getAllCategorys)    //TODO: add auth before deploy
+router.get('/getAllCatogories', getAllCategorys)    //TODO: add auth:isAdmin before deploy
 // fetch category based courses router
-router.get('/getCategoryPageDetails', categoryPageDetails)  //TODO: add auth before deploy
+router.get('/getCategoryPageDetails', categoryPageDetails)  //TODO: add auth:isAdmin before deploy
 
 // -------- Rating and Review Routes -------- //
 

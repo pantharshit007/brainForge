@@ -25,20 +25,39 @@ export const profileEndPoints = {
     GET_INSTRUCTOR_DATA_API: BASE_URL + "/profile/instructorDashboard",
 }
 
-// CATEGORIES API
+// CATEGORIES ENDPOINTS
 export const categories = {
     CATEGORIES_API: BASE_URL + '/course/getAllCatogories'
 }
 
-// CONTACT-US API
+// CONTACT-US ENDPOINTS
 export const contactusEndpoint = {
     CONTACT_US_API: BASE_URL + "/contact/contactUs",
 }
 
-// SETTINGS API
+// SETTINGS ENDPOINTS
 export const settingsEndpoint = {
     UPDATE_DISPLAY_PICTURE_API: BASE_URL + "/profile/updateDisplayPicture",
     UPDATE_PROFILE_API: BASE_URL + "/profile/updateProfile",
     CHANGE_PASSWORD_API: BASE_URL + "/auth/changepassword",
     DELETE_PROFILE_API: BASE_URL + "/profile/deleteProfile",
+}
+
+// COURSE ENDPOINTS
+export const courseEndpoint = {
+    CREATE_COURSE_API: BASE_URL + "/course/createCourse",
+    GET_ALL_COURSE_API: BASE_URL + "/course/getAllCourses",
+    COURSE_DETAILS_API: BASE_URL + "/course/getCourseDetails",
+    GET_FULL_COURSE_DETAILS_AUTHENTICATED: BASE_URL + "/course/getFullCourseDetails",
+    GET_ALL_INSTRUCTOR_COURSES_API: BASE_URL + "/course/getInstructorCourses",
+    UPDATE_COURSE_API: BASE_URL + "/course/updateCourse",
+    DELETE_COURSE_API: BASE_URL + "/course/deleteCourse",
+    //? TODO: ADD SECTION
+    //? TODO: ADD SUB-SECTION
+    //? TODO: UPDATE SECTION
+    //? TODO: UPDATE SUB-SECTION
+    //? TODO: DELETE SECTION
+    //? TODO: DELETE SUB-SECTION
+    //? TODO: LECTURE COMPLETION
+    //? TODO: CREATE RATING
 }

@@ -188,3 +188,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     height: 24px;
     top: -1px;
 }
+
+/* Side bar CSS */
+sidebar {
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+}

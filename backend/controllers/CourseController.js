@@ -1,9 +1,12 @@
 const Course = require("../models/Course");
 const User = require("../models/User");
 const Category = require("../models/Category");
+const CourseProgress = require("../models/CourseProgress");
+const Section = require("../models/Section");
+const SubSection = require("../models/SubSection");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
 const { convertSecondsToDuration } = require("../utils/secConverter");
-const CourseProgress = require("../models/CourseProgress");
+
 require('dotenv').config();
 const MEDIA_FOLDER = process.env.MEDIA_FOLDER
 
@@ -332,9 +335,181 @@ async function getFullCourseDetails(req, res) {
     }
 }
 
+// fetch courses under a specific Instructor
+async function getInstructorCourses(req, res) {
+    try {
+        //fetch instructor id 
+        const instructorId = req.user.id;
+
+        //find all the courses created by the instructor in latest to oldest order
+        const instructorCourses = await Course.find({ instructor: instructorId }).sort({ createdAt: -1 });
+
+        //return res
+        res.status(200).json({
+            success: true,
+            message: 'Instructor Created Courses.',
+            data: instructorCourses
+        })
+
+    } catch (err) {
+        console.log('> Failed to fetch Instructor Courses: ' + err.message);
+        res.status(500).json({
+            success: false,
+            message: 'Course Fetching Failed:' + err.message
+        })
+
+    }
+}
+
+// update course [edit]
+async function updateCourse(req, res) {
+    try {
+        // fetching course id
+        const { courseId } = req.body;
+
+        // changes in course: updates
+        const updates = req.body;
+
+        // find the course we are updating
+        const courseDetails = await Course.findById(courseId);
+
+        if (!courseDetails) {
+            throw new Error('Course not found');
+        }
+
+        // updating the upload location and adding tag
+        const courseName = courseDetails.courseName;
+        const THUMBNAIL_LOCATION = MEDIA_FOLDER + '/' + courseName
+        const imageTag = [courseName]
+
+        // update thumbnail: If send from FE via req.files
+        if (req.files && req.files.thumbnailImage) {
+            const thumbnail = req.files.thumbnailImage;
+            const thumbnailImage = await uploadImageToCloudinary(thumbnail, THUMBNAIL_LOCATION, null, null, imageTag);
+            courseDetails.thumbnail = thumbnailImage.secure_url;
+        }
+
+        // update the fields that are send within the req body
+        for (const key in updates) {
+            if (updates.hasOwnProperty(key)) {
+                if (key == 'tag' || key == 'instructions') {
+                    console.log('course update: ', updates[key]);
+                    courseDetails[key] = JSON.parse(updates[key]);
+                } else {
+                    courseDetails[key] = updates[key];
+                }
+            }
+        }
+
+        // save the new changes to the course DB
+        courseDetails.save();
+
+        // update state of course with new data
+        //? TODO: find a way so that only the data whcih is updated passed or unneccessary is removed like addition, rating 
+        const updatedCourse = await Course.findOne({ _id: courseId })
+            .populate({
+                path: "instructor",
+                populate: {
+                    path: "additionalDetails",
+                },
+            })
+            .populate("category")
+            .populate("ratingAndReviews")
+            .populate({
+                path: "courseContent",
+                populate: {
+                    path: "subSection",
+                },
+            })
+            .exec()
+
+        // send response
+        res.status(200).json({
+            success: true,
+            message: 'Course updated!',
+            data: updatedCourse
+        })
+
+    } catch (err) {
+        console.log('> Failed to update Course:', err.message)
+        res.status(500).json({
+            success: false,
+            message: "Failed to update Course:" + err.message
+        })
+    }
+}
+
+// delete the course
+async function deleteCourse(req, res) {
+    try {
+        // fetching course Id from body
+        const courseId = req.body.courseId;
+
+        // find the course 
+        const course = await Course.findById(courseId);
+
+        if (!course) {
+            return res.status(404).json({
+                success: false,
+                message: "Course not found"
+            });
+        }
+
+        // unenroll students from the Course
+        const studentsEnrolled = course.studentEnrolled;
+        const unenrolledStudentPromise = User.updateMany(
+            { _id: { $in: studentsEnrolled } },
+            { $pull: { course: courseId } }
+        );
+
+        // Get all sub-section ID's to delete
+        const courseSections = course.courseContent;
+        const subSectionIds = [];
+
+        for (const sectionId of courseSections) {
+            const section = await Section.findById(sectionId);
+
+            // pushing all sub-section ID's to array
+            if (section) {
+                subSectionIds.push(...section.subSection);
+            }
+        }
+
+        // Delete all sub-section and section in parallel
+        const deleteSubSectionsPromise = SubSection.deleteMany({ _id: { $in: subSectionIds } });
+        const deleteSectionsPromise = Selection.deleteMany({ _id: { $in: courseSections } });
+
+        // Delete the course
+        const deleteCoursePromise = Course.findByIdAndDelete(courseId);
+
+        // Wait for all operations to complete
+        await Promise.all([
+            unenrolledStudentPromise,
+            deleteSubSectionsPromise,
+            deleteSectionsPromise,
+            deleteCoursePromise
+        ])
+
+        return res.status(200).json({
+            success: true,
+            message: "Course deleted successfully",
+        });
+
+    } catch (err) {
+        console.log('> Failed to delete Course: ' + err.message);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to delete Course: ' + err.message,
+        })
+    }
+}
+
 module.exports = {
     createCourse,
     getAllCourses,
     getCourseDetails,
-    getFullCourseDetails
+    getFullCourseDetails,
+    getInstructorCourses,
+    updateCourse,
+    deleteCourse
 }
