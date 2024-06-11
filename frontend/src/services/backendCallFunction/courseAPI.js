@@ -26,6 +26,32 @@ const {
 } = courseEndpoint;
 
 //CREATE COURSE BACKEND CALL
+export async function createCourse(token, data) {
+    let res = [];
+    const toastId = toast.loading('Loading...');
+    const headers = { Authorization: 'Bearer ' + token };
+
+    try {
+        // CALLING /createCourse BACKEND URL
+        const response = await apiConnector('POST', CREATE_COURSE_API, data, headers)
+        // console.log('> CREATE COURSE API', response)
+
+        // IF ENCOUNTER ERROR
+        if (!response?.data?.success) {
+            throw new Error('Failed to create Course')
+        }
+
+        toast.success('Course Created!', toastPosition)
+        return res = response?.data?.data;
+
+    } catch (err) {
+        console.log('> COURSE CREATION API ERROR: ', err?.response?.data?.message)
+        toast.error(err?.response?.data?.message || 'Failed to create Course', errorToastPosition);
+
+    } finally {
+        toast.dismiss(toastId);
+    }
+}
 
 // GET ALL COURSES BACKEN CALL 
 

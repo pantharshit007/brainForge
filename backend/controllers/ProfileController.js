@@ -4,7 +4,6 @@ const Profile = require("../models/Profile");
 const User = require("../models/User");
 const { deleteFolder } = require("../utils/deleteContent");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
-const { convertSecondsToDuration } = require("../utils/secConverter");
 
 require('dotenv').config();
 const USER_PFP = process.env.USER_PFP

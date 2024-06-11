@@ -55,14 +55,9 @@ const courseSchema = new Schema({
         enum: ["Draft", "Published", "Archived"],
         //? TODO: default:'Draft' how about this and Archived addition?
     },
-    createdAt: {
-        type: Date,
-    },
-    updatedAt: {
-        type: Date,
-    }
 
-
-});
+    // Add timestamps for when the document is created and last modified
+}, { timestamps: true },
+);
 
 module.exports = mongoose.model("Course", courseSchema);

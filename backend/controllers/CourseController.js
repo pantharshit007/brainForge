@@ -6,6 +6,7 @@ const Section = require("../models/Section");
 const SubSection = require("../models/SubSection");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
 const { convertSecondsToDuration } = require("../utils/secConverter");
+const { deleteFolder } = require("../utils/deleteContent");
 
 require('dotenv').config();
 const MEDIA_FOLDER = process.env.MEDIA_FOLDER
@@ -98,7 +99,7 @@ async function createCourse(req, res) {
             thumbnail: thumbnailImage.secure_url,
             status,
             tag,
-            instructions
+            instructions,
         })
 
         //update user(Instructor)'s data of created course
@@ -477,7 +478,11 @@ async function deleteCourse(req, res) {
 
         // Delete all sub-section and section in parallel
         const deleteSubSectionsPromise = SubSection.deleteMany({ _id: { $in: subSectionIds } });
-        const deleteSectionsPromise = Selection.deleteMany({ _id: { $in: courseSections } });
+        const deleteSectionsPromise = Section.deleteMany({ _id: { $in: courseSections } });
+
+        // Delete image folder of related course
+        const THUMBNAIL_LOCATION = MEDIA_FOLDER + '/' + course.courseName
+        await deleteFolder(THUMBNAIL_LOCATION);
 
         // Delete the course
         const deleteCoursePromise = Course.findByIdAndDelete(courseId);

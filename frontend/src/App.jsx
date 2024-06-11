@@ -21,6 +21,7 @@ import EnrolledCourses from './components/core/Dashboard/EnrolledCourses/Enrolle
 import Cart from './components/core/Dashboard/Cart/Cart'
 import { ACCOUNT_TYPE } from './utils/constant'
 import MyCourses from './components/core/Dashboard/InstructorCourses/MyCourses'
+import AddCourse from './components/core/Dashboard/AddCourse/AddCourse'
 
 function App() {
   // TODO: Implement an upword arrow which bring user to top of the page.
@@ -87,6 +88,7 @@ function App() {
             {user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
               <>
                 <Route path="dashboard/my-courses" element={<MyCourses />} />
+                <Route path="dashboard/add-course" element={<AddCourse />} />
               </>
             )}
 

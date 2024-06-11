@@ -194,3 +194,14 @@ sidebar {
     transition: all 0.3s ease-in-out;
     overflow: hidden;
 }
+
+/* Remove the incrementer/decrementer symbol in input[type="number"] */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}

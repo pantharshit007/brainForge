@@ -10,7 +10,7 @@ exports.test = async () => {
         await deleteContentByTag('dp');
         console.log('Content with tag "dp" deleted');
 
-        // Deleting a folder's resources
+        // Deleting a folder's resources + folder
         await deleteFolder('UserDP');
         console.log('Folder resources deleted');
 

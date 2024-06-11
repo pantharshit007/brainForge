@@ -12,7 +12,7 @@
 //? TODO: auto logout when token expires : already written the login need to implement
 // TODO: for myprofile and setting part add a react router navigation link which directly navigate to the specific section of the setting page [profileEdit -> Edit profile section]. Do similar if needed anywhere also.
 // TODO: create a purchase History tab in side Bar
-// TODO: try implementing a 3 option module in Enrolled course which shows [ALL, PENDING, COMPLETED] courses with filter.
+///// TODO: try implementing a 3 option module in Enrolled course which shows [ALL, PENDING, COMPLETED] courses with filter.
 // TODO: add skeleton data in enrolled courses and everywhere we need it.
 ///// TODO: make the enrolled courses section a grid similar to [https://www.udemy.com/home/my-courses/learning/]
 // TODO: add logic for adding rating in RenderCartCourses
@@ -20,6 +20,8 @@
 ///// TODO: hide menu Bar in my-profile
 // TODO: create a separate API point for category from Navbar: CATEGORY_API
 // TODO: ADD GOOGLE AUTHENTICATION FEATURE in signupForm
+// TODO: Add a backend function in global api where we call the auth middleware and check if the token is still valid or not and we can call this backend function call in useffect in every dashboard page.
+// TODO: add one token checker call in add course section in INSTRUCTOR
 
 //? <<<<<<< BACKEND TODO >>>>>>>> //
 //  TODO BACKEND: Check if cookies are even working on the backend side and twik with their expiry time.
@@ -33,3 +35,4 @@
 //? <<<<<<< END TODO >>>>>>>> //
 //! TODO: change tag of all the sample ID's data:images/videos: dp/sub-section videos
 //! TODO: remove testData from enrolledCourses
+//? TODO: remove the video from hero section and replace it with product images in a slider formation + tilt effect
