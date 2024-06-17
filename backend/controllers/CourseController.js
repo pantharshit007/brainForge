@@ -10,6 +10,7 @@ const { deleteFolder } = require("../utils/deleteContent");
 
 require('dotenv').config();
 const MEDIA_FOLDER = process.env.MEDIA_FOLDER
+const VIDEO_FOLDER = process.env.VIDEO_FOLDER
 
 
 //create Courses
@@ -33,7 +34,7 @@ async function createCourse(req, res) {
         if (isNewCourse) {
             return res.status(406).json({
                 success: false,
-                message: 'Course already exists',
+                message: 'Duplicate course name.',
             })
         }
 
@@ -483,6 +484,10 @@ async function deleteCourse(req, res) {
         // Delete image folder of related course
         const THUMBNAIL_LOCATION = MEDIA_FOLDER + '/' + course.courseName
         await deleteFolder(THUMBNAIL_LOCATION);
+
+        // Delete coureseVideos of subSection
+        const COURSE_LOCATION = VIDEO_FOLDER + '/' + course.courseName
+        await deleteFolder(COURSE_LOCATION);
 
         // Delete the course
         const deleteCoursePromise = Course.findByIdAndDelete(courseId);

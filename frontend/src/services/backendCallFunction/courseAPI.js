@@ -149,4 +149,173 @@ export async function deleteCourse(token, data) {
     } finally {
         toast.dismiss(toastId);
     }
-} 
+}
+
+// CREATE SECTION BACKEND CALL
+export async function createSection(token, data) {
+    let res = null;
+    const toastId = toast.loading('Creating...');
+    const headers = { Authorization: 'Bearer ' + token };
+
+    try {
+        // CALLING THE /addSection URL
+        const response = await apiConnector("POST", CREATE_SECTION_API, data, headers);
+        console.log('CREATE SECTION API: ', response);
+
+        // IF ENCOUNTER ERROR
+        if (!response?.data?.success) {
+            throw new Error("Failed to create section");
+        }
+
+        toast.success('Section Created!', toastPosition);
+        return res = response?.data?.updatedCourse;
+
+    } catch (err) {
+        console.log('> CREATE SECTION API ERROR: ', err?.response?.data?.message);
+        toast.error(err?.response?.data?.message || 'Failed in Section Creation', errorToastPosition);
+
+    } finally {
+        toast.dismiss(toastId);
+    }
+}
+
+// UPDATE SECTION BACKEND CALL
+export async function updateSection(token, data) {
+    let res = null;
+    const toastId = toast.loading('Updating...');
+    const headers = { Authorization: 'Bearer ' + token };
+
+    try {
+        // CALLING THE /updateSection URL
+        const response = await apiConnector("PUT", UPDATE_SECTION_API, data, headers);
+        console.log('UPDATE SECTION API: ', response);
+
+        // IF ENCOUNTER ERROR
+        if (!response?.data?.success) {
+            throw new Error("Failed to update section");
+        }
+
+        toast.success('Section Updated!', toastPosition);
+        return res = response?.data?.updatedCourse;
+
+    } catch (err) {
+        console.log('> UPDATE SECTION API ERROR: ', err?.response?.data?.message);
+        toast.error(err?.response?.data?.message || 'Failed in Section Updation', errorToastPosition);
+
+    } finally {
+        toast.dismiss(toastId);
+    }
+}
+
+// DELETE SECTION BACKEND CALL
+export async function deleteSection(token, data) {
+    let res = null;
+    const toastId = toast.loading('Updating...');
+    const headers = { Authorization: 'Bearer ' + token };
+
+    try {
+        // CALLING THE /deleteSection URL
+        const response = await apiConnector("DELETE", DELETE_SECTION_API, data, headers);
+        console.log('DELETE SECTION API: ', response);
+
+        // IF ENCOUNTER ERROR
+        if (!response?.data?.success) {
+            throw new Error("Failed to delete section");
+        }
+
+        toast.success('Section Deleted!', toastPosition);
+        return res = response?.data?.updatedCourse;
+
+    } catch (err) {
+        console.log('> DELETE SECTION API ERROR: ', err?.response?.data?.message);
+        toast.error(err?.response?.data?.message || 'Failed in Section Deletion', errorToastPosition);
+
+    } finally {
+        toast.dismiss(toastId);
+    }
+}
+
+// CREATE SUB-SECTION BACKEND CALL
+export async function createSubSection(token, data) {
+    let res = null;
+    const toastId = toast.loading('Creating...');
+    const headers = { Authorization: 'Bearer ' + token };
+
+    try {
+        // CALLING THE /addSubSection URL
+        const response = await apiConnector("POST", CREATE_SUBSECTION_API, data, headers);
+        console.log('CREATE SUB-SECTION API: ', response);
+
+        // IF ENCOUNTER ERROR
+        if (!response?.data?.success) {
+            throw new Error("Failed to create sub-section");
+        }
+
+        toast.success('Sub-Section Created!', toastPosition);
+        return res = response?.data?.updatedSection;
+
+    } catch (err) {
+        console.log('> CREATE SUB-SECTION API ERROR: ', err?.response?.data?.message);
+        toast.error(err?.response?.data?.message || 'Failed in Sub-Section Creation', errorToastPosition);
+
+    } finally {
+        toast.dismiss(toastId);
+    }
+}
+
+// UPDATE SUB-SECTION BACKEND CALL
+export async function updateSubSection(token, data) {
+    let res = null;
+    const toastId = toast.loading('Updating...');
+    const headers = { Authorization: 'Bearer ' + token };
+
+    try {
+        // CALLING THE /updateSubSection URL
+        const response = await apiConnector("PUT", UPDATE_SUBSECTION_API, data, headers);
+        console.log('UPDATE SUB-SECTION API: ', response);
+
+        // IF ENCOUNTER ERROR
+        if (!response?.data?.success) {
+            throw new Error("Failed to update Sub-section");
+        }
+
+        toast.success('Sub-Section Updated!', toastPosition);
+        return res = response?.data?.updatedSection;
+
+    } catch (err) {
+        console.log('> UPDATE SUB-SECTION API ERROR: ', err?.response?.data?.message);
+        toast.error(err?.response?.data?.message || 'Failed in Sub-Section Updation', errorToastPosition);
+
+    } finally {
+        toast.dismiss(toastId);
+    }
+}
+
+// DELETE SUB-SECTION BACKEND CALL
+export async function deleteSubSection(token, data) {
+    let res = null;
+    const toastId = toast.loading('Updating...');
+    const headers = { Authorization: 'Bearer ' + token };
+
+    try {
+        // CALLING THE /deleteSubSection URL
+        const response = await apiConnector("DELETE", DELETE_SUBSECTION_API, data, headers);
+        console.log('DELETE SUB-SECTION API: ', response);
+
+        // IF ENCOUNTER ERROR
+        if (!response?.data?.success) {
+            throw new Error("Failed to delete Sub-section");
+        }
+
+        toast.success('Sub-Section Deleted!', toastPosition);
+        return res = response?.data?.updatedSection;
+
+    } catch (err) {
+        console.log('> DELETE SUB-SECTION API ERROR: ', err?.response?.data?.message);
+        toast.error(err?.response?.data?.message || 'Failed in Sub-Section Deletion', errorToastPosition);
+
+    } finally {
+        toast.dismiss(toastId);
+    }
+}
+

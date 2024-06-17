@@ -191,14 +191,14 @@ async function login(req, res) {
     // validating inputs
     const loginBody = zod.object({
         email: zod.string().email(),
-        password: zod.string()
+        password: zod.string().min(6, "Password is required")
     })
 
     try {
         const { success, error } = loginBody.safeParse(req.body)
         const errorMessage = error?.errors[0]?.message;
         if (!success) {
-            return res.status(411).json({
+            return res.status(400).json({
                 success: false,
                 message: errorMessage || "Incorrect inputs"
             })
@@ -238,19 +238,31 @@ async function login(req, res) {
             accountType: user.accountType,
         }
         const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '2h' });
-        // Save token to user document in database
+
+        // Save token to user document in database (optional)
         user.token = token;
+        // await user.save();
         user.password = undefined;
 
         //Generating cookies for token 
         const options = {
             expires: new Date(Date.now() + 3 * 60 * 60 * 1000),    //expiry: 3h
             httpOnly: true,
+            secure: process.env.NODE_ENV === "production",  // Use secure cookies in production
+            sameSite: "strict",
         }
         return res.cookie("token", token, options).status(200).json({
             success: true,
             token: token,
-            user: user,
+            user: {
+                email: user.email,
+                _id: user._id,
+                accountType: user.accountType,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                additionalDetails: user.additionalDetails,
+                image: user.image,
+            },
             message: "Logged in successfully"
         });
 

@@ -22,6 +22,7 @@ app.use(
     cors({
         origin: FE_URL,
         credentials: true,
+        // maxAge: 14400,
     })
 )
 

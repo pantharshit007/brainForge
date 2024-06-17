@@ -9,7 +9,11 @@ const sectionSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'SubSection',
         required: true,
-    }]
+    }],
+    totalSectionDuration: {
+        type: Number,
+        default: 0,
+    },
 
 
 });

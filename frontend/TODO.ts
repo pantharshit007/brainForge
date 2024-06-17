@@ -31,8 +31,11 @@
 //! TODO: add tag to the course->section->sub-section videos so that we can delete once instructor account is deleted with option of deletion given to the instructor.
 //above TODO: it can be done by using courses[] in user's dB (Instructor specific) and finding the courseName then deleting all resourses related to that tag.
 //! TODO: ADDED CUSTOM COURSE IN MAIN ACCOUNT REMOVE IT BEFORE TESTING {PYTHON ONE}
+//? Add a limit to video upload in subsection : 10MB
+// TODO: Now, we have totalSectionDuration in each Section use that to add up the section duration and present it in enrolled courses.
 
 //? <<<<<<< END TODO >>>>>>>> //
 //! TODO: change tag of all the sample ID's data:images/videos: dp/sub-section videos
 //! TODO: remove testData from enrolledCourses
 //? TODO: remove the video from hero section and replace it with product images in a slider formation + tilt effect
+//? TODO: remove package video-react from fe

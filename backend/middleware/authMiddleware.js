@@ -22,7 +22,6 @@ async function auth(req, res, next) {
             req.user = decode;
 
         } catch (err) {
-            console.log("> Token is invalid: " + err.message);
             if (err.message === 'jwt expired') {
                 return res.status(408).json({
                     success: false,

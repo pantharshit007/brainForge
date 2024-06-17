@@ -45,19 +45,19 @@ export const settingsEndpoint = {
 
 // COURSE ENDPOINTS
 export const courseEndpoint = {
-    CREATE_COURSE_API: BASE_URL + "/course/createCourse",
     GET_ALL_COURSE_API: BASE_URL + "/course/getAllCourses",
     COURSE_DETAILS_API: BASE_URL + "/course/getCourseDetails",
     GET_FULL_COURSE_DETAILS_AUTHENTICATED: BASE_URL + "/course/getFullCourseDetails",
     GET_ALL_INSTRUCTOR_COURSES_API: BASE_URL + "/course/getInstructorCourses",
+    CREATE_COURSE_API: BASE_URL + "/course/createCourse",
+    CREATE_SECTION_API: BASE_URL + "/course/addSection",
+    CREATE_SUBSECTION_API: BASE_URL + "/course/addSubSection",
     UPDATE_COURSE_API: BASE_URL + "/course/updateCourse",
+    UPDATE_SECTION_API: BASE_URL + "/course/updateSection",
+    UPDATE_SUBSECTION_API: BASE_URL + "/course/updateSubSection",
     DELETE_COURSE_API: BASE_URL + "/course/deleteCourse",
-    //? TODO: ADD SECTION
-    //? TODO: ADD SUB-SECTION
-    //? TODO: UPDATE SECTION
-    //? TODO: UPDATE SUB-SECTION
-    //? TODO: DELETE SECTION
-    //? TODO: DELETE SUB-SECTION
+    DELETE_SECTION_API: BASE_URL + "/course/deleteSection",
+    DELETE_SUBSECTION_API: BASE_URL + "/course/deleteSubSection",
     //? TODO: LECTURE COMPLETION
     //? TODO: CREATE RATING
 }

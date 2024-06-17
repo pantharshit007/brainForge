@@ -2,21 +2,22 @@ const SubSection = require('../models/SubSection');
 const Section = require('../models/Section');
 const { uploadImageToCloudinary } = require('../utils/imageUploader');
 const Course = require('../models/Course');
+
 require('dotenv').config();
 const VIDEO_FOLDER = process.env.VIDEO_FOLDER
 
-// Section Creation
+// Sub-Section Creation
 async function createSubSection(req, res) {
 
     try {
         //fetching data
-        const { sectionId, title, description } = req.body;
+        const { sectionId, title, description, courseId } = req.body;
 
         //extracting file data
         const video = req.files.video;
 
         //validate input data
-        if (!sectionId || !title || !description || !video) {
+        if (!sectionId || !title || !description || !video || !courseId) {
             return res.status(400).json({
                 success: false,
                 message: 'All fields are required',
@@ -24,16 +25,18 @@ async function createSubSection(req, res) {
         }
 
         //Finding the courseName
-        const courseName = await Course.findOne({ courseContent: courseName }).populate('courseContent');
-        if (!courseName) {
+        const courseDetail = await Course.findById(courseId);
+        if (!courseDetail) {
             return res.status(404).json({
                 success: false,
                 message: 'Course not found'
             });
         }
 
-        // updating the video upload path and tag
-        const SUBSECTION_LOCATION = VIDEO_FOLDER + '/' + 'SubSection/' + sectionId
+        const courseName = courseDetail.courseName;
+
+        // updating the video upload path and tag: brainForge/VIDEO_FOLDER/SubSection/courseName/sectionId
+        const SUBSECTION_LOCATION = VIDEO_FOLDER + '/' + courseName + '/' + sectionId
         const tag = [courseName]
 
         // upload the video on cloudinary.
@@ -47,11 +50,12 @@ async function createSubSection(req, res) {
             videoUrl: uploadedVideoDetails.secure_url
         });
 
-        // Update the corresponding section with the newly created sub-section
+        // Update the corresponding section with the newly created sub-section and update the total time duration
         const updatedSection = await Section.findByIdAndUpdate(
             { _id: sectionId },
             {
-                $push: { subSection: newSubSection._id }
+                $push: { subSection: newSubSection._id },
+                $inc: { totalSectionDuration: uploadedVideoDetails.duration }  //total += new
             },
             { new: true },
         ).populate('subSection')
@@ -59,7 +63,7 @@ async function createSubSection(req, res) {
         return res.status(201).json({
             success: true,
             message: 'Sub-Section Created successfully',
-            updatedSection: updatedSection  //ToRemove later
+            updatedSection: updatedSection
         })
 
     } catch (err) {
@@ -71,18 +75,18 @@ async function createSubSection(req, res) {
     }
 }
 
-// Section Updation
+// Sub-Section Updation
 async function updateSubSection(req, res) {
     try {
         // fetching required input data
-        const { sectionId, subSectionId, title, description } = req.body;
+        const { sectionId, subSectionId, title, description, courseName } = req.body;
         // const video = req.files.video || req.files;  //produces error if not provided
 
         //validate input data
-        if (!subSectionId) {
+        if (!subSectionId || !sectionId) {
             return res.status(404).json({
                 success: false,
-                message: 'No Sub-Section ID found.',
+                message: 'No Sub-Section/Section ID found.',
             })
         }
 
@@ -94,8 +98,11 @@ async function updateSubSection(req, res) {
             })
         }
 
+        // Store old duration
+        const oldDuration = parseFloat(subSectionDetails.timeDuration) || 0;
+
         // updating the video upload path
-        const SUBSECTION_LOCATION = VIDEO_FOLDER + '/' + 'SubSection/' + sectionId
+        const SUBSECTION_LOCATION = VIDEO_FOLDER + '/' + courseName + '/' + sectionId
 
         //check if title is updated
         if (title !== undefined) {
@@ -106,23 +113,36 @@ async function updateSubSection(req, res) {
             subSectionDetails.description = description
         }
         //check if video got an update?
+        let newDuration = oldDuration;
         if (req.files && req.files.video !== undefined) {
             const video = req.files.video;
             const updateVideoDetails = await uploadImageToCloudinary(video, SUBSECTION_LOCATION);
 
             subSectionDetails.videoUrl = updateVideoDetails.secure_url;
             subSectionDetails.timeDuration = `${updateVideoDetails.duration}`
+            newDuration = parseFloat(updateVideoDetails.duration);
         }
 
         await subSectionDetails.save();
 
-        // find updated section and return it
-        // const updatedSection = await Section.findById(sectionId).populate("subSection")
+        // update Section: Update the totalSectionDuration of the section only if the video was updated
+        let updatedSection;
+        if (newDuration === oldDuration) {
+            updatedSection = await Section.findById(sectionId)
+                .populate("subSection")
+        } else {
+            const durationDifference = newDuration - oldDuration;
+            updatedSection = await Section.findByIdAndUpdate(
+                sectionId,
+                { $inc: { totalSectionDuration: durationDifference } },
+                { new: true }
+            ).populate('subSection')
+        }
 
         return res.status(200).json({
             success: true,
             message: 'Sub-Section updated successfully',
-            data: subSectionDetails
+            updatedSection: updatedSection,
         })
 
     } catch (err) {
@@ -134,11 +154,11 @@ async function updateSubSection(req, res) {
     }
 }
 
-// Sub Section Deletion
+// Sub-Sub Section Deletion
 async function deleteSubSection(req, res) {
     try {
         //section ID: from URl using params
-        const { sectionId, subSectionId } = req.body
+        const { sectionId, subSectionId, courseId } = req.body
 
         if (!sectionId || !subSectionId) {
             return res
@@ -149,16 +169,33 @@ async function deleteSubSection(req, res) {
         //deleting the Sub-section from section dB
         const updatedSection = await Section.findByIdAndUpdate(
             { _id: sectionId },
-            { $pull: { subSection: subSectionId } }
-        ).populate("subSection");
+            { $pull: { subSection: subSectionId } },
+            { new: true }
+        ).populate('subSection');
+
+        if (!updatedSection) {
+            console.log('> Section Not Found: ' + sectionId);
+            return res.status(404).json({
+                success: false,
+                message: 'Section Not Found!'
+            })
+        }
 
         // deleting sub-section from dB
-        await SubSection.findByIdAndDelete(subSectionId);
+        const updatedSubSection = await SubSection.findByIdAndDelete(subSectionId);
+
+        if (!updatedSubSection) {
+            console.log('> Sub-Section Not Found: ' + sectionId);
+            return res.status(404).json({
+                success: false,
+                message: 'Sub-Section Not Found!'
+            })
+        }
 
         return res.status(200).json({
             success: true,
             message: 'Sub-Section deleted successfully',
-            sectionData: updatedSection     //TODO: To Remove later
+            updatedSection: updatedSection
         })
 
     } catch (err) {

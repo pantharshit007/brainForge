@@ -14,11 +14,11 @@ function IconBtn({
             disabled={disabled}
             onClick={onClick}
             type={type}
-            className={`flex items-center gap-x-2 rounded-md py-2 px-5 font-semibold text-richblack-25 
+            className={`flex items-center gap-x-2 rounded-md py-2 px-5 font-semibold text-richblack-25 cursor-pointer
                 ${outline
                     ? "border border-indigo-600 bg-transparent"
                     : "bg-indigo-600"
-                } ${customClasses ? customClasses : "cursor-pointer"}`}
+                } ${customClasses ? customClasses : ""}`}
         >
             {children ?
                 <>

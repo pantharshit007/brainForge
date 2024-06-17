@@ -164,7 +164,6 @@ function CourseInformationForm() {
                 </label>
 
                 <input
-                    type="text"
                     id="courseTitle"
                     placeholder="Course Title"
                     {...register("courseTitle", { required: true })}
