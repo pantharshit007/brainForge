@@ -47,7 +47,7 @@ function CoursesTable({ courses, setCourses }) {
         )
     }
 
-    // if not courses are created yet
+    // if no courses are created yet
     if (courses?.length === 0) {
         return (
             <Table>
@@ -92,7 +92,7 @@ function CoursesTable({ courses, setCourses }) {
                                 <img
                                     src={course?.thumbnail}
                                     alt={course?.courseName}
-                                    className="md:h-[148px] md:w-[220px] h-[110px] w-[180px] aspect-video rounded-lg object-cover"
+                                    className="md:h-[148px] md:w-[220px] h-[170px] w-[280px] mx-auto aspect-video rounded-lg object-cover"
                                 />
 
                                 {/* DETAIL INFO - COURSE */}
@@ -111,8 +111,10 @@ function CoursesTable({ courses, setCourses }) {
                                             : course.courseDescription}
                                     </p>
 
-                                    <p className="text-[12px] text-white flex flex-col">
-                                        <span>Created: {formattedDateTime(course?.createdAt || course?.updatedAt) || 'June 5, 2024 | 8:14 PM'}</span>
+                                    <p className="text-[11px] text-richblack-5 flex flex-col">
+                                        <span className='text-richblack-50 text-[10.5px] mb-1'>
+                                            Created: {formattedDateTime(course?.createdAt || course?.updatedAt) || 'June 5, 2024 | 8:14 PM'}
+                                        </span>
                                         Updated: {formattedDateTime(course?.updatedAt) || 'June 5, 2024 | 8:14 PM'}
                                     </p>
 
@@ -123,8 +125,8 @@ function CoursesTable({ courses, setCourses }) {
                                             Drafted
                                         </p>
                                     ) : (
-                                        <p className="flex w-fit flex-row items-center gap-2 rounded-full bg-richblack-700 px-2 py-[2px] text-[12px] font-medium text-yellow-100">
-                                            <div className="flex h-3 w-3 items-center justify-center rounded-full bg-yellow-100 text-richblack-700">
+                                        <p className="flex w-fit flex-row items-center gap-2 rounded-full bg-indigo-600 px-2 py-[2px] text-[12px] font-medium text-richblack-50">
+                                            <div className="flex h-3 w-3 items-center justify-center rounded-full bg-richblack-50 text-indigo-600">
                                                 <FaCheck size={8} />
                                             </div>
                                             Published

@@ -52,8 +52,8 @@ const courseSchema = new Schema({
     },
     status: {
         type: String,
-        enum: ["Draft", "Published", "Archived"],
-        //? TODO: default:'Draft' how about this and Archived addition?
+        enum: ["Draft", "Published"],
+        default: 'Draft'
     },
 
     // Add timestamps for when the document is created and last modified

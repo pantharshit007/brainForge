@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-    step: 1,
+    step: 1,    //! TODO: Change
     course: null,
     //! TEMP:
     // course: {

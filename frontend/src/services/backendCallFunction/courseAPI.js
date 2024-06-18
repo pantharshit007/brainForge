@@ -105,7 +105,7 @@ export async function updateCourse(token, data) {
     try {
         // GETTING BACK RESPONSE FORM BE
         const response = await apiConnector('PUT', UPDATE_COURSE_API, data, headers);
-        console.log('> Course Update:', response);
+        // console.log('Course Update:', response);
 
         // IF ENCOUNTER AN ERROR FORM BE
         if (!response?.data?.success) {
@@ -160,7 +160,7 @@ export async function createSection(token, data) {
     try {
         // CALLING THE /addSection URL
         const response = await apiConnector("POST", CREATE_SECTION_API, data, headers);
-        console.log('CREATE SECTION API: ', response);
+        // console.log('CREATE SECTION API: ', response);
 
         // IF ENCOUNTER ERROR
         if (!response?.data?.success) {
@@ -188,7 +188,7 @@ export async function updateSection(token, data) {
     try {
         // CALLING THE /updateSection URL
         const response = await apiConnector("PUT", UPDATE_SECTION_API, data, headers);
-        console.log('UPDATE SECTION API: ', response);
+        // console.log('UPDATE SECTION API: ', response);
 
         // IF ENCOUNTER ERROR
         if (!response?.data?.success) {
@@ -216,7 +216,7 @@ export async function deleteSection(token, data) {
     try {
         // CALLING THE /deleteSection URL
         const response = await apiConnector("DELETE", DELETE_SECTION_API, data, headers);
-        console.log('DELETE SECTION API: ', response);
+        // console.log('DELETE SECTION API: ', response);
 
         // IF ENCOUNTER ERROR
         if (!response?.data?.success) {
@@ -244,7 +244,7 @@ export async function createSubSection(token, data) {
     try {
         // CALLING THE /addSubSection URL
         const response = await apiConnector("POST", CREATE_SUBSECTION_API, data, headers);
-        console.log('CREATE SUB-SECTION API: ', response);
+        // console.log('CREATE SUB-SECTION API: ', response);
 
         // IF ENCOUNTER ERROR
         if (!response?.data?.success) {
@@ -272,7 +272,7 @@ export async function updateSubSection(token, data) {
     try {
         // CALLING THE /updateSubSection URL
         const response = await apiConnector("PUT", UPDATE_SUBSECTION_API, data, headers);
-        console.log('UPDATE SUB-SECTION API: ', response);
+        // console.log('UPDATE SUB-SECTION API: ', response);
 
         // IF ENCOUNTER ERROR
         if (!response?.data?.success) {
@@ -300,7 +300,7 @@ export async function deleteSubSection(token, data) {
     try {
         // CALLING THE /deleteSubSection URL
         const response = await apiConnector("DELETE", DELETE_SUBSECTION_API, data, headers);
-        console.log('DELETE SUB-SECTION API: ', response);
+        // console.log('DELETE SUB-SECTION API: ', response);
 
         // IF ENCOUNTER ERROR
         if (!response?.data?.success) {

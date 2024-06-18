@@ -34,7 +34,7 @@ function RenderSteps() {
                                 {/* NUMBERING */}
                                 <div className='flex flex-col items-center'>
                                     <div
-                                        className={`grid cursor-default aspect-square w-[34px] place-items-center rounded-full border-[1px]
+                                        className={`grid cursor-default aspect-square w-[34px] place-items-center rounded-full border-[1px] transition-all duration-700
                                         ${step === items.id
                                                 ? 'bg-indigo-600 border-white text-white'
                                                 : 'border-richblack-700 bg-richblack-800 text-richblack-300'}
@@ -50,7 +50,7 @@ function RenderSteps() {
                                 {/* DASHED LINE */}
                                 {items.id < steps.length && (
                                     <div
-                                        className={`h-[calc(34px/2)] w-[100%] border-dashed border-b-2
+                                        className={`h-[calc(34px/2)] w-[100%] border-dashed border-b-2 transition-all duration-500
                                             ${step > items.id
                                                 ? "border-indigo-500"
                                                 : "border-richblack-700"}`}

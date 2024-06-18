@@ -22,6 +22,7 @@
 // TODO: ADD GOOGLE AUTHENTICATION FEATURE in signupForm
 // TODO: Add a backend function in global api where we call the auth middleware and check if the token is still valid or not and we can call this backend function call in useffect in every dashboard page.
 // TODO: add one token checker call in add course section in INSTRUCTOR
+// TODO: Make a dashboard for ADMIN where we have choices between Instructor and Student which shows a table of all the users with specific account type and by click on them we can we more detail with a special auth controller.
 
 //? <<<<<<< BACKEND TODO >>>>>>>> //
 //  TODO BACKEND: Check if cookies are even working on the backend side and twik with their expiry time.
@@ -39,3 +40,4 @@
 //! TODO: remove testData from enrolledCourses
 //? TODO: remove the video from hero section and replace it with product images in a slider formation + tilt effect
 //? TODO: remove package video-react from fe
+//! TODO: make changes in auth controller so no is able to create ADMIN account and ADMIN priviledge on frontEnd.

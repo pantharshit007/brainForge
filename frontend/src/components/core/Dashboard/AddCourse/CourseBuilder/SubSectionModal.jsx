@@ -9,6 +9,7 @@ import { errorToastPosition } from '../../../../../utils/constant';
 import { createSubSection, updateSubSection } from '../../../../../services/backendCallFunction/courseAPI';
 import UploadVideo from './UploadVideo';
 import IconBtn from '../../../../common/IconBtn';
+import { setCourse } from '../../../../../reducer/slices/courseSlice';
 
 
 const dropIn = {
@@ -93,13 +94,13 @@ function SubSectionModal({
         const res = await updateSubSection(token, formData);
 
         if (res) {
-            // update courseContent with new section Id's
+            // update courseContent specific section with new section data
             const updatedCourseContent = course.courseContent.map(section =>
-                section._id === modalData ? res : course.courseContent
+                section._id === modalData.sectionId ? res : section
             )
             // update only courseContent which holds section data
             const updatedCourse = { ...course, courseContent: updatedCourseContent }
-            dispatch(updatedCourse);
+            dispatch(setCourse(updatedCourse));
         }
 
         setModalData(null)
@@ -136,13 +137,13 @@ function SubSectionModal({
         // backend API call
         const res = await createSubSection(token, formData);
         if (res) {
-            // update courseContent with new section Id's
+            // update courseContent specific section with new section data
             const updatedCourseContent = course.courseContent.map(section =>
-                section._id === modalData ? res : course.courseContent
+                section._id === modalData ? res : section
             )
             // update only courseContent which holds section data
             const updatedCourse = { ...course, courseContent: updatedCourseContent }
-            dispatch(updatedCourse);
+            dispatch(setCourse(updatedCourse));
         }
 
         setModalData(null)
@@ -239,6 +240,7 @@ function SubSectionModal({
                                 type='submit'
                                 disabled={loading}
                                 text={loading ? 'Saving...' : edit ? 'Save Changes' : 'Save'}
+                                customClasses={loading && 'cursor-not-allowed bg-richblack-500'}
                             />
                         </div>
                     )}

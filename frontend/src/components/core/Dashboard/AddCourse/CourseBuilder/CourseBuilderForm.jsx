@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import IconBtn from '../../../../common/IconBtn';
 import NestedSections from './NestedSections';
-import { setEditCourse, setStep } from '../../../../../reducer/slices/courseSlice';
+import { setCourse, setEditCourse, setStep } from '../../../../../reducer/slices/courseSlice';
 import toast from 'react-hot-toast';
 import { errorToastPosition } from '../../../../../utils/constant';
 import { createSection, updateSection } from '../../../../../services/backendCallFunction/courseAPI';
@@ -45,7 +45,7 @@ function CourseBuilderForm() {
 
         // update store with new results
         if (res) {
-            dispatch(course(res));
+            dispatch(setCourse(res));
             setEditSection(null)
             setValue('sectionName', '')
         }
@@ -73,7 +73,7 @@ function CourseBuilderForm() {
 
     //! Step Back button: Not working
     const goBack = () => {
-        setStep(1)
+        dispatch(setStep(1))
         dispatch(setEditCourse(true));
     }
 
@@ -143,7 +143,7 @@ function CourseBuilderForm() {
             </form>
 
             {/* CREATE NEW SUB-SECTION */}
-            {course.courseContent.length > 0 && (
+            {course?.courseContent?.length > 0 && (
                 <NestedSections handleEditSectionName={handleEditSectionName} />
             )}
 

@@ -40,7 +40,13 @@ function NestedSections({ handleEditSectionName }) {
         const res = await deleteSubSection(token, data);
 
         if (res) {
-            dispatch(setCourse(res))
+            // update courseContent specific section with new section data
+            const updatedCourseContent = course.courseContent.map(section =>
+                section._id === sectionId ? res : section
+            )
+            // update only courseContent which holds section data
+            const updatedCourse = { ...course, courseContent: updatedCourseContent }
+            dispatch(setCourse(updatedCourse))
         }
         setConfirmationModal(null);
     }
