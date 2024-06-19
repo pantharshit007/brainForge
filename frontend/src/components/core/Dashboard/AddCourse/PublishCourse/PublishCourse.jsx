@@ -52,10 +52,12 @@ function PublishCourse() {
         const alreadyPublished = course?.status === COURSE_STATUS.PUBLISHED && getValues('public') === true;
         const alreadyDrafted = course?.status === COURSE_STATUS.DRAFT && getValues('public') === false;
 
+        const courseStatus = getValues('public') ? COURSE_STATUS.PUBLISHED : COURSE_STATUS.DRAFT;
+
         // check if no changes are made
         if (alreadyPublished || alreadyDrafted) {
             gotToCourse()
-            toast.success('Course Status: Draft', toastPosition)
+            toast.success('Course Status: ' + courseStatus, toastPosition)
             return
         }
 

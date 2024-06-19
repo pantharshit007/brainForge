@@ -85,7 +85,7 @@ function CourseInformationForm() {
                 const currentValues = getValues();
                 const formData = new FormData();
 
-                formData.append('CourseId', course._id);
+                formData.append('courseId', course._id);
 
                 if (currentValues.courseTitle !== course.courseName) {
                     formData.append("courseName", data.courseTitle);
@@ -109,6 +109,14 @@ function CourseInformationForm() {
 
                 if (currentValues.courseInstructions.toString() !== course.instructions.toString()) {
                     formData.append("instructions", JSON.stringify(data.courseInstructions));
+                }
+
+                if (currentValues.courseTags.toString() !== course.tag.toString()) {
+                    formData.append('tag', JSON.stringify(data.courseTags));
+                }
+
+                if (currentValues.courseImage !== course.thumbnail) {
+                    formData.append('thumbnailImage', data.courseImage)
                 }
 
                 setLoading(true);
@@ -307,7 +315,7 @@ function CourseInformationForm() {
             </>
 
             {/* BUTTONS */}
-            <div>
+            <div className='flex justify-end gap-x-3'>
                 {editCourse && (
                     <button
                         onClick={() => dispatch(setStep(2))}

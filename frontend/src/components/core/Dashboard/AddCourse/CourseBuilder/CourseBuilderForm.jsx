@@ -71,7 +71,6 @@ function CourseBuilderForm() {
         setValue("sectionName", sectionName);
     }
 
-    //! Step Back button: Not working
     const goBack = () => {
         dispatch(setStep(1))
         dispatch(setEditCourse(true));

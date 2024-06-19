@@ -36,9 +36,9 @@ router.post('/createCourse', auth, isInstructor, createCourse)
 // get all courses router
 router.get('/getAllCourses', getAllCourses)     //TODO: add auth before deploy
 // get course details
-router.get('/getCourseDetails', getCourseDetails)   //TODO: add auth before deploy
+router.post('/getCourseDetails', getCourseDetails)
 // get Full Course details (user specific) 
-router.get('/getFullCourseDetails', auth, getFullCourseDetails)
+router.post('/getFullCourseDetails', auth, getFullCourseDetails)
 // get all courses router (Instructor specific)
 router.get('/getInstructorCourses', auth, isInstructor, getInstructorCourses)
 // update Course router: INSTRUCTOR

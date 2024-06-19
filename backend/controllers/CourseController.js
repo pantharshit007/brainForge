@@ -167,7 +167,91 @@ async function getAllCourses(req, res) {
 async function getCourseDetails(req, res) {
     try {
         //fetch course Id
-        const courseId = req.body.courseId;
+        const { courseId } = req.body;
+
+        // check validity
+        if (!courseId) {
+            return res.status(404).json({
+                success: false,
+                message: 'Course Id required',
+            })
+        }
+
+        //fetch course details
+        const courseDetails = await Course.findById(courseId)
+            .populate({
+                path: 'instructor',
+                populate: {
+                    path: 'additionalDetails',
+                }
+            })
+            .populate({
+                path: 'courseContent',
+                populate: {
+                    path: 'subSection',
+                    select: '-videoUrl' //to exclude videoUrl from populating
+                }
+            })
+            .populate({
+                path: 'ratingAndReviews',
+                populate: {
+                    path: 'user', select: 'firstName lastName accountType image'
+                }
+            })
+            .populate('category')
+            .exec()
+
+        // check validity
+        if (!courseDetails) {
+            return res.status(404).json({
+                success: false,
+                message: 'No course Found with id ' + courseId,
+            });
+        }
+
+        let totalTimeInSeconds = 0;
+
+        // courseDetails.courseContent.forEach((section) => {
+        //     section.subSection.forEach((subSection) => {
+        //         const timeDurationSeconds = parseInt(subSection.timeDuration)
+        //         totalTimeInSeconds += timeDurationSeconds;
+        //     })
+        // })
+
+        //! using already calculated time from section Modal
+        courseDetails.courseContent.forEach(section => {
+            const timeDurationSeconds = parseInt(section?.totalSectionDuration)
+            totalTimeInSeconds += timeDurationSeconds;
+        })
+
+        //convert seconds to proper annotations
+        const totalDuration = convertSecondsToDuration(totalTimeInSeconds);
+
+        //response
+        return res.status(200).json({
+            success: true,
+            message: 'Course found!',
+            data: {
+                courseDetails,
+                totalDuration
+            }
+        })
+
+    } catch (err) {
+        console.log("> Failed to retrieve Course Details: " + err.message)
+        return res.status(500).json({
+            success: false,
+            message: "Failed to retrieve Course Details: " + err.message,
+        })
+    }
+}
+
+// fetch course details with user specific info
+async function getFullCourseDetails(req, res) {
+    try {
+        //fetch course Id
+        const { courseId } = req.body;
+        const userId = req.user.id;
 
         // check validity
         if (!courseId) {
@@ -196,91 +280,9 @@ async function getCourseDetails(req, res) {
             .populate('ratingAndReviews')
             .exec()
 
+
         // check validity
         if (!courseDetails) {
-            return res.status(404).json({
-                success: false,
-                message: 'No course Found with id ' + courseId,
-            });
-        }
-
-        // only show courses which are in published phase    
-        /*if (courseDetails.status === "Draft") {
-          return res.status(403).json({
-            success: false,
-            message: `Accessing a draft course is forbidden`,
-          });
-        }
-        */
-
-        let totalTimeInSeconds = 0;
-
-        courseDetails.courseContent.forEach((section) => {
-            section.subSection.forEach((subSection) => {
-                const timeDurationSeconds = parseInt(subSection.timeDuration)
-                totalTimeInSeconds += timeDurationSeconds;
-            })
-        })
-
-        //convert seconds to proper annotations
-        const totalDuration = convertSecondsToDuration(totalTimeInSeconds);
-
-        //response
-        return res.status(200).json({
-            success: true,
-            message: 'Course found!',
-            data: {             //ToRemove later
-                courseDetails,
-                totalDuration
-            }
-        })
-
-    } catch (err) {
-        console.log("> Failed to retrieve Course Details: " + err.message)
-        return res.status(500).json({
-            success: false,
-            message: "Failed to retrieve Course Details: " + err.message,
-        })
-    }
-}
-
-// fetch course details with user specific info: course Progress data
-async function getFullCourseDetails(req, res) {
-    try {
-        //fetch course Id
-        const courseId = req.body.courseId;
-        const userId = req.user.id;
-
-        // check validity
-        if (!courseId) {
-            return res.status(404).json({
-                success: false,
-                message: 'Course Id required',
-            })
-        }
-
-        //fetch course details
-        const courseDetails = await Course.findById(courseId)
-            .populate({
-                path: 'instructor',
-                populate: {
-                    path: 'additionalDetails',
-                }
-            })
-            .populate({
-                path: 'CourseContent',
-                populate: {
-                    path: 'subSection',
-                    select: '-videoUrl' //to exclude videoUrl from ppulating
-                }
-            })
-            .populate('category')
-            .populate('ratingAndReviews')
-            .exec()
-
-
-        // check validity
-        if (!courseDetails || !courseDetails.length) {
             return res.status(404).json({
                 success: false,
                 message: 'No course Found with id ' + courseId,
@@ -293,8 +295,6 @@ async function getFullCourseDetails(req, res) {
             userId: userId,
         })
 
-        console.log("Course Progress", courseProgressStatus);
-
         // only show courses which are in published phase    
         /*if (courseDetails.status === "Draft") {
           return res.status(403).json({
@@ -304,32 +304,41 @@ async function getFullCourseDetails(req, res) {
         }
         */
 
+        // let totalTimeInSeconds = 0;
 
-        let totalTimeInSeconds = 0;
+        // courseDetails.courseContent.forEach((section) => {
+        //     section.subSection.forEach((subSection) => {
+        //         const timeDurationSeconds = parseInt(subSection.timeDuration)
+        //         totalTimeInSeconds += timeDurationSeconds;
+        //     })
+        // })
 
-        courseDetails.courseContent.forEach((section) => {
-            section.subSection.forEach((subSection) => {
-                const timeDurationSeconds = parseInt(subSection.timeDuration)
-                totalTimeInSeconds += timeDurationSeconds;
-            })
-        })
+        //! using already calculated time from section Modal
+        // courseDetails.courseContent.forEach(section => {
+        //     const timeDurationSeconds = parseInt(section.totalSectionDuration)
+        //     totalTimeInSeconds += timeDurationSeconds;
+        // })
 
         //convert seconds to proper annotations
-        const totalDuration = convertSecondsToDuration(totalTimeInSeconds);
+        // const totalDuration = convertSecondsToDuration(totalTimeInSeconds);
+
+        // check if their is any progress: if yes then return section ID's
+        const completedSection = courseProgressStatus?.completedVideos
+            ? courseProgressStatus.completedVideos
+            : []
 
         //response
         return res.status(200).json({
             success: true,
             message: 'Course found!',
-            data: {             //ToRemove later
+            data: {
                 courseDetails,
-                courseProgressStatus,
-                totalDuration
+                completedVideos: completedSection
             }
         })
 
     } catch (err) {
-        console.log("> Failed to retrieve Course Details: " + err.message)
+        console.log("> Failed to retrieve Full Course Details: " + err.message)
         return res.status(500).json({
             success: false,
             message: "Failed to retrieve Course Details: " + err.message,
@@ -376,7 +385,10 @@ async function updateCourse(req, res) {
         const courseDetails = await Course.findById(courseId);
 
         if (!courseDetails) {
-            throw new Error('Course not found');
+            return res.status(500).json({
+                success: false,
+                message: 'Course not found',
+            })
         }
 
         // updating the upload location and adding tag
@@ -395,7 +407,6 @@ async function updateCourse(req, res) {
         for (const key in updates) {
             if (updates.hasOwnProperty(key)) {
                 if (key == 'tag' || key == 'instructions') {
-                    console.log('course update: ', updates[key]);
                     courseDetails[key] = JSON.parse(updates[key]);
                 } else {
                     courseDetails[key] = updates[key];
@@ -436,7 +447,7 @@ async function updateCourse(req, res) {
         console.log('> Failed to update Course:', err.message)
         res.status(500).json({
             success: false,
-            message: "Failed to update Course:" + err.message
+            message: "Failed to update Course: " + err.message
         })
     }
 }

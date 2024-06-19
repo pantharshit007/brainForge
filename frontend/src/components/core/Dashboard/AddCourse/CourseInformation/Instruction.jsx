@@ -25,17 +25,15 @@ function Instruction({ name, label, register, errors, setValue, getValues }) {
     }
 
     useEffect(() => {
-        register(name, { required: true })
-    }, [register])
+        register(name, { required: true, validate: (value) => value.length > 0 })
+        if (editCourse) {
+            setInstructionList(course?.instructions);
+        }
+    }, [])
 
     // during editing phase
     useEffect(() => {
         setValue(name, instructionList)
-        if (editCourse) {
-            setInstructionList(course?.instructions);
-            setValue(name, course?.instructions)
-        }
-
     }, [instructionList])
 
     return (
@@ -52,7 +50,6 @@ function Instruction({ name, label, register, errors, setValue, getValues }) {
                     value={instruction}
                     onChange={(e) => setInstruction(e.target.value)}
                     className='form-style w-full'
-
                 />
 
                 <button

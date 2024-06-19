@@ -12,8 +12,8 @@ function TagsInput({ name, label, placeholder, register, errors, setValue }) {
 
         // when edit course
         if (editCourse) {
-            setTags(JSON.parse(course?.tag));
-            setValue(name, JSON.parse(course?.tag));
+            setTags(course?.tag);
+            setValue(name, course?.tag);
         }
 
     }, [])

@@ -53,11 +53,69 @@ export async function createCourse(token, data) {
     }
 }
 
-// GET ALL COURSES BACKEN CALL 
+// GET ALL COURSES BACKEND CALL 
 
 // FETCH COURSE DETAIL BACKEND CALL
+export async function fetchCourseDetails(data) {
+    let result = null;
+    const toastId = toast.loading('Loading...');
+
+    try {
+        // GET RESPONSE BE: '/getCourseDetails'
+        const response = await apiConnector('POST', COURSE_DETAILS_API, data);
+        console.log('> COURSE DETAILS API: ', response);
+
+        // IF ENCOUNTER AN ERROR
+        if (!response?.data?.success) {
+            throw new Error(response.data.message);
+        }
+
+        // COURSE DETAIL RETURN: courseDetails
+        result = response?.data?.data[0];
+        return result;
+
+    } catch (err) {
+        console.log('> FETCH COURSE API FAILURE:', err?.response?.data?.message);
+        toast.error(err?.response?.data?.message || 'Failed to Fetch Course Details', errorToastPosition);
+
+    } finally {
+        toast.dismiss(toastId);
+    }
+}
 
 // GET FULL COURSE DETAIL BACKEND CALL
+export async function fetchFullCourseDetail(token, data, dispatch, navigate) {
+    let result = null;
+    const toastId = toast.loading('Loading...');
+    const headers = { Authorization: 'Bearer ' + token };
+
+    try {
+        // GET RESPONSE BE: '/getFullCourseDetails'
+        const response = await apiConnector('POST', GET_FULL_COURSE_DETAILS_AUTHENTICATED, data, headers);
+        // console.log('> FULL COURSE DETAILS API: ', response);
+
+        // IF ENCOUNTER AN ERROR
+        if (!response?.data?.success) {
+            throw new Error(response.data.message);
+        }
+
+        // FULL COURSE DETAIL RETURN: courseDetails,totalDuration,completedVideos
+        result = response?.data?.data;
+        return result;
+
+    } catch (err) {
+        console.log('> FETCH FULL COURSE API FAILURE:', err?.response?.data?.message);
+        toast.error(err?.response?.data?.message || 'Failed to Fetch Full Course Details', errorToastPosition);
+
+        // IF TOKEN EXPIRES
+        if (err?.response?.status === 408) {
+            dispatch(loginTimeOut(err?.response?.data?.message, navigate))
+        }
+
+    } finally {
+        toast.dismiss(toastId);
+    }
+}
 
 // GET INSTRUCTOR SPECIFIC COURSES BACKEND CALL
 export async function fetchInstructorCourses(token, dispatch, navigate) {

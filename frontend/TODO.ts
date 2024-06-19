@@ -40,4 +40,4 @@
 //! TODO: remove testData from enrolledCourses
 //? TODO: remove the video from hero section and replace it with product images in a slider formation + tilt effect
 //? TODO: remove package video-react from fe
-//! TODO: make changes in auth controller so no is able to create ADMIN account and ADMIN priviledge on frontEnd.
+//! TODO: make changes in auth controller so no one is able to create ADMIN account (even from postMan) and ADMIN priviledge on frontEnd.

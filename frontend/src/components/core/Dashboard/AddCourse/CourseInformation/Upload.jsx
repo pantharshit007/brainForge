@@ -1,11 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone';
 import { FiUploadCloud } from "react-icons/fi"
+import { useSelector } from 'react-redux';
 
 
 function Upload({ name, label, register, errors, setValue }) {
 
     const [image, setImage] = useState(null)
+    const { editCourse, course } = useSelector(state => state.course)
 
     // setting the new image values
     const onDrop = useCallback(acceptedFiles => {
@@ -25,6 +27,13 @@ function Upload({ name, label, register, errors, setValue }) {
         register(name, { required: true })
     }, [register])
 
+    useEffect(() => {
+        if (editCourse) {
+            setImage(course?.thumbnail)
+        }
+
+        setValue(name, image)
+    }, [image, setValue])
 
     return (
         <div className="flex flex-col space-y-2">

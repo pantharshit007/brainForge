@@ -11,6 +11,7 @@ import SidebarLink from './SidebarLink';
 import ConfirmationModal from '../../common/ConfirmationModal'
 import Backdrop from '../../common/Backdrop'
 import { setOpenSidebar, setScreenSize } from '../../../reducer/slices/sideBarSlice'
+import { ACCOUNT_TYPE } from '../../../utils/constant';
 
 
 // sliding side bar motion CSS 
@@ -173,15 +174,17 @@ function Sidebar() {
             }
 
             {/* MOBILE SIDEBAR */}
-            <div className='flex md:hidden fixed bottom-0 justify-between items-center -pl-4 py-1 bg-richblack-900 z-50 w-full'>
-                <div className='flex flex-row gap-1 w-full justify-between'>
+            <div className='flex md:hidden fixed bottom-0 justify-between items-center px-2 py-1 bg-richblack-900 z-50 w-full'>
+                <div className='flex flex-row md:gap-1 w-full justify-between'>
                     {
                         sidebarLinks.map((link) => {
                             if (link.type && user?.accountType !== link.type) return null;
+
                             return (
                                 <SidebarLink key={link.id} link={link} iconName={link.icon} />
                             )
-                        })}
+                        })
+                    }
                     <SidebarLink
                         link={{ name: "Settings", path: "/dashboard/settings" }}
                         iconName="VscSettingsGear"

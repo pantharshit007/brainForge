@@ -22,6 +22,7 @@ import Cart from './components/core/Dashboard/Cart/Cart'
 import { ACCOUNT_TYPE } from './utils/constant'
 import MyCourses from './components/core/Dashboard/InstructorCourses/MyCourses'
 import AddCourse from './components/core/Dashboard/AddCourse/AddCourse'
+import EditCourse from './components/core/Dashboard/EditCourse/EditCourse'
 
 function App() {
   // TODO: Implement an upword arrow which bring user to top of the page.
@@ -89,6 +90,7 @@ function App() {
               <>
                 <Route path="dashboard/my-courses" element={<MyCourses />} />
                 <Route path="dashboard/add-course" element={<AddCourse />} />
+                <Route path="dashboard/edit-course/:courseId" element={<EditCourse />} />
               </>
             )}
 

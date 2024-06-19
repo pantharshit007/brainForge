@@ -37,7 +37,10 @@ async function receivePayment(req, res) {
             const uid = mongoose.Types.ObjectId.createFromHexString(userId);
 
             if (Course.studentEnrolled.includes(uid)) {
-                throw new Error("User already Enrolled in the Course");
+                return res.status(411).json({
+                    success: false,
+                    message: 'User already Enrolled in the Course'
+                })
             }
 
         } catch (err) {

@@ -24,9 +24,9 @@ function MyCourses() {
     }, [])
 
     return (
-        <>
+        <div>
             <div className="mb-14 mt-6 flex items-center justify-between">
-                <h1 className="text-3xl font-medium text-richblack-5">
+                <h1 className="md:text-3xl sm:text-2xl text-xl font-medium text-richblack-5">
                     My Courses
                 </h1>
 
@@ -42,7 +42,7 @@ function MyCourses() {
                 {/* Render courses table if courses available */}
             </div>
             {courses && <CoursesTable courses={courses} setCourses={setCourses} />}
-        </>
+        </div>
     )
 }
 

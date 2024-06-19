@@ -7,6 +7,13 @@ const JWT_SECRET = process.env.JWT_SECRET;
 async function auth(req, res, next) {
     try {
         const authHeader = req.header("Authorization");
+        if (authHeader === undefined) {
+            return res.status(401).json({
+                success: false,
+                message: "Token is missing"
+            });
+        }
+
         const token = req.cookies.token || authHeader.split(" ")[1];
 
         if (!token) {

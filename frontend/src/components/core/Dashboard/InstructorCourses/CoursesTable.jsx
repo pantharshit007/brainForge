@@ -53,7 +53,7 @@ function CoursesTable({ courses, setCourses }) {
             <Table>
                 <Tbody>
                     <Tr>
-                        <Td className="py-10 text-center text-2xl font-medium text-richblack-100">
+                        <Td className="py-10 text-center text-2xl font-medium text-richblack-100 mx-auto">
                             No courses found
                         </Td>
                     </Tr>
@@ -64,7 +64,7 @@ function CoursesTable({ courses, setCourses }) {
 
     return (
         <>
-            <Table className="rounded-xl border border-richblack-800 ">
+            <Table className="rounded-xl border border-richblack-800 mb-16">
                 <Thead>
                     <Tr className="flex gap-x-10 rounded-t-md border-b border-b-richblack-800 px-6 py-2 text-richblack-100">
                         <Th className="flex-1 text-left text-sm font-medium uppercase text-richblack-100">
@@ -92,7 +92,7 @@ function CoursesTable({ courses, setCourses }) {
                                 <img
                                     src={course?.thumbnail}
                                     alt={course?.courseName}
-                                    className="md:h-[148px] md:w-[220px] h-[170px] w-[280px] mx-auto aspect-video rounded-lg object-cover"
+                                    className="md:h-[148px] md:w-[220px] w-full h-full aspect-video rounded-lg object-cover"
                                 />
 
                                 {/* DETAIL INFO - COURSE */}
@@ -119,19 +119,21 @@ function CoursesTable({ courses, setCourses }) {
                                     </p>
 
                                     {/* COURSE STATUS */}
-                                    {course.status === COURSE_STATUS.DRAFT ? (
-                                        <p className="flex w-fit flex-row items-center gap-2 rounded-full bg-richblack-700 px-2 py-[2px] text-[12px] font-medium text-pink-100">
-                                            <HiClock size={14} />
-                                            Drafted
-                                        </p>
-                                    ) : (
-                                        <p className="flex w-fit flex-row items-center gap-2 rounded-full bg-indigo-600 px-2 py-[2px] text-[12px] font-medium text-richblack-50">
-                                            <div className="flex h-3 w-3 items-center justify-center rounded-full bg-richblack-50 text-indigo-600">
-                                                <FaCheck size={8} />
-                                            </div>
-                                            Published
-                                        </p>
-                                    )}
+                                    <>
+                                        {course.status === COURSE_STATUS.DRAFT ? (
+                                            <p className="flex w-fit flex-row items-center gap-2 rounded-full bg-richblack-700 px-2 py-[2px] text-[12px] font-medium text-pink-100">
+                                                <HiClock size={14} />
+                                                Drafted
+                                            </p>
+                                        ) : (
+                                            <p className="flex w-fit flex-row items-center gap-2 rounded-full bg-indigo-600 px-2 py-[2px] text-[12px] font-medium text-richblack-5">
+                                                <span className="flex h-3 w-3 items-center justify-center rounded-full bg-richblack-5 text-indigo-600">
+                                                    <FaCheck size={8} />
+                                                </span>
+                                                Published
+                                            </p>
+                                        )}
+                                    </>
                                 </div>
                             </Td>
 
@@ -145,7 +147,7 @@ function CoursesTable({ courses, setCourses }) {
                                 {/* EDIT BUTTON */}
                                 <button
                                     disabled={loading}
-                                    onClick={() => navigate('/dashboard/update-course/' + course._id)}
+                                    onClick={() => navigate('/dashboard/edit-course/' + course._id)}
                                     title="Edit"
                                     className="px-2 transition-all duration-200 hover:scale-110 hover:text-caribbeangreen-300 mr- mb-"
                                 >
