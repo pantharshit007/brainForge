@@ -5,7 +5,7 @@
 // TODO: fix bottom of login page when inspects. ⚔️
 // TODO: password constraints during signup: pass must be 8 level.
 // TODO: find ulternative to instead of storing user data in local storage. in profileSlice
-// TODO: Mobile view of NavBar
+///// TODO: Mobile view of NavBar
 // TODO: try Implementing tilting effect on images similar to hkirat website.
 // TODO: Update the Error page.
 //? TODO: Check why are we using dispatch in SideBarLink: Its related to Course State will handle later
@@ -23,6 +23,8 @@
 // TODO: Add a backend function in global api where we call the auth middleware and check if the token is still valid or not and we can call this backend function call in useffect in every dashboard page.
 // TODO: add one token checker call in add course section in INSTRUCTOR
 // TODO: Make a dashboard for ADMIN where we have choices between Instructor and Student which shows a table of all the users with specific account type and by click on them we can we more detail with a special auth controller.
+// TODO: add "already have an account log in button and do not have an account create button on login and signup"
+//?TODO: the eye from login and signup is visible when side menu is open.
 
 //? <<<<<<< BACKEND TODO >>>>>>>> //
 //  TODO BACKEND: Check if cookies are even working on the backend side and twik with their expiry time.

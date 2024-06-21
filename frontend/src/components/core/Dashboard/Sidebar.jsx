@@ -41,7 +41,7 @@ const containerVariants = {
 function Sidebar() {
     const { user, loading: profileLoading } = useSelector(state => state.profile);
     const { loading: authLoading } = useSelector(state => state.auth);
-    const { openSidebar, screenSize } = useSelector(state => state.sidebar);
+    const { openSidebar, screenSize, isOpen } = useSelector(state => state.sidebar);
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -112,7 +112,7 @@ function Sidebar() {
     // }
 
     return (
-        <>
+        <div className="relative">
             {/* MENU TOGGLE BUTTON */}
             <div className='hidden md:flex text-richblack-25 absolute left-3 top-1 cursor-pointer hover:bg-indigo-800/40 hover:text-richblack-50 p-1 rounded-md transition-all duration-200'
                 onClick={() => dispatch(setOpenSidebar(!openSidebar))}
@@ -173,25 +173,28 @@ function Sidebar() {
                 </Backdrop>
             }
 
-            {/* MOBILE SIDEBAR */}
-            <div className='flex md:hidden fixed bottom-0 justify-between items-center px-2 py-1 bg-richblack-900 z-50 w-full'>
-                <div className='flex flex-row md:gap-1 w-full justify-between'>
-                    {
-                        sidebarLinks.map((link) => {
-                            if (link.type && user?.accountType !== link.type) return null;
+            {/* MOBILE SIDEBAR: when sidebar is open hide it */}
+            {!isOpen && (
+                <div className='flex md:hidden fixed bottom-0 justify-between items-center px-2 py-1 bg-richblack-900 z-50 w-full'>
+                    <div className='flex flex-row md:gap-1 w-full justify-between'>
+                        {
+                            sidebarLinks.map((link) => {
+                                if (link.type && user?.accountType !== link.type) return null;
 
-                            return (
-                                <SidebarLink key={link.id} link={link} iconName={link.icon} />
-                            )
-                        })
-                    }
-                    <SidebarLink
-                        link={{ name: "Settings", path: "/dashboard/settings" }}
-                        iconName="VscSettingsGear"
-                    />
+                                return (
+                                    <SidebarLink key={link.id} link={link} iconName={link.icon} />
+                                )
+                            })
+                        }
+                        <SidebarLink
+                            link={{ name: "Settings", path: "/dashboard/settings" }}
+                            iconName="VscSettingsGear"
+                        />
+                    </div>
                 </div>
-            </div>
-        </>
+            )}
+
+        </div>
     )
 }
 

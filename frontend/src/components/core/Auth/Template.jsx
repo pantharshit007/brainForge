@@ -15,7 +15,7 @@ function Template({ title, description1, description2, image, formType }) {
 
             ) : (
 
-                <div className="mx-auto flex w-11/12 max-w-maxContent flex-col-reverse justify-between gap-y-12 py-12 md:flex-row md:gap-y-0 md:gap-x-12">
+                <div className="mx-auto flex w-11/12 max-w-maxContent flex-col-reverse justify-between gap-y-12 pt-11 pb-8 md:flex-row md:gap-y-0 md:gap-x-12">
 
                     {/* LEFT-PANEL */}
                     <div className="mx-auto w-11/12 max-w-[450px] md:mx-0 lg:ml-2 lg:relative">
