@@ -52,9 +52,8 @@ async function getAllCategorys(req, res) {
 // fetch courses based on different category: category Page
 async function categoryPageDetails(req, res) {
     try {
-        //fetcj category Id
+        //fetch category Id
         const categoryId = req.body.categoryId;
-
         if (!categoryId) {
             return res.status(403).json({
                 success: false,
@@ -62,12 +61,15 @@ async function categoryPageDetails(req, res) {
             })
         }
 
-        //get courses for specified category
+        //get courses for specified category //!remove unnecessary data from instructor
         const selectedCategory = await Category.findById(categoryId)
             .populate({
                 path: "courses",
                 match: { status: "Published" },
-                populate: "ratingAndReviews",
+                populate: ([
+                    { path: "instructor" },
+                    { path: "ratingAndReviews" }
+                ])
             })
             .exec();
 
@@ -79,41 +81,59 @@ async function categoryPageDetails(req, res) {
             })
         }
 
-        // get courses for other categories
+        // Handle the case when there are no courses
+        if (selectedCategory.courses.length === 0) {
+            console.log("> No courses found for the selected category.");
+            return res.status(404).json({
+                success: false,
+                message: "No courses found for the selected category.",
+            });
+        }
+
+        // get courses for other categories //!remove unnecessary data from instructor
         const otherCategories = await Category.find({
             _id: { $ne: categoryId },     // not equal to categoryId
         })
             .populate({
                 path: 'courses',
                 match: { status: "Published" },
-                populate: "ratingAndReviews"
+                populate: ([
+                    { path: "instructor" },
+                    { path: "ratingAndReviews" }
+                ])
             })
             .exec();
 
-        // get top selling course: TODO: re-think how this works
+        let differentCourses = [];
+        for (const category of otherCategories) {
+            differentCourses.push(...category.courses);
+        }
+
+        // get top selling course: TODO: re-think how this works //!remove unnecessary data from instructor
         const allCategories = await Category.find()
             .populate({
                 path: "courses",
                 match: { status: "Published" },
-                populate: {
-                    path: "instructor",
-                },
+                populate: ([
+                    { path: "instructor" },
+                    { path: "ratingAndReviews" }
+                ])
             })
             .exec()
 
         const allCourses = allCategories.flatMap((category) => category.courses)
         const mostSellingCourses = allCourses
             .sort((a, b) => b.sold - a.sold)
-            .slice(0, 10)
+            .slice(0, 6)
 
-        console.log("mostSellingCourses:", mostSellingCourses)
+        // console.log("mostSellingCourses:", mostSellingCourses)
 
         return res.status(200).json({
             success: true,
             message: 'Category Data has been fetched.',
             data: {
                 selectedCategory,
-                otherCategories,
+                differentCourses,
                 mostSellingCourses
             }
         })

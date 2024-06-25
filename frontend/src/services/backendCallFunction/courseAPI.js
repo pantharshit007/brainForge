@@ -29,7 +29,10 @@ const {
 export async function createCourse(token, data) {
     let res = [];
     const toastId = toast.loading('Loading...');
-    const headers = { Authorization: 'Bearer ' + token };
+    const headers = {
+        "Content-Type": "multipart/form-data",
+        Authorization: 'Bearer ' + token
+    };
 
     try {
         // CALLING /createCourse BACKEND URL
@@ -158,7 +161,10 @@ export async function updateCourse(token, data) {
 
     let result = []
     const toastId = toast.loading('Updating...');
-    const headers = { Authorization: 'Bearer ' + token };
+    const headers = {
+        "Content-Type": "multipart/form-data",
+        Authorization: 'Bearer ' + token
+    };
 
     try {
         // GETTING BACK RESPONSE FORM BE
@@ -297,7 +303,10 @@ export async function deleteSection(token, data) {
 export async function createSubSection(token, data) {
     let res = null;
     const toastId = toast.loading('Creating...');
-    const headers = { Authorization: 'Bearer ' + token };
+    const headers = {
+        "Content-Type": "multipart/form-data",
+        Authorization: 'Bearer ' + token
+    };
 
     try {
         // CALLING THE /addSubSection URL
@@ -325,7 +334,10 @@ export async function createSubSection(token, data) {
 export async function updateSubSection(token, data) {
     let res = null;
     const toastId = toast.loading('Updating...');
-    const headers = { Authorization: 'Bearer ' + token };
+    const headers = {
+        "Content-Type": "multipart/form-data",
+        Authorization: 'Bearer ' + token
+    };
 
     try {
         // CALLING THE /updateSubSection URL

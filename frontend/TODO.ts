@@ -24,7 +24,8 @@
 // TODO: add one token checker call in add course section in INSTRUCTOR
 // TODO: Make a dashboard for ADMIN where we have choices between Instructor and Student which shows a table of all the users with specific account type and by click on them we can we more detail with a special auth controller.
 // TODO: add "already have an account log in button and do not have an account create button on login and signup"
-//?TODO: the eye from login and signup is visible when side menu is open.
+//? TODO: the eye from login and signup is visible when side menu is open.
+// TODO: check so that if upload dp is clicked no error is given in myprofile instead toast: Select an Image
 
 //? <<<<<<< BACKEND TODO >>>>>>>> //
 //  TODO BACKEND: Check if cookies are even working on the backend side and twik with their expiry time.

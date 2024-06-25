@@ -27,7 +27,9 @@ export const profileEndPoints = {
 
 // CATEGORIES ENDPOINTS
 export const categories = {
-    CATEGORIES_API: BASE_URL + '/course/getAllCatogories'
+    CATEGORIES_API: BASE_URL + '/course/getAllCatogories',
+    PROTECTED_CATEGORIES_API: BASE_URL + '/course/getAllCatogorie',
+    CATALOG_DATA: BASE_URL + '/course/getCategoryPageDetails',
 }
 
 // CONTACT-US ENDPOINTS

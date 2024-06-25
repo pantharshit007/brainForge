@@ -13,7 +13,7 @@ function Upload({ name, label, register, errors, setValue }) {
     const onDrop = useCallback(acceptedFiles => {
         const imageFile = acceptedFiles[0]
         if (imageFile) {
-            setImage(URL.createObjectURL(imageFile))
+            setImage(imageFile)
             setValue(name, imageFile)
         }
     }, [setValue, name])
@@ -47,7 +47,7 @@ function Upload({ name, label, register, errors, setValue }) {
                 // DISPLAY IMAGE UPLOADED
                 <div className="flex flex-col space-y-2">
                     <img
-                        src={image}
+                        src={URL.createObjectURL(image)}
                         alt="thumbnail"
                         className="h-full w-full rounded-md object-cover"
                     />

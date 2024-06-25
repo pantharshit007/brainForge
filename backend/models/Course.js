@@ -55,6 +55,10 @@ const courseSchema = new Schema({
         enum: ["Draft", "Published"],
         default: 'Draft'
     },
+    sold: {
+        type: Number,
+        default: 0,
+    },
 
     // Add timestamps for when the document is created and last modified
 }, { timestamps: true },

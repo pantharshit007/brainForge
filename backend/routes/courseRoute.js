@@ -69,9 +69,11 @@ router.delete('/deleteSubSection', auth, isInstructor, deleteSubSection)
 // create category router: ADMIN
 router.post('/createCategory', auth, isAdmin, createCategory)
 // fetch all category router: 
-router.get('/getAllCatogories', getAllCategorys)    //TODO: add auth:isAdmin before deploy
+router.get('/getAllCatogories', getAllCategorys)
+// fetch all category router: Protected
+router.get('/getAllCatogorie', auth, isInstructor, getAllCategorys)
 // fetch category based courses router
-router.get('/getCategoryPageDetails', categoryPageDetails)  //TODO: add auth:isAdmin before deploy
+router.post('/getCategoryPageDetails', categoryPageDetails)
 
 // -------- Rating and Review Routes -------- //
 

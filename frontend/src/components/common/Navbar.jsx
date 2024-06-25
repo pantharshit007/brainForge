@@ -10,11 +10,10 @@ import logo from '../../assets/Logo/Logo1-Full-Light.png'
 import { NavbarLinks } from '../../data/navbar-links'
 import { ACCOUNT_TYPE } from '../../utils/constant'
 import ProfileDropDown from '../core/Auth/ProfileDropDown'
-import { apiConnector } from '../../services/apiConnector'
-import { categories } from '../../services/apis'
 import NavbarMob from './NavbarMob'
 import Backdrop from './Backdrop'
 import { setIsOpen } from '../../reducer/slices/sideBarSlice'
+import { fetchCourseCategories } from '../../services/backendCallFunction/categoryAPI'
 
 function Navbar() {
     const { token } = useSelector(state => state.auth)
@@ -28,8 +27,8 @@ function Navbar() {
 
     async function fetchCategory() {
         try {
-            const res = await apiConnector("GET", categories.CATEGORIES_API)
-            setSubLinks(res.data.AllCategorys)
+            const res = await fetchCourseCategories();
+            setSubLinks(res)
             // console.log("Categories: " + JSON.stringify(res.data.AllCategorys))
 
         } catch (err) {
@@ -83,7 +82,7 @@ function Navbar() {
                                                 subLinks?.filter((subLink) => subLink?.courses?.length > 0)
                                                     ?.map((category, index) => (
                                                         // add link to category
-                                                        <Link to={'/category/' + category.name
+                                                        <Link to={'/catalog/' + category.name
                                                             .split(' ')
                                                             .join('-')
                                                             .toLowerCase()} key={index}

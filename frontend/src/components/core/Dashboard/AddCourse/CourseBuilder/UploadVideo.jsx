@@ -38,8 +38,8 @@ function UploadVideo({
 
     // render video file and make it available for preview
     const previewFile = (videoFile) => {
-        const videoUrl = URL.createObjectURL(videoFile);
-        setPreviewSource(videoUrl);
+        // const videoUrl = URL.createObjectURL(videoFile); // use only for presenting dont push this to BE
+        setPreviewSource(videoFile);
     }
 
     useEffect(() => {
@@ -68,7 +68,7 @@ function UploadVideo({
                         {/* PLAYER */}
                         {/* <Player aspectRatio="16:9" playsInline src={previewSource} preload="metadata" /> */}
                         <div className="relative pb-[56.25%] h-0 bg-black">
-                            <ReactPlayer url={previewSource} controls={true} width="100%" height="100%"
+                            <ReactPlayer url={URL.createObjectURL(previewSource)} controls={true} width="100%" height="100%"
                                 className="absolute top-0 left-0" />
                         </div>
 

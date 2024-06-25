@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BsChevronDown } from "react-icons/bs"
 
 import { logout } from '../../services/backendCallFunction/authAPI';
-
+import { setIsOpen } from '../../reducer/slices/sideBarSlice'
 
 const dropIn = {
     hidden: {
@@ -29,7 +29,7 @@ const dropIn = {
     },
 };
 
-function NavbarMob({ isOpen, setIsOpen, NavbarLinks, subLinks }) {
+function NavbarMob({ isOpen, NavbarLinks, subLinks }) {
 
     const { user } = useSelector(state => state.profile);
     const { token } = useSelector(state => state.auth);
@@ -92,7 +92,7 @@ function NavbarMob({ isOpen, setIsOpen, NavbarLinks, subLinks }) {
                                                 subLinks?.filter((subLink) => subLink?.courses?.length > 0)
                                                     ?.map((category, index) => (
                                                         // add link to category
-                                                        <Link to={'/category/' + category.name
+                                                        <Link to={'/catalog/' + category.name
                                                             .split(' ')
                                                             .join('-')
                                                             .toLowerCase()} key={index}
