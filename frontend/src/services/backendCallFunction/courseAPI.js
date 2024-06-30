@@ -66,7 +66,7 @@ export async function fetchCourseDetails(data) {
     try {
         // GET RESPONSE BE: '/getCourseDetails'
         const response = await apiConnector('POST', COURSE_DETAILS_API, data);
-        console.log('> COURSE DETAILS API: ', response);
+        // console.log('> COURSE DETAILS API: ', response);
 
         // IF ENCOUNTER AN ERROR
         if (!response?.data?.success) {
@@ -74,7 +74,7 @@ export async function fetchCourseDetails(data) {
         }
 
         // COURSE DETAIL RETURN: courseDetails
-        result = response?.data?.data[0];
+        result = response?.data?.data;
         return result;
 
     } catch (err) {

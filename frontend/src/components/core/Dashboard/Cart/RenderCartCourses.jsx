@@ -1,19 +1,33 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import ReactStars from "react-rating-stars-component"
-import { FaStar } from "react-icons/fa"
 import { RiDeleteBin6Line } from "react-icons/ri"
 import { removeFromCart } from '../../../../reducer/slices/cartSlice'
+import RatingStars from '../../../common/RatingStars'
+import getAvgRating from '../../../../utils/avgRating'
 
 function RenderCartCourses() {
     const { cart } = useSelector(state => state.cart)
+    const { paymentLoading } = useSelector((state) => state.course);
     const dispatch = useDispatch();
 
+    function avgRating(ratingAndReviews) {
+        return getAvgRating(ratingAndReviews)
+    }
+
+    if (paymentLoading) {
+        // console.log("payment loading")
+        return (
+            <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
+                <div className="spinner"></div>
+            </div>
+        )
+    }
+
     return (
-        <div className="flex w-full flex-col">
+        <div className="flex w-full flex-col mb-12">
             {cart.map((course, index) => (
                 <div key={course._id}
-                    className={`flex w-full  items-start justify-between gap-6 ${index !== cart.length - 1 && "border-b border-b-richblack-400 pb-6"
+                    className={`flex w-full  items-start justify-between gap-6 ${index !== cart.length - 1 && "border-b border-b-richblack-400 pb-6 "
                         } ${index !== 0 && "mt-6"} `}
                 >
                     <div className="flex flex-1 flex-col gap-4 md:flex-row lg:flex-col xl:flex-row">
@@ -22,7 +36,7 @@ function RenderCartCourses() {
                         <img
                             src={course.thumbnail}
                             alt={course?.courseName}
-                            className="md:h-[100px] md:w-[200px] h-[50px] w-[70px] rounded-sm object-cover"
+                            className="md:h-[150px] md:w-[250px] h-[100px] w-[170px] rounded-sm object-cover"
                         />
 
                         {/* NAME/CREATOR - RATINGS */}
@@ -32,22 +46,19 @@ function RenderCartCourses() {
                             </p>
                             <p className="text-sm text-richblack-300">
                                 {/* TODO: add instructor data in course data in BE */}
-                                By {course?.instructorName || 'Abdul Bari'}
+                                By {course?.instructor?.firstName + ' ' + course?.instructor?.lastName || 'Abdul Bari'}
                             </p>
 
                             {/* RATINGS */}
                             <div className="flex items-center gap-2">
-                                <span className="text-yellow-5">4.5</span>
+                                <span className="text-yellow-5">{avgRating(course?.ratingAndReviews)}</span>
                                 {/* STARS */}
-                                <ReactStars
-                                    count={5}
-                                    value={3}
-                                    size={20}
-                                    edit={false}
-                                    activeColor="#ffd700"
-                                    emptyIcon={<FaStar />}
-                                    fullIcon={<FaStar />}
-                                />
+                                {
+                                    course?.ratingAndReviews?.length > 0
+                                        ? < RatingStars Review_Count={avgRating(course?.ratingAndReviews)} />
+                                        : <RatingStars Review_Count={0} />
+                                }
+
                                 {/* NO OF RATING & REVIEW*/}
                                 <span className="text-richblack-300">
                                     ({course?.ratingAndReviews?.length} Ratings)

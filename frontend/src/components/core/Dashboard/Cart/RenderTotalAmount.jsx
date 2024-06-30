@@ -1,16 +1,32 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import IconBtn from '../../../common/IconBtn';
+import { buyCourse } from '../../../../services/backendCallFunction/paymentAPI';
+import { useNavigate } from 'react-router-dom';
 
 function RenderTotalAmount() {
-    const totalAmount = useSelector(state => state.cart.total);
+    const { token } = useSelector((state) => state.auth);
+    const { user } = useSelector((state) => state.profile);
     const { cart } = useSelector(state => state.cart);
+    const totalAmount = useSelector(state => state.cart.total);
+    const { paymentLoading } = useSelector((state) => state.course);
+
+    const navigate = useNavigate()
+    const dispatch = useDispatch();
 
     // function to initiate transactions
-    function handleBuyCourse() {
-        const courses = cart.map(course => course._id);
-        console.log("Courses in cart: ", courses);
-        //TODO: add payment gateway
+    async function handleBuyCourse() {
+        const allCourseId = cart.map(course => course._id);
+        await buyCourse(token, allCourseId, user, navigate, dispatch, paymentLoading)
+    }
+
+    if (paymentLoading) {
+        // console.log("payment loading")
+        return (
+            <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
+                <div className="spinner"></div>
+            </div>
+        )
     }
 
     return (

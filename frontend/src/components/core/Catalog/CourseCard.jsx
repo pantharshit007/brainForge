@@ -25,7 +25,8 @@ function CourseCard({ course, Height, slider = false }) {
                         <img
                             src={course.thumbnail}
                             alt={'Thumbnail-' + course.courseName}
-                            className={`${Height} rounded-md object-cover `}
+                            loading='lazy'
+                            className={`${Height} rounded-md object-cover`}
                         />
 
                     </div>

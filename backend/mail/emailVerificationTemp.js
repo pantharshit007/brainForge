@@ -1,87 +1,33 @@
 const otpTemplate = (otp) => {
 	return `<!DOCTYPE html>
-	<html>
-	
-	<head>
-		<meta charset="UTF-8">
-		<title>OTP Verification Email</title>
-		<style>
-			body {
-				background-color: #ffffff;
-				font-family: Arial, sans-serif;
-				font-size: 16px;
-				line-height: 1.4;
-				color: #333333;
-				margin: 0;
-				padding: 0;
-			}
-	
-			.container {
-				max-width: 600px;
-				margin: 0 auto;
-				padding: 20px;
-				text-align: center;
-			}
-	
-			.logo {
-				max-width: 200px;
-				margin-bottom: 20px;
-			}
-	
-			.message {
-				font-size: 18px;
-				font-weight: bold;
-				margin-bottom: 20px;
-			}
-	
-			.body {
-				font-size: 16px;
-				margin-bottom: 20px;
-			}
-	
-			.cta {
-				display: inline-block;
-				padding: 10px 20px;
-				background-color: #FFD60A;
-				color: #000000;
-				text-decoration: none;
-				border-radius: 5px;
-				font-size: 16px;
-				font-weight: bold;
-				margin-top: 20px;
-			}
-	
-			.support {
-				font-size: 14px;
-				color: #999999;
-				margin-top: 20px;
-			}
-	
-			.highlight {
-				font-weight: bold;
-			}
-		</style>
-	
-	</head>
-	
-	<body>
-		<div class="container">
-			<a href="https://github.com/pantharshit007/brainforge"><img class="logo"
-					src="https://i.ibb.co/G5cKnxf/logo.png" alt="BrainForge Logo"></a>
-			<div class="message">OTP Verification Email</div>
-			<div class="body">
-				<p>Dear User,</p>
-				<p>Thank you for registering with BrainForge. To complete your registration, please use the following OTP
-					(One-Time Password) to verify your account:</p>
-				<h2 class="highlight">${otp}</h2>
-				<p>This OTP is valid for 5 minutes. If you did not request this verification, please disregard this email.
-				Once your account is verified, you will have access to our platform and its features.</p>
-			</div>
-			<div class="support">If you have any questions or need assistance, please feel free to reach out to us at <a
-					href="mailto:info@brainforge.com">info@brainforge.com</a>. We are here to help!</div>
-		</div>
-	</body>
-	
-	</html>`;
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>OTP Verification Email</title>
+    </head>
+    <body>
+        <div style="font-family: Helvetica, Arial, sans-serif; min-width: 100%; overflow: auto; line-height: 2">
+            <div style="margin: 50px; width: 80%; padding: 20px 0">
+                <div style="border-bottom: 1px solid #eee">
+                    <a href="https://github.com/pantharshit007/brainforge" style="color: #00466a; text-decoration: none; font-weight: 600">
+                        <img style="max-width: 200px;" src="https://i.ibb.co/G5cKnxf/logo.png" alt="BrainForge Logo"/>
+                    </a>
+                </div>
+                <p style="font-size: 1.1em">Hi,</p>
+                <p>Thank you for choosing Us. Use the following OTP to complete your Sign Up procedures. OTP is valid for 5 minutes</p>
+                <h2 style="background: #00466a; margin: 0 auto; width: max-content; padding: 0 10px; color: #fff; border-radius: 4px;">
+                    ${otp}
+                </h2>
+                <p style="font-size: 0.9em;">Regards,<br />Brain Forge</p>
+                <hr style="border: none; border-top: 1px solid #eee" />
+                <div style="float: right; padding: 8px 0; color: #aaa; font-size: 0.8em; line-height: 1; font-weight: 300">
+                    <p>Brain Forge Inc</p>
+                    <p>India</p>
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>`;
 };
+
 module.exports = otpTemplate;

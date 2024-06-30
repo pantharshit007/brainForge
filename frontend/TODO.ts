@@ -37,6 +37,8 @@
 //! TODO: ADDED CUSTOM COURSE IN MAIN ACCOUNT REMOVE IT BEFORE TESTING {PYTHON ONE}
 //? Add a limit to video upload in subsection : 10MB
 // TODO: Now, we have totalSectionDuration in each Section use that to add up the section duration and present it in enrolled courses.
+// TODO: add custom modification in purchase email. {table including courseName+price / receipt of payment}
+// TODO: update 'Home / Catalog / undefined' in catalog import page name form url.
 
 //? <<<<<<< END TODO >>>>>>>> //
 //! TODO: change tag of all the sample ID's data:images/videos: dp/sub-section videos
@@ -44,3 +46,4 @@
 //? TODO: remove the video from hero section and replace it with product images in a slider formation + tilt effect
 //? TODO: remove package video-react from fe
 //! TODO: make changes in auth controller so no one is able to create ADMIN account (even from postMan) and ADMIN priviledge on frontEnd.
+//! TODO: remove all git link from emails and replace with site link.

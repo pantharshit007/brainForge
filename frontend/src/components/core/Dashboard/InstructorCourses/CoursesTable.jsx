@@ -84,7 +84,7 @@ function CoursesTable({ courses, setCourses }) {
                     {courses.map(course => (
                         <Tr
                             key={course?._id}
-                            className="flex gap-x-10 border-b border-richblack-800 px-6 py-8 gap-4">
+                            className="flex gap-x-10 border-b border-richblack-400 px-6 py-8 gap-4">
 
                             {/* 1st COLUMN */}
                             <Td colSpan={1} className="flex flex-1 md:flex-row flex-col gap-x-4 p-3">

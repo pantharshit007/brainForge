@@ -61,13 +61,13 @@ async function categoryPageDetails(req, res) {
             })
         }
 
-        //get courses for specified category //!remove unnecessary data from instructor
+        //get courses for specified category  
         const selectedCategory = await Category.findById(categoryId)
             .populate({
                 path: "courses",
                 match: { status: "Published" },
                 populate: ([
-                    { path: "instructor" },
+                    { path: "instructor", select: "firstName lastName" },
                     { path: "ratingAndReviews" }
                 ])
             })
@@ -90,7 +90,7 @@ async function categoryPageDetails(req, res) {
             });
         }
 
-        // get courses for other categories //!remove unnecessary data from instructor
+        // get courses for other categories  
         const otherCategories = await Category.find({
             _id: { $ne: categoryId },     // not equal to categoryId
         })
@@ -98,7 +98,7 @@ async function categoryPageDetails(req, res) {
                 path: 'courses',
                 match: { status: "Published" },
                 populate: ([
-                    { path: "instructor" },
+                    { path: "instructor", select: "firstName lastName" },
                     { path: "ratingAndReviews" }
                 ])
             })
@@ -109,13 +109,13 @@ async function categoryPageDetails(req, res) {
             differentCourses.push(...category.courses);
         }
 
-        // get top selling course: TODO: re-think how this works //!remove unnecessary data from instructor
+        // get top selling course: TODO: re-think how this works  
         const allCategories = await Category.find()
             .populate({
                 path: "courses",
                 match: { status: "Published" },
                 populate: ([
-                    { path: "instructor" },
+                    { path: "instructor", select: "firstName lastName" },
                     { path: "ratingAndReviews" }
                 ])
             })

@@ -63,3 +63,10 @@ export const courseEndpoint = {
     //? TODO: LECTURE COMPLETION
     //? TODO: CREATE RATING
 }
+
+// PAYMENT ENDPOINTS
+export const paymentEndpoint = {
+    COURSE_PAYMENT_API: BASE_URL + "/payment/capturePayment",
+    VERIFY_PAYMENT_API: BASE_URL + "/payment/verifyPayment",
+    PAYMENT_SUCCESS_EMAIL_API: BASE_URL + "/payment/sendPaymentSuccessEmail"
+};

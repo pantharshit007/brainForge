@@ -16,7 +16,7 @@ const {
 } = endpoints;
 
 // SEND OTP BACKEND CALL
-export function sendOtp(email, navigate) {
+export function sendOtp(email, navigate = () => { }) {
     //REDUX THUMK MIDDLEWARE
     return async (dispatch) => {
 
@@ -27,14 +27,14 @@ export function sendOtp(email, navigate) {
         try {
             // MAKE BACKEDN CALL ON ROUTE SENDOTP_API
             const response = await apiConnector('POST', SENDOTP_API, { email })
-            // console.log('> OTP SENT: ', JSON.stringify(response))
+            // console.log('> OTP SENT: ', response)
 
             if (!response.data.success) {
                 throw new Error(response.data.message)
             }
 
             toast.success('OTP Sent!', toastPosition)
-            navigate('/verify-email')
+            navigate('/verify-email')   // we will not call it for re-send
 
         } catch (err) {
             console.log('> OTP API Failure: ' + err?.response?.data?.message)
@@ -173,7 +173,7 @@ export function getPasswordResetToken(email, setEmailSent) {
         try {
             // SENDING BACKEND CALL ON ROUTE /reset-password-token
             const response = await apiConnector('POST', RESETPASSTOKEN_API, { email })
-            console.log("Reset pass token:", response);
+            // console.log("Reset pass token:", response);
 
             if (!response.data.success) {
                 throw new Error(response?.data?.message);

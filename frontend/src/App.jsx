@@ -24,6 +24,7 @@ import MyCourses from './components/core/Dashboard/InstructorCourses/MyCourses'
 import AddCourse from './components/core/Dashboard/AddCourse/AddCourse'
 import EditCourse from './components/core/Dashboard/EditCourse/EditCourse'
 import Catalog from './pages/Catalog'
+import CourseDetail from './pages/CourseDetail'
 
 function App() {
   // TODO: Implement an upword arrow which bring user to top of the page.
@@ -102,6 +103,7 @@ function App() {
           <Route path="contact" element={<Contact />} />
 
           <Route path="/catalog/:catalogName" element={<Catalog />} />
+          <Route path="/course/:courseId" element={<CourseDetail />} />
 
 
           {/* Error Route */}
