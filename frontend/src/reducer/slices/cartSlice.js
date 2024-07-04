@@ -51,9 +51,9 @@ const cartSlice = createSlice({
             // check if course is available
             if (courseIndex >= 0) {
                 // update cart, total Items and total Price
-                state.cart.splice(courseIndex, 1);  //courseIndex: position in array: 0,1,2,3,..
-                state.totalItems--;
                 state.total -= state.cart[courseIndex].price;
+                state.totalItems--;
+                state.cart.splice(courseIndex, 1);  //courseIndex: position in array: 0,1,2,3,..
 
                 // update Local Storage
                 localStorage.setItem("cart", JSON.stringify(state.cart));

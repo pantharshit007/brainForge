@@ -20,15 +20,6 @@ function RenderTotalAmount() {
         await buyCourse(token, allCourseId, user, navigate, dispatch, paymentLoading)
     }
 
-    if (paymentLoading) {
-        // console.log("payment loading")
-        return (
-            <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
-                <div className="spinner"></div>
-            </div>
-        )
-    }
-
     return (
         <div className="lg:max-w-[280px] w-full rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-6">
             <p className="mb-1 text-sm font-medium text-richblack-300">

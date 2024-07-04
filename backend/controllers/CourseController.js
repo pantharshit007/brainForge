@@ -181,7 +181,7 @@ async function getCourseDetails(req, res) {
         const courseDetails = await Course.findById(courseId)
             .populate({
                 path: 'instructor',
-                select: 'firstName lastName'
+                select: 'firstName lastName image'
             })
             .populate({
                 path: 'courseContent',

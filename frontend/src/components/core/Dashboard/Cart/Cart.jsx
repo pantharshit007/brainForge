@@ -6,6 +6,16 @@ import RenderTotalAmount from './RenderTotalAmount'
 
 function Cart() {
     const { totalItems } = useSelector(state => state.cart)
+    const { paymentLoading } = useSelector((state) => state.course);
+
+    if (paymentLoading) {
+        // console.log("payment loading")
+        return (
+            <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
+                <div className="spinner"></div>
+            </div>
+        )
+    }
 
     return (
         <div>

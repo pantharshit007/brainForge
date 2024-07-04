@@ -1,24 +1,21 @@
 // TODO: Implement an upword arrow which bring user to top of the page.
-
-// TODO: Change the setUser in authAPI.js so that we only include user ID in it and store only that data instead of whole user info
-// TODO: try storing user Info or Id's in session instead of local storage. ✅
+///// TODO: try storing user Info or Id's in session instead of local storage. ✅
 // TODO: fix bottom of login page when inspects. ⚔️
 // TODO: password constraints during signup: pass must be 8 level.
 // TODO: find ulternative to instead of storing user data in local storage. in profileSlice
 ///// TODO: Mobile view of NavBar
 // TODO: try Implementing tilting effect on images similar to hkirat website.
 // TODO: Update the Error page.
-//? TODO: Check why are we using dispatch in SideBarLink: Its related to Course State will handle later
 //? TODO: auto logout when token expires : already written the login need to implement
 // TODO: for myprofile and setting part add a react router navigation link which directly navigate to the specific section of the setting page [profileEdit -> Edit profile section]. Do similar if needed anywhere also.
 // TODO: create a purchase History tab in side Bar
 ///// TODO: try implementing a 3 option module in Enrolled course which shows [ALL, PENDING, COMPLETED] courses with filter.
 // TODO: add skeleton data in enrolled courses and everywhere we need it.
 ///// TODO: make the enrolled courses section a grid similar to [https://www.udemy.com/home/my-courses/learning/]
-// TODO: add logic for adding rating in RenderCartCourses
+///// TODO: add logic for adding rating in RenderCartCourses
 ///// TODO: add rating in grid cards in EnrolledCourseTable
 ///// TODO: hide menu Bar in my-profile
-// TODO: create a separate API point for category from Navbar: CATEGORY_API
+///// TODO: create a separate API point for category from Navbar: CATEGORY_API ✅
 // TODO: ADD GOOGLE AUTHENTICATION FEATURE in signupForm
 // TODO: Add a backend function in global api where we call the auth middleware and check if the token is still valid or not and we can call this backend function call in useffect in every dashboard page.
 // TODO: add one token checker call in add course section in INSTRUCTOR
@@ -36,9 +33,10 @@
 //above TODO: it can be done by using courses[] in user's dB (Instructor specific) and finding the courseName then deleting all resourses related to that tag.
 //! TODO: ADDED CUSTOM COURSE IN MAIN ACCOUNT REMOVE IT BEFORE TESTING {PYTHON ONE}
 //? Add a limit to video upload in subsection : 10MB
-// TODO: Now, we have totalSectionDuration in each Section use that to add up the section duration and present it in enrolled courses.
-// TODO: add custom modification in purchase email. {table including courseName+price / receipt of payment}
+///// TODO: add custom modification in purchase email. {table including courseName+price / receipt of payment}
 // TODO: update 'Home / Catalog / undefined' in catalog import page name form url.
+//? TODO: is it possible that any other instructor remove the section or course of a different instructor? I think yes.
+//? extended: we can use the userId to check if the courseId is present in the instructor[course]
 
 //? <<<<<<< END TODO >>>>>>>> //
 //! TODO: change tag of all the sample ID's data:images/videos: dp/sub-section videos
@@ -47,3 +45,4 @@
 //? TODO: remove package video-react from fe
 //! TODO: make changes in auth controller so no one is able to create ADMIN account (even from postMan) and ADMIN priviledge on frontEnd.
 //! TODO: remove all git link from emails and replace with site link.
+//! TODO: update the link in uploadVideo where we are passing video url to reactComponent for display since URL.encoded is deprecated and risky.

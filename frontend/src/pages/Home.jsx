@@ -8,7 +8,6 @@ import CodeBlocks from '../components/core/HomePage/CodeBlocks'
 import TimeLineSection from '../components/core/HomePage/TimeLineSection'
 import LearningLangSection from '../components/core/HomePage/LearningLangSection'
 import InstructorSection from '../components/core/HomePage/InstructorSection'
-import ReviewSection from '../components/core/HomePage/ReviewSection'
 import Footer from '../components/common/Footer'
 import ExploreMore from '../components/core/HomePage/ExploreMore'
 
@@ -178,8 +177,8 @@ function Home() {
                     <HightlightText text={"Reviews "} /> from other learners
                 </h1>
 
-                {/* Review Section */}
-                <ReviewSection />
+                {/* Review Slider */}
+
 
             </div>
 

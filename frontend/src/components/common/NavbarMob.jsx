@@ -52,7 +52,7 @@ function NavbarMob({ isOpen, NavbarLinks, subLinks }) {
                 animate="visible"
                 exit={{ opacity: 0 }}
                 variants={dropIn}
-                className='absolute h-screen flex flex-col text-white bg-richblack-700 shadow-sm shadow-richblack-25 z-[100] min-w-[250px] right-1 pt-20'
+                className='absolute h-screen flex flex-col text-white bg-richblack-700 shadow-sm shadow-richblack-25 z-[100] min-w-[260px] right-1 pt-20'
             >
 
                 {/* DASHBOARD */}

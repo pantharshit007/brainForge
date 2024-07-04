@@ -13,8 +13,12 @@ function Upload({ name, label, register, errors, setValue }) {
     const onDrop = useCallback(acceptedFiles => {
         const imageFile = acceptedFiles[0]
         if (imageFile) {
-            setImage(imageFile)
             setValue(name, imageFile)
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImage(reader.result);
+            }
+            reader.readAsDataURL(imageFile);
         }
     }, [setValue, name])
 
@@ -33,7 +37,7 @@ function Upload({ name, label, register, errors, setValue }) {
         }
 
         setValue(name, image)
-    }, [image, setValue])
+    }, [])
 
     return (
         <div className="flex flex-col space-y-2">
@@ -47,7 +51,7 @@ function Upload({ name, label, register, errors, setValue }) {
                 // DISPLAY IMAGE UPLOADED
                 <div className="flex flex-col space-y-2">
                     <img
-                        src={URL.createObjectURL(image)}
+                        src={image}
                         alt="thumbnail"
                         className="h-full w-full rounded-md object-cover"
                     />

@@ -127,14 +127,13 @@ async function deleteSection(req, res) {
         }
 
         // Deleting Sub-sections
-        await SubSection.deleteMany({ _id: { $in: section.subSection } });
+        if (section.subSection.length !== 0) {
+            await SubSection.deleteMany({ _id: { $in: section.subSection } });
 
-        // Deleting Sections
-        await Section.findByIdAndDelete(sectionId);
-
-        // Deleting the lecture videos in section
-        const SECTION_LOCATION = VIDEO_FOLDER + '/' + courseName + '/' + sectionId
-        await deleteFolder(SECTION_LOCATION);
+            // Deleting the lecture videos in section
+            const SECTION_LOCATION = VIDEO_FOLDER + '/' + courseName + '/' + sectionId
+            await deleteFolder(SECTION_LOCATION);
+        }
 
         // Updating the course to remove the section and then fetch the updated course
         const updatedCourse = await Course.findByIdAndUpdate(courseId,
@@ -153,6 +152,9 @@ async function deleteSection(req, res) {
                 message: "Course not found."
             });
         }
+
+        // Deleting Sections
+        await Section.findByIdAndDelete(sectionId);
 
         return res.status(200).json({
             success: true,
