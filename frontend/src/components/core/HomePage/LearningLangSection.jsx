@@ -31,7 +31,7 @@ function LearningLangSection() {
                     />
                 </div>
                 {/* button */}
-                <div className='w-fit mx-auto lg:mb-20 mb-8 lg:-mt-5'>
+                <div className='w-full md:w-fit mx-auto lg:mb-20 mb-8 lg:-mt-5'>
                     <CTAButton active={true} linkTo={'/signup'} >
                         <div>Learn More</div>
                     </CTAButton>

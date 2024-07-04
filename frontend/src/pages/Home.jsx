@@ -149,11 +149,13 @@ function Home() {
                         {/* box-2 */}
                         <div className='flex flex-col gap-10 lg:w-[40%] items-start '>
                             <div className='text-[16px]'>
-                                The modern BrainForge is the dictates its own terms. Today, to be a competitive specialist requires more than professional skills.
+                                The modern BrainForge dictates its own terms. Today, to be a competitive specialist requires more than professional skills.
                             </div>
-                            <CTAButton active={true} linkTo={'/signup'}>
-                                <div>Learn More</div>
-                            </CTAButton>
+                            <div className='w-full md:w-fit'>
+                                <CTAButton active={true} linkTo={'/signup'}>
+                                    <div>Learn More</div>
+                                </CTAButton>
+                            </div>
                         </div>
                     </div>
 

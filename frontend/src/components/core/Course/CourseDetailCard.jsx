@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { FaShareSquare } from 'react-icons/fa';
 import toast from 'react-hot-toast'
@@ -9,10 +9,8 @@ import { ACCOUNT_TYPE, toastPosition } from '../../../utils/constant'
 
 function CourseDetailCard({ course, handleBuyCourse, handleAddToCart, isEnrolled }) {
     const { user } = useSelector((state) => state.profile)
-    const { token } = useSelector((state) => state.auth)
     const { cart } = useSelector((state) => state.cart)
     const navigate = useNavigate()
-    const dispatch = useDispatch()
 
     const {
         _id: courseId,

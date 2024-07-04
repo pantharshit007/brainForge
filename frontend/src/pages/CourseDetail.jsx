@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { BsGlobe } from 'react-icons/bs';
+import { FaShareSquare } from 'react-icons/fa';
 
 import IconBtn from '../components/common/IconBtn'
 import { buyCourse } from '../services/backendCallFunction/paymentAPI';
@@ -18,7 +19,8 @@ import CourseDetailCard from '../components/core/Course/CourseDetailCard';
 import CourseAccordian from '../components/core/Course/CourseAccordian';
 import ReviewSection from '../components/core/Course/ReviewSection';
 import Footer from '../components/common/Footer';
-import { ACCOUNT_TYPE } from '../utils/constant';
+import { ACCOUNT_TYPE, toastPosition } from '../utils/constant';
+import toast from 'react-hot-toast';
 
 function CourseDetail() {
 
@@ -107,6 +109,11 @@ function CourseDetail() {
         setAvailableInCart(isAlreadyInCart)
     }, [cart])
 
+    function handleCopy() {
+        navigator.clipboard.writeText(window.location.href)
+        toast.success('URL Copied to clipboard!', toastPosition)
+    }
+
     // fetching course details
     useEffect(() => {
         async function getCourseDetails() {
@@ -122,6 +129,7 @@ function CourseDetail() {
         getCourseDetails()
     }, [courseId, dispatch])
 
+    // is course available in cart
     useEffect(() => {
         if (!courseData) return;
 
@@ -151,7 +159,7 @@ function CourseDetail() {
     }
 
     return (
-        <div className='relative w-full bg-richblack-900'>
+        <div className='relative w-11/12 mx-auto bg-richblack-900'>
             <div className='mx-auto box-content px-4 lg:w-[1260px] xl:relative'>
                 <div className="mx-auto grid min-h-[450px] max-w-maxContentTab justify-items-center py-8 lg:mx-0 lg:justify-items-start lg:py-0 xl:max-w-[810px]">
                     {/* MOBILE VIEW */}
@@ -204,7 +212,7 @@ function CourseDetail() {
                         </div>
 
                         {/* PRICE: Mobile View */}
-                        <div className='flex w-full flex-col gap-4 border-y border-y-richblack-500 py-4 lg:hidden'>
+                        <div className='flex w-full flex-col gap-4 py-4 lg:hidden'>
                             {ACCOUNT_TYPE.STUDENT === user.accountType
                                 ? <>
                                     {isEnrolled
@@ -227,6 +235,17 @@ function CourseDetail() {
                                     </div>
                                 </>
                             }
+
+                            {/* SHARE BUTTON */}
+                            <div className="text-center">
+                                <button
+                                    onClick={handleCopy}
+                                    className='mx-auto flex items-center gap-2 text-indigo-600'
+                                >
+                                    <FaShareSquare className='text-xl text-indigo-600' />
+                                    <span>Share</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
 
@@ -262,8 +281,8 @@ function CourseDetail() {
                         <div className="max-w-[830px] ">
                             <p className="text-[28px] font-semibold">Course Content</p>
 
-                            <div className="flex flex-wrap justify-between gap-2">
-                                <div className='flex gap-2'>
+                            <div className="flex flex-wrap justify-between gap-2 pt-3">
+                                <div className='md:flex gap-2 hidden'>
                                     Section(s):
                                     <span className='font-mono text-indigo-500'>{courseContent.length}</span>┆
                                     Lecture(s):
@@ -272,7 +291,21 @@ function CourseDetail() {
                                     <span className='font-mono text-indigo-500'>{totalDuration}</span>
                                 </div>
 
-                                <div>
+                                {/* Mobile */}
+                                <div className='md:hidden gap-1 flex-col flex'>
+
+                                    <span className='font-mono'>
+                                        Section(s): {courseContent.length}
+                                    </span>
+                                    <span className='font-mono'>
+                                        Lecture(s): {totalLectures}
+                                    </span>
+                                    <span className='font-mono'>
+                                        Total Length: {totalDuration}
+                                    </span>
+                                </div>
+
+                                <div className='pt-[60px] h-full md:p-0'>
                                     <button
                                         onClick={() => setIsActive(new Set())}
                                         className='text-indigo-500'

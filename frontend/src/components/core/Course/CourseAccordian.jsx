@@ -24,7 +24,7 @@ function CourseAccordian({ section, isActive, handleAccordion }) {
                 onClick={() => handleAccordion(section._id)}
             >
                 {/* section Name */}
-                <div className='flex flex-wrap items-center gap-x-3 my-auto md:text-[16px] sm:text-[14px] text-[12px]'>
+                <div className='flex flex-wrap items-center gap-x-3 my-auto md:text-[16px] sm:text-[14px]'>
                     <FaChevronDown className={`${isOpen ? 'rotate-180' : 'rotate-0'} transition-transform duration-200`} />
                     {section?.sectionName}
                 </div>
