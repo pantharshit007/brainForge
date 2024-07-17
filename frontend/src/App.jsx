@@ -25,6 +25,8 @@ import AddCourse from './components/core/Dashboard/AddCourse/AddCourse'
 import EditCourse from './components/core/Dashboard/EditCourse/EditCourse'
 import Catalog from './pages/Catalog'
 import CourseDetail from './pages/CourseDetail'
+import ViewCourse from './pages/ViewCourse'
+import VideoDetail from './components/core/ViewCourse/VideoDetail'
 
 function App() {
   // TODO: Implement an upword arrow which bring user to top of the page.
@@ -75,7 +77,8 @@ function App() {
               <PrivateRoute>
                 <Dashboard />
               </PrivateRoute>
-            } >
+            }
+          >
             <Route path="dashboard/my-profile" element={<MyProfile />} />
             <Route path="dashboard/settings" element={<Setting />} />
 
@@ -105,6 +108,21 @@ function App() {
           <Route path="/catalog/:catalogName" element={<Catalog />} />
           <Route path="/course/:courseId" element={<CourseDetail />} />
 
+          <Route
+            element={
+              <PrivateRoute>
+                <ViewCourse />
+              </PrivateRoute>
+            }
+          >
+            {/* STUDENT ROUTES */}
+            {user?.accountType === ACCOUNT_TYPE.STUDENT && (
+              <>
+                <Route path="dashboard/enrolled-courses/view-course/:courseId/section/:sectionId/sub-section/:subsectionId" element={<VideoDetail />} />
+              </>
+            )}
+
+          </Route>
 
           {/* Error Route */}
           <Route path="*" element={<Error />} />

@@ -6,9 +6,9 @@ async function createRating(req, res) {
 
     try {
         //fetch course Id and User Id
-        const { userId, courseId } = req.body;
+        const userId = req.user.id;
+        const { courseId } = req.body;
         const { rating, review } = req.body;
-
 
         if (!rating || !review) {
             return res.status(406).json({
@@ -18,12 +18,10 @@ async function createRating(req, res) {
         }
 
         // check user Enrollment in the Course: can also use $elemMatch
-        const courseDetails = await Course.findOne(
-            {
-                _id: courseId,
-                studentEnrolled: userId
-            }
-        )
+        const courseDetails = await Course.findOne({
+            _id: courseId,
+            studentEnrolled: userId
+        })
 
         if (!courseDetails) {
             return res.status(401).json({
@@ -60,8 +58,6 @@ async function createRating(req, res) {
             },
             { new: true }
         )
-
-        console.log("rating Added: " + updatedCourseDetails)
 
         return res.status(200).json({
             success: true,

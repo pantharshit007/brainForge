@@ -1,7 +1,11 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import ProgressBar from "@ramonak/react-progress-bar"
+import { useNavigate } from 'react-router-dom';
 
-function EnrolledCourseTable({ course, index }) {
+function EnrolledCourseTable({ course, courseId, sectionId, subSectionId }) {
+
+    const navigate = useNavigate();
+    const link = `view-course/${courseId}/section/${sectionId}/sub-section/${subSectionId}`
 
     const totalSubSection = (course) => {
         let subSectionCount = 0;
@@ -20,7 +24,10 @@ function EnrolledCourseTable({ course, index }) {
 
     return (
         <>
-            <div className='flex flex-col items-center w-full border border-richblack-700 rounded-sm'>
+            <div
+                onClick={() => navigate(link)}
+                className='flex flex-col items-center w-full border border-richblack-700 rounded-sm'
+            >
                 <div className='grid row-span-4 grid-rows-subgrid gap-2 w-full cursor-pointer mb-3'>
                     {/* IMAGE */}
                     <img

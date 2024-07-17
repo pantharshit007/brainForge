@@ -120,7 +120,6 @@ function CourseDetail() {
             setLoading(true);
 
             const res = await fetchCourseDetails({ courseId });
-            console.log('Get course details:', res?.courseDetails);
 
             setCourseData(res?.courseDetails);
             setTotalDuration(res?.totalDuration);

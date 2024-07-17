@@ -7,6 +7,7 @@ const SubSection = require("../models/SubSection");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
 const { convertSecondsToDuration } = require("../utils/secConverter");
 const { deleteFolder } = require("../utils/deleteContent");
+const mongoose = require('mongoose');
 
 require('dotenv').config();
 const MEDIA_FOLDER = process.env.MEDIA_FOLDER
@@ -163,7 +164,7 @@ async function getAllCourses(req, res) {
     }
 }
 
-//fetch course detail (entirely)
+//fetch course detail (entirely-Lecvideo)
 async function getCourseDetails(req, res) {
     try {
         //fetch course Id
@@ -263,15 +264,12 @@ async function getFullCourseDetails(req, res) {
         const courseDetails = await Course.findById(courseId)
             .populate({
                 path: 'instructor',
-                populate: {
-                    path: 'additionalDetails',
-                }
+                select: 'firstName lastName image'
             })
             .populate({
                 path: 'courseContent',
                 populate: {
                     path: 'subSection',
-                    select: '-videoUrl' //to exclude videoUrl from ppulating
                 }
             })
             .populate('category')
@@ -523,6 +521,59 @@ async function deleteCourse(req, res) {
     }
 }
 
+// update course completed by student 
+async function markLectureAsComplete(req, res) {
+    try {
+        const { courseId, subSectionId } = req.body;
+        const userId = req.user.id;
+
+        if (!courseId || !subSectionId || !userId) {
+            return res.status(400).json({
+                success: false,
+                message: "Missing required fields",
+            });
+        }
+
+        // Convert IDs to ObjectId
+        const userObjId = mongoose.Types.ObjectId.createFromHexString(userId);
+        const courseObjId = mongoose.Types.ObjectId.createFromHexString(courseId);
+        const subSectionObjId = mongoose.Types.ObjectId.createFromHexString(subSectionId);
+
+        // Find the course progress document
+        const progress = await CourseProgress.findOne({
+            userId: userObjId,
+            courseID: courseObjId,
+        });
+
+        // Check if the sub-section ID is already in the completed videos array
+        if (progress && progress.completedVideos.includes(subSectionObjId)) {
+            return res.status(400).json({
+                success: false,
+                message: "Lecture already marked as complete",
+            });
+        }
+
+        // If not already completed, push the sub-section ID into the completed videos array
+        await CourseProgress.findOneAndUpdate(
+            { userId: userObjId, courseID: courseObjId },
+            { $push: { completedVideos: subSectionObjId } }
+        );
+
+        return res.status(200).json({
+            success: true,
+            message: "Lecture marked as complete",
+        });
+
+    } catch (err) {
+        console.log('> Failed to update Lecture status: ' + err.message);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to update Lecture status: ' + err.message,
+        });
+    }
+}
+
+
 module.exports = {
     createCourse,
     getAllCourses,
@@ -530,5 +581,6 @@ module.exports = {
     getFullCourseDetails,
     getInstructorCourses,
     updateCourse,
-    deleteCourse
+    deleteCourse,
+    markLectureAsComplete
 }

@@ -60,7 +60,7 @@ function Sidebar() {
             dispatch(setScreenSize(window.innerWidth));
         }
 
-        // rate limiting the resize function to 1 req/s
+        // rate limiting the resize function to 1 req/400ms
         const debounceHandler = debounce(handleWindowSize, 400);
 
         window.addEventListener("resize", debounceHandler);
@@ -123,9 +123,11 @@ function Sidebar() {
             {/* DESKTOP SIDEBAR */}
             <motion.div
                 variants={containerVariants}
-                initial="close"
+                initial="open"
                 animate={containerControls}
-                className={`md:flex hidden flex-col h-[calc(100vh-3.5rem)] bg-richblack-800 border-r-[1px] border-r-richblack-700 py-16`}>
+                className={`
+                    md:flex hidden flex-col h-[calc(100vh-3.5rem)] bg-richblack-800 border-r-[1px] border-r-richblack-700 py-16`}
+            >
 
                 {/* MyProfile - Enrollment - Cart */}
                 <div className="flex flex-col">

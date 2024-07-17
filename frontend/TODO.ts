@@ -22,25 +22,28 @@
 // TODO: Make a dashboard for ADMIN where we have choices between Instructor and Student which shows a table of all the users with specific account type and by click on them we can we more detail with a special auth controller.
 // TODO: add "already have an account log in button and do not have an account create button on login and signup"
 //? TODO: the eye from login and signup is visible when side menu is open.
-// TODO: check so that if upload dp is clicked no error is given in myprofile instead toast: Select an Image
+// TODO: check so that if upload dp is clicked no error is given in myprofile instead toast: Select an Image.
+// TODO: fix the footer in Smaller screen remove unnecessary elements so that it looks elegent.
+// TODO: add a counter in about/matrics section
 
 //? <<<<<<< BACKEND TODO >>>>>>>> //
 //  TODO BACKEND: Check if cookies are even working on the backend side and twik with their expiry time.
 //? TODO: update all backend error responses with throw new error.
 /////! TODO: when a user deleted his account delete related data from cloudinary also and when a user updates his dp delete previous data from cloudinary.
 // TODO: add a limit on the size of video/picture to be uploaded if not followed give an error.
-//! TODO: add tag to the course->section->sub-section videos so that we can delete once instructor account is deleted with option of deletion given to the instructor.
+//! TODO: add tag to the course->section->sub-section videos so that we can delete once instructor account is deleted with option of deletion given to the instructor (do you want to delete all courses along with account).
 //above TODO: it can be done by using courses[] in user's dB (Instructor specific) and finding the courseName then deleting all resourses related to that tag.
 //! TODO: ADDED CUSTOM COURSE IN MAIN ACCOUNT REMOVE IT BEFORE TESTING {PYTHON ONE}
 //? Add a limit to video upload in subsection : 10MB
 ///// TODO: add custom modification in purchase email. {table including courseName+price / receipt of payment}
-// TODO: update 'Home / Catalog / undefined' in catalog import page name form url.
+// TODO: update 'Home / Catalog / undefined' in catalog page (before page loads course name is undefined).
 //? TODO: is it possible that any other instructor remove the section or course of a different instructor? I think yes.
 //? extended: we can use the userId to check if the courseId is present in the instructor[course]
+// TODO: think of a way to update courseStatus once all the lectures in a course are marked as completed.
 
 //? <<<<<<< END TODO >>>>>>>> //
 //! TODO: change tag of all the sample ID's data:images/videos: dp/sub-section videos
-//! TODO: remove testData from enrolledCourses
+/////! TODO: remove testData from enrolledCourses
 //? TODO: remove the video from hero section and replace it with product images in a slider formation + tilt effect
 //? TODO: remove package video-react from fe
 //! TODO: make changes in auth controller so no one is able to create ADMIN account (even from postMan) and ADMIN priviledge on frontEnd.

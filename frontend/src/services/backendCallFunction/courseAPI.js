@@ -19,10 +19,10 @@ const {
     GET_ALL_INSTRUCTOR_COURSES_API,
     DELETE_COURSE_API,
     GET_FULL_COURSE_DETAILS_AUTHENTICATED,
-    CREATE_RATING_API,
+    ADD_RATING_API,
     LECTURE_COMPLETION_API,
+    CREATE_CATEGORY_API,
     ADD_COURSE_TO_CATEGORY_API,
-    SEARCH_COURSES_API,
 } = courseEndpoint;
 
 //CREATE COURSE BACKEND CALL
@@ -389,3 +389,54 @@ export async function deleteSubSection(token, data) {
     }
 }
 
+// MARK COURSE LECTURE AS COMPLETED BACKEND CALL
+export async function markLectureAsComplete(token, data) {
+    let result = null;
+    const toastId = toast.loading('Updating...');
+    const headers = { Authorization: 'Bearer ' + token };
+
+    try {
+        // BACKEND URL: /updateCourseProgress
+        const response = await apiConnector("PUT", LECTURE_COMPLETION_API, data, headers);
+        // console.log('> MARK LECTURE: ', response)
+
+        if (!response.data.success) {
+            throw new Error(response.data.message);
+        }
+
+        toast.success('Lecture Completed!', toastPosition)
+        result = true;
+
+    } catch (err) {
+        console.log('> MARK LECTURE API ERROR: ', err?.response?.data?.message);
+        toast.error(err?.response?.data?.message || 'Failed in updating lecture status', errorToastPosition);
+    } finally {
+        toast.dismiss(toastId);
+        return result;
+    }
+}
+
+// ADD NEW REVIEW AND RATING BACKEND CALL
+export async function addReviewAndRating(token, data) {
+    const toastId = toast.loading('Adding you Review...');
+    const headers = { Authorization: 'Bearer ' + token };
+
+    try {
+        // BACKEND URL: /updateCourseProgress
+        const response = await apiConnector("POST", ADD_RATING_API, data, headers);
+        // console.log('> CREATE RATING: ', response)
+
+        if (!response.data.success) {
+            throw new Error(response.data.message);
+        }
+
+        toast.success('Rating & Review Added!', toastPosition);
+        return;
+
+    } catch (err) {
+        console.log('> ADD REVIEW API ERROR: ', err?.response?.data?.message);
+        toast.error(err?.response?.data?.message || 'Failed in adding Review:', errorToastPosition);
+    } finally {
+        toast.dismiss(toastId);
+    }
+}

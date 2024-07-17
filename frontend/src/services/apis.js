@@ -60,8 +60,8 @@ export const courseEndpoint = {
     DELETE_COURSE_API: BASE_URL + "/course/deleteCourse",
     DELETE_SECTION_API: BASE_URL + "/course/deleteSection",
     DELETE_SUBSECTION_API: BASE_URL + "/course/deleteSubSection",
-    //? TODO: LECTURE COMPLETION
-    //? TODO: CREATE RATING
+    ADD_RATING_API: BASE_URL + "/course/createRating",
+    LECTURE_COMPLETION_API: BASE_URL + "/course/updateCourseProgress"
 }
 
 // PAYMENT ENDPOINTS

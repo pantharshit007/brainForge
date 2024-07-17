@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
     openSidebar: true,
-    screenSize: null,
+    screenSize: window.innerWidth,
     isOpen: false, // side-bar Navbar
 }
 
@@ -12,6 +12,7 @@ const sideBarSlice = createSlice({
     reducers: {
         // setting the state of sidebar: open/close
         setOpenSidebar(state, value) {
+            console.log('setting state of', value.payload)
             state.openSidebar = value.payload;
         },
 

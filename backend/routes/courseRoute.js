@@ -12,7 +12,8 @@ const {
     getFullCourseDetails,
     getInstructorCourses,
     updateCourse,
-    deleteCourse
+    deleteCourse,
+    markLectureAsComplete
 } = require('../controllers/CourseController');
 
 // Section controller
@@ -34,7 +35,7 @@ const { createRating, avgRating, getAllRatingAndReview, getCourseRatingAndReview
 // create course router: INSTRUCTOR
 router.post('/createCourse', auth, isInstructor, createCourse)
 // get all courses router
-router.get('/getAllCourses', getAllCourses)     //TODO: add auth before deploy
+router.get('/getAllCourses', getAllCourses)
 // get course details
 router.post('/getCourseDetails', getCourseDetails)
 // get Full Course details (user specific) 
@@ -45,6 +46,8 @@ router.get('/getInstructorCourses', auth, isInstructor, getInstructorCourses)
 router.put('/updateCourse', auth, isInstructor, updateCourse)
 // delete course router: INSTRUCTOR
 router.delete('/deleteCourse', auth, isInstructor, deleteCourse)
+// mark course lecture as completed: STUDENT
+router.put('/updateCourseProgress', auth, isStudent, markLectureAsComplete)
 
 // -------- Section Routes -------- //
 

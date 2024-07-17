@@ -36,7 +36,7 @@ function ReviewSection({ ratingAndReviews, avgReviewCount, studentsEnrolled }) {
                                     />
 
                                     <p className="capitalize text-lg">
-                                        {reviews?.user?.firstName} +{reviews?.user?.lastName}
+                                        {reviews?.user?.firstName} {reviews?.user?.lastName}
                                     </p>
                                 </div>
 
