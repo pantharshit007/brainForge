@@ -141,10 +141,18 @@ function ReviewModal({ setReviewModal }) {
                                 id="userReview"
                                 placeholder='Write your experience...'
                                 className='form-style resize-x-none min-h-[150px] w-full'
-                                {...register('userReview', { required: true })}
+                                {...register('userReview', {
+                                    required: {
+                                        value: true,
+                                        message: 'Please provide your experience '
+                                    }, maxLength: {
+                                        value: 100,
+                                        message: "This input exceed maxLength.",
+                                    },
+                                })}
                             />
                             {errors.userReview &&
-                                <span className='text-pink-200 text-[12px]'>* Please provide your experience</span>
+                                <span className='text-pink-200 text-[12px]'>* {errors.userReview?.message}</span>
                             }
                         </div>
 

@@ -21,6 +21,7 @@ const {
     GET_FULL_COURSE_DETAILS_AUTHENTICATED,
     ADD_RATING_API,
     LECTURE_COMPLETION_API,
+    GET_REVIEW_API,
     CREATE_CATEGORY_API,
     ADD_COURSE_TO_CATEGORY_API,
 } = courseEndpoint;
@@ -438,5 +439,25 @@ export async function addReviewAndRating(token, data) {
         toast.error(err?.response?.data?.message || 'Failed in adding Review:', errorToastPosition);
     } finally {
         toast.dismiss(toastId);
+    }
+}
+
+// FETCH REVIEW AND RATING BACKEND CALL
+export async function fetchRatingAndReview() {
+    let res = null;
+    try {
+        // BACKEND URL: /getReviews
+        const response = await apiConnector('GET', GET_REVIEW_API)
+        // console.log('FETCH REVIEW AND RATING:', response.data)
+
+        if (!response?.data?.success) {
+            throw new Error(response.data.message);
+        }
+        res = response?.data?.data;
+        return res;
+
+    } catch (err) {
+        console.log('> FETCH RATING & REVIEW API ERROR: ', err?.response?.data?.message);
+        toast.error(err?.response?.data?.message || 'Failed in Fetching rating & review:', errorToastPosition);
     }
 }

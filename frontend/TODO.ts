@@ -16,8 +16,8 @@
 ///// TODO: add rating in grid cards in EnrolledCourseTable
 ///// TODO: hide menu Bar in my-profile
 ///// TODO: create a separate API point for category from Navbar: CATEGORY_API ✅
-// TODO: ADD GOOGLE AUTHENTICATION FEATURE in signupForm
-// TODO: Add a backend function in global api where we call the auth middleware and check if the token is still valid or not and we can call this backend function call in useffect in every dashboard page.
+// TODO: ADD GOOGLE AUTHENTICATION FEATURE in signupForm: issue(default:Student Account)
+// TODO: Add a backend function in global api where we call the auth middleware and check if the token is still valid or not and we can refresh the token + add a timer in a auth slice which automatically remove the token/logout eg:3h
 // TODO: add one token checker call in add course section in INSTRUCTOR
 // TODO: Make a dashboard for ADMIN where we have choices between Instructor and Student which shows a table of all the users with specific account type and by click on them we can we more detail with a special auth controller.
 // TODO: add "already have an account log in button and do not have an account create button on login and signup"
@@ -25,6 +25,7 @@
 // TODO: check so that if upload dp is clicked no error is given in myprofile instead toast: Select an Image.
 // TODO: fix the footer in Smaller screen remove unnecessary elements so that it looks elegent.
 // TODO: add a counter in about/matrics section
+// TODO: add skeleton in rating and review
 
 //? <<<<<<< BACKEND TODO >>>>>>>> //
 //  TODO BACKEND: Check if cookies are even working on the backend side and twik with their expiry time.
@@ -40,6 +41,7 @@
 //? TODO: is it possible that any other instructor remove the section or course of a different instructor? I think yes.
 //? extended: we can use the userId to check if the courseId is present in the instructor[course]
 // TODO: think of a way to update courseStatus once all the lectures in a course are marked as completed.
+//! TODO: add functionality of refresh token
 
 //? <<<<<<< END TODO >>>>>>>> //
 //! TODO: change tag of all the sample ID's data:images/videos: dp/sub-section videos
@@ -49,3 +51,4 @@
 //! TODO: make changes in auth controller so no one is able to create ADMIN account (even from postMan) and ADMIN priviledge on frontEnd.
 //! TODO: remove all git link from emails and replace with site link.
 //! TODO: update the link in uploadVideo where we are passing video url to reactComponent for display since URL.encoded is deprecated and risky.
+//! TODO: remove test data rom ratingSlider

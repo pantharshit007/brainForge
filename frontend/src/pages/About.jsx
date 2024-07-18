@@ -11,6 +11,7 @@ import LearningGrid from '../components/core/AboutPage/LearningGrid'
 import ContactFormSection from '../components/core/AboutPage/ContactFormSection'
 import Footer from '../components/common/Footer'
 import CustomHighlightText from '../components/core/AboutPage/CustomHighlightText'
+import RatingSlider from '../components/core/Ratings/RatingSlider';
 
 function About() {
     return (
@@ -114,10 +115,15 @@ function About() {
 
             {/* SECTION-6 */}
             <section>
-                <div className="mx-auto my-20 w-screen gap-8 text-white">
+                <div className="mx-auto my-20 w-screen flex flex-col gap-8 text-white">
                     <h1 className="text-center text-4xl font-semibold mt-8">
-                        Reviews from other learners
+                        <HightlightText text={"Reviews "} />from other learners
                     </h1>
+
+                    {/* Review Slider */}
+                    <div className=" rounded-md flex flex-col antialiased bg-white dark:bg-bgBlue items-center justify-center">
+                        <RatingSlider />
+                    </div>
                 </div>
             </section>
 

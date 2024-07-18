@@ -10,6 +10,7 @@ import LearningLangSection from '../components/core/HomePage/LearningLangSection
 import InstructorSection from '../components/core/HomePage/InstructorSection'
 import Footer from '../components/common/Footer'
 import ExploreMore from '../components/core/HomePage/ExploreMore'
+import RatingSlider from '../components/core/Ratings/RatingSlider'
 
 function Home() {
     return (
@@ -180,7 +181,9 @@ function Home() {
                 </h1>
 
                 {/* Review Slider */}
-
+                <div className=" rounded-md flex flex-col antialiased bg-white dark:bg-bgBlue items-center justify-center">
+                    <RatingSlider />
+                </div>
 
             </div>
 
