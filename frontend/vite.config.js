@@ -9,9 +9,7 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react()],
     // server: {
-    //   proxy: {
-    //     '/api/v1': API_URL,
-    //   },
+    //   proxy: { '/api/v1': API_URL,},
     // },
     define: {
       global: "globalThis",
