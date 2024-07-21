@@ -8,12 +8,6 @@ function DashboardChart({ instructorData, currentChart }) {
 
     const [colors, setColors] = useState([]);
 
-    useEffect(() => {
-        if (instructorData.length) {
-            setColors(generateComplementingColors(instructorData.length));
-        }
-    }, [instructorData]);
-
     // Function to generate HSL to RGB conversion
     function hslToRgb(h, s, l) {
         let r, g, b;
@@ -117,6 +111,11 @@ function DashboardChart({ instructorData, currentChart }) {
         aspectRatio: 2,
     }
 
+    useEffect(() => {
+        if (instructorData.length) {
+            setColors(generateComplementingColors(instructorData.length));
+        }
+    }, [instructorData]);
 
     return (
         <div className='mx-auto aspect-square md:h-[85%] md:w-full relative'>

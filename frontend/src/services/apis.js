@@ -1,12 +1,12 @@
-const BASE_URL = '/api/v1';
+// const BASE_URL = '/api/v1';
 
 //-------------------------- remove `server` from vite.config --------------------------\\
-// let BASE_URL;
-// if (import.meta.env.MODE === "development") {
-//     BASE_URL = "http://localhost:4000/api/v1";
-// } else {
-//     BASE_URL = import.meta.env.VITE_BASE_URL;
-// }
+let BASE_URL;
+if (import.meta.env.MODE === "development") {
+    BASE_URL = "http://localhost:4000/api/v1";
+} else {
+    BASE_URL = import.meta.env.VITE_BASE_URL;
+}
 //----------------------------------- OTHER WAY -----------------------------------------\\
 
 // AUTH ENDPOINTS
