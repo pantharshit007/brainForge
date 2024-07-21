@@ -265,14 +265,14 @@ async function instructorDashboard(req, res) {
 
         //fetching course details with total students enrolled and revenue generated
         const courseData = courseDetails.map((course) => {
-            const totalStudentEnrolled = course.studentEnrolled.length;
-            const totalRevenue = totalStudentEnrolled * course.price
+            const totalStudentEnrolled = course?.studentEnrolled.length;
+            const totalRevenue = totalStudentEnrolled * course?.price
 
             // create a new object which encompasses all the necessary only fields
             const courseStats = {
                 _id: course.id,
-                courseName: course.name,
-                courseDescription: course.description,
+                courseName: course.courseName,
+                courseDescription: course.courseDescription,
                 // new properties
                 studentsEnrolled: totalStudentEnrolled,
                 revenueGenerated: totalRevenue,
@@ -297,78 +297,80 @@ async function instructorDashboard(req, res) {
 }
 
 // optimized fetch user enrolled courses + totalDuration Calculation
-// async function getEnrolledCourses(req, res) {
-//     try {
-//         const userId = req.user.id;
+/*
+async function getEnrolledCourses(req, res) {
+    try {
+        const userId = req.user.id;
 
-//         // Fetch user courses and course content with necessary fields
-//         let userDetails = await User.findOne({ _id: userId })
-//             .populate({
-//                 path: "courses",
-//                 select: "courseName thumbnail courseDescription",
-//                 populate: {
-//                     path: "courseContent",
-//                     select: "subSection",
-//                     populate: {
-//                         path: "subSection",
-//                         select: "timeDuration"
-//                     }
-//                 }
-//             })
-//             .lean();    // converting to plain js object
+        // Fetch user courses and course content with necessary fields
+        let userDetails = await User.findOne({ _id: userId })
+            .populate({
+                path: "courses",
+                select: "courseName thumbnail courseDescription",
+                populate: {
+                    path: "courseContent",
+                    select: "subSection",
+                    populate: {
+                        path: "subSection",
+                        select: "timeDuration"
+                    }
+                }
+            })
+            .lean();    // converting to plain js object
 
-//         if (!userDetails) {
-//             return res.status(400).json({
-//                 success: false,
-//                 message: `No user found`
-//             });
-//         }
+        if (!userDetails) {
+            return res.status(400).json({
+                success: false,
+                message: `No user found`
+            });
+        }
 
-//         // Calculate total duration and progress for each course
-//         const coursePromises = userDetails.courses.map(async (course) => {
-//             let totalDurationInSeconds = 0;
-//             let subSectionCount = 0;
+        // Calculate total duration and progress for each course
+        const coursePromises = userDetails.courses.map(async (course) => {
+            let totalDurationInSeconds = 0;
+            let subSectionCount = 0;
 
-//             course.courseContent.forEach(section => {
-//                 section.subSection.forEach(subSection => {
-//                     // adding subSection's video duration
-//                     totalDurationInSeconds += parseInt(subSection.timeDuration);
-//                 });
-//                 // adding total subSection count
-//                 subSectionCount += section.subSection.length;
-//             });
+            course.courseContent.forEach(section => {
+                section.subSection.forEach(subSection => {
+                    // adding subSection's video duration
+                    totalDurationInSeconds += parseInt(subSection.timeDuration);
+                });
+                // adding total subSection count
+                subSectionCount += section.subSection.length;
+            });
 
-//             // converting sec's to min/hr
-//             course.totalDuration = convertSecondsToDuration(totalDurationInSeconds);
+            // converting sec's to min/hr
+            course.totalDuration = convertSecondsToDuration(totalDurationInSeconds);
 
-//             const courseProgress = await CourseProgress.findOne({
-//                 courseID: course._id,
-//                 userId: userId
-//             }).select("completedVideos").lean();
+            const courseProgress = await CourseProgress.findOne({
+                courseID: course._id,
+                userId: userId
+            }).select("completedVideos").lean();
 
-//             const completedCount = courseProgress ? courseProgress.completedVideos.length : 0;
-//             // adding progressPercentage matric with 2 decimal point
-//             course.progressPercentage = subSectionCount > 0
-//                 ? Math.round((completedCount / subSectionCount) * 10000) / 100
-//                 : 100;
+            const completedCount = courseProgress ? courseProgress.completedVideos.length : 0;
+            // adding progressPercentage matric with 2 decimal point
+            course.progressPercentage = subSectionCount > 0
+                ? Math.round((completedCount / subSectionCount) * 10000) / 100
+                : 100;
 
-//             return course;
-//         });
+            return course;
+        });
 
-//         // promise all to handle multiple asynchronous operations in parallel
-//         userDetails.courses = await Promise.all(coursePromises);
+        // promise all to handle multiple asynchronous operations in parallel
+        userDetails.courses = await Promise.all(coursePromises);
 
-//         return res.status(200).json({
-//             success: true,
-//             data: userDetails.courses
-//         });
-//     } catch (error) {
-//         return res.status(500).json({
-//             success: false,
-//             message: error.message
-//         });
-//     }
-// }
+        return res.status(200).json({
+            success: true,
+            data: userDetails.courses
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+}
+*/
 
 module.exports = {
     updateProfile,

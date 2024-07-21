@@ -39,7 +39,7 @@ function Template({ title, description1, description2, image, formType }) {
                     </div>
 
                     {/* RIGHT PANEL */}
-                    <div className=" mx-auto w-11/12 max-w-[650px] md:mx-0">
+                    <div className=" mx-auto w-11/12 max-w-[650px] md:mx-0 !overflow-hidden">
                         <img
                             src={image}
                             alt="Students"

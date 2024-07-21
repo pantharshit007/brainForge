@@ -27,6 +27,7 @@ import Catalog from './pages/Catalog'
 import CourseDetail from './pages/CourseDetail'
 import ViewCourse from './pages/ViewCourse'
 import VideoDetail from './components/core/ViewCourse/VideoDetail'
+import InstructorDash from './components/core/Dashboard/InstructorDashboard/InstructorDash'
 
 function App() {
   // TODO: Implement an upword arrow which bring user to top of the page.
@@ -96,6 +97,7 @@ function App() {
                 <Route path="dashboard/my-courses" element={<MyCourses />} />
                 <Route path="dashboard/add-course" element={<AddCourse />} />
                 <Route path="dashboard/edit-course/:courseId" element={<EditCourse />} />
+                <Route path="dashboard/instructor" element={<InstructorDash />} />
               </>
             )}
 
@@ -108,6 +110,7 @@ function App() {
           <Route path="/catalog/:catalogName" element={<Catalog />} />
           <Route path="/course/:courseId" element={<CourseDetail />} />
 
+          {/* COURSE VIEW */}
           <Route
             element={
               <PrivateRoute>

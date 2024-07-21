@@ -82,7 +82,7 @@ export async function getInstructorData(token, dispatch, navigate) {
     try {
         // CALLING BACKEND URL: /profile/instructorDashboard
         const response = await apiConnector('GET', GET_INSTRUCTOR_DATA_API, null, headers);
-        console.log('> INSTRUCTOR DATA API: ', response);
+        // console.log('> INSTRUCTOR DATA API: ', response);
 
         // ENCOUNTERED AN ERROR
         if (!response.data.success) {

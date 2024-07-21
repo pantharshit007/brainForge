@@ -225,3 +225,14 @@ input[type="number"] {
         /* Firefox */
     }
 }
+
+.bgImage {
+    background-image: url(../src/assets/Images/no_data.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 37%;
+    margin: 0 auto;
+    background-blend-mode: overlay;
+    background-blend-mode: soft-light;
+}
