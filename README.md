@@ -4,7 +4,7 @@
 
 ## Demo Video
 
-[![YouTube](./frontend/public/Images/frontPage.png)](https://www.youtube.com/watch?v=wsCpRGHbSWQ)
+[![YouTube](./frontend/public/Images/frontPage.png)](https://youtu.be/nk1AYOY_lS0)
 
 ### MERN Based
 
@@ -65,7 +65,7 @@ For Instructors:
 
 To build the front-end, we use frameworks and libraries such as ReactJS, CSS, and Tailwind for styling, and Redux for state management with Framer-motion to power the animation.
 
-##### For more Details go to Frontend Readme [here 🚀](/frontend/README.md)
+##### For more Details go to Frontend Readme [here 🚀](/frontend)
 
 ### Back-end
 
@@ -79,7 +79,7 @@ The back-end of the platform is built using NodeJS and ExpressJS, providing APIs
 - **Cloud-based Media Management:** BrainForge uses Cloudinary, a cloud-based media management service, to store and manage all media content, including images, videos, and documents.
 - **Markdown Formatting:** Course content in document format is stored in Markdown format, allowing for easier display and rendering on the front-end.
 
-##### For more Details go to Backend Readme [here 🚀](/backend/README.md)
+##### For more Details go to Backend Readme [here 🚀](/backend)
 
 ### Database
 
@@ -134,7 +134,9 @@ For a list of upcoming tasks and features, please refer to the `todo` file locat
 
 <details>
   <summary>TODO.ts</summary>
-
+  
+  used extension [here](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments) 
+  
 ![TODO](./frontend/public/Images/todo.png)
 
 </details>
