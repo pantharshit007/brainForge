@@ -74,7 +74,7 @@ router.post('/createCategory', auth, isAdmin, createCategory)
 // fetch all category router: 
 router.get('/getAllCatogories', getAllCategorys)
 // fetch all category router: Protected
-router.get('/activeCategory', auth, isInstructor, isAdmin, activeCategory)
+router.get('/activeCategory', auth, isInstructor, activeCategory)
 // fetch category based courses router
 router.post('/getCategoryPageDetails', categoryPageDetails)
 // update category active status
