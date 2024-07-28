@@ -56,7 +56,7 @@ async function sendOtpMessage(req, res) {
         return res.status(200).json({
             success: true,
             message: 'OTP sent successfully',
-            otp //TODO: remove this for sequrity reason since can be accessed in network tab
+            otp
         })
 
     } catch (err) {
@@ -117,6 +117,14 @@ async function signup(req, res) {
             });
         }
 
+        // not allowed to create Admin account: Optional
+        if (accountType === 'Admin') {
+            return res.status(403).json({
+                success: false,
+                message: 'Not Allowed, Admin account is limited.'
+            })
+        }
+
         //checking if user already exists
         const existingUser = await userSchema.findOne({ email: email });
         if (existingUser) {
@@ -147,7 +155,7 @@ async function signup(req, res) {
         //Hashing the password in dB
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Create the user
+        // Create the user: I forgot its purpose maybe for future use ig?
         let approved = ""
         approved === "Instructor" ? (approved = false) : (approved = true)
 
@@ -281,7 +289,7 @@ async function changePassword(req, res) {
     //validate inputs
     const changePassBody = zod.object({
         oldPassword: zod.string(),
-        newPassword: zod.string(),
+        newPassword: zod.string().min(8, "New Password must be at least 8 characters"),
     })
 
     try {
