@@ -33,7 +33,7 @@ const { createRating, avgRating, getAllRatingAndReview, getCourseRatingAndReview
 // -------- Course Routes -------- //
 
 // create course router: INSTRUCTOR
-router.post('/createCourse', auth, isInstructor, createCourse)
+router.post('/createCourse', auth, isInstructor, isDemo, createCourse)
 // get all courses router
 router.get('/getAllCourses', getAllCourses)
 // get course details
@@ -43,29 +43,29 @@ router.post('/getFullCourseDetails', auth, getFullCourseDetails)
 // get all courses router (Instructor specific)
 router.get('/getInstructorCourses', auth, isInstructor, getInstructorCourses)
 // update Course router: INSTRUCTOR
-router.put('/updateCourse', auth, isInstructor, updateCourse)
+router.put('/updateCourse', auth, isInstructor, isDemo, updateCourse)
 // delete course router: INSTRUCTOR
-router.delete('/deleteCourse', auth, isInstructor, deleteCourse)
+router.delete('/deleteCourse', auth, isInstructor, isDemo, deleteCourse)
 // mark course lecture as completed: STUDENT
 router.put('/updateCourseProgress', auth, isStudent, markLectureAsComplete)
 
 // -------- Section Routes -------- //
 
 // add section router: INSTRUCTOR
-router.post('/addSection', auth, isInstructor, createSection)
+router.post('/addSection', auth, isInstructor, isDemo, createSection)
 // update section router: INSTRUCTOR
-router.put('/updateSection', auth, isInstructor, updateSection)
+router.put('/updateSection', auth, isInstructor, isDemo, updateSection)
 // delete section router: INSTRUCTOR
-router.delete('/deleteSection', auth, isInstructor, deleteSection)
+router.delete('/deleteSection', auth, isInstructor, isDemo, deleteSection)
 
 // -------- Sub Section Routes -------- //
 
 // add sub-section router: INSTRUCTOR
-router.post('/addSubSection', auth, isInstructor, createSubSection)
+router.post('/addSubSection', auth, isInstructor, isDemo, createSubSection)
 // update sub-section router: INSTRUCTOR
-router.put('/updateSubSection', auth, isInstructor, updateSubSection)
+router.put('/updateSubSection', auth, isInstructor, isDemo, updateSubSection)
 // delete sub-section router: INSTRUCTOR
-router.delete('/deleteSubSection', auth, isInstructor, deleteSubSection)
+router.delete('/deleteSubSection', auth, isInstructor, isDemo, deleteSubSection)
 
 // -------- Category Routes -------- //
 
@@ -74,7 +74,7 @@ router.post('/createCategory', auth, isAdmin, createCategory)
 // fetch all category router: 
 router.get('/getAllCatogories', getAllCategorys)
 // fetch all category router: Protected
-router.get('/activeCategory', auth, isInstructor, activeCategory)
+router.get('/activeCategory', auth, isInstructor, isAdmin, activeCategory)
 // fetch category based courses router
 router.post('/getCategoryPageDetails', categoryPageDetails)
 // update category active status
@@ -83,7 +83,7 @@ router.put('/disableCategory', auth, isAdmin, disableCategory)
 // -------- Rating and Review Routes -------- //
 
 // add rating routes: ISSTUDENT
-router.post('/createRating', auth, isStudent, createRating)
+router.post('/createRating', auth, isStudent, isDemo, createRating)
 // Average rating routes: ISSTUDENT
 router.get('getAverageRating', avgRating)
 // fetch all Rating and Review
