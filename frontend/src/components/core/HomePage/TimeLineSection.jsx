@@ -18,7 +18,7 @@ function TimeLineSection() {
                                 <div className="flex lg:flex-row gap-6" >
                                     {/* image */}
                                     <div className='w-[52px] h-[52px] bg-white place-items-center rounded-full flex justify-center items-center shadow-[#00000012] shadow-[0_0_62px_0]'>
-                                        <img src={element.Logo} alt="Logo-Img" />
+                                        <img src={element.Logo} alt="Logo-Img" loading='lazy' />
                                     </div>
                                     {/* Skill Detail */}
                                     <div >
@@ -57,7 +57,7 @@ function TimeLineSection() {
                         </div>
                     </div>
                     <div></div>
-                    <img src={timelineImage} alt="TimeLine-Image"
+                    <img src={timelineImage} alt="TimeLine-Image" loading='lazy'
                         className="shadow-white shadow-[20px_20px_0px_0px] object-cover h-[400px] lg:h-fit"
                     />
                 </div>

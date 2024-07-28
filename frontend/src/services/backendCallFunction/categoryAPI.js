@@ -5,7 +5,7 @@ import { categories } from '../apis'
 import { errorToastPosition } from '../../utils/constant';
 import { loginTimeOut } from './globalAPI';
 
-const { PROTECTED_CATEGORIES_API, CATEGORIES_API, CATALOG_DATA } = categories;
+const { ACTIVE_CATEGORIES_API, CATEGORIES_API, CATALOG_DATA } = categories;
 
 // FETCHING COURSE CATEGORY BACKEND CALL
 export async function fetchCourseCategories() {
@@ -30,13 +30,14 @@ export async function fetchCourseCategories() {
 }
 
 // FETCHING COURSE CATEGORY BACKEND CALL: PROTECTED
-export async function fetchCourseCategorie(dispatch, navigate) {
+export async function fetchCourseCategorie(token, dispatch, navigate) {
     let res = [];
+    const headers = { Authorization: 'Bearer ' + token };
 
     try {
         // RESPONSE FROM BACKEND FUNCTION
-        const response = await apiConnector('GET', PROTECTED_CATEGORIES_API);
-        // console.log('> Category: ', response);
+        const response = await apiConnector('GET', ACTIVE_CATEGORIES_API, null, headers);
+        // console.log('> Active Category: ', response);
 
         // IF ENCOUNTER AN ERROR 
         if (!response?.data?.success) {

@@ -48,7 +48,7 @@ function Navbar() {
     }
 
     return (
-        <div className='flex h-14 items-center justify-center border-b-[1px] border-b-richblack-700 z-10 '>
+        <div className='flex h-14 items-center justify-center border-b-[1px] border-b-richblack-700 bg-bgBlue z-[100] '>
             <div className='w-11/12 max-w-maxContent flex items-center justify-between'>
                 {/* Logo */}
                 <Link to={'/'}>

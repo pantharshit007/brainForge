@@ -12,7 +12,11 @@ const categorySchema = new mongoose.Schema({
     courses: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Course',
-    },]
+    },],
+    active: {
+        type: Boolean,
+        default: true
+    }
 
 });
 

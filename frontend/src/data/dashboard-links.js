@@ -39,13 +39,20 @@ export const sidebarLinks = [
     name: "Your Cart",
     path: "/dashboard/cart",
     type: ACCOUNT_TYPE.STUDENT,
-    icon: "VscBookmark",
+    icon: "VscBook",
   },
   {
     id: 7,
     name: "Admin Panel",
     path: "/dashboard/admin-panel",
     type: ACCOUNT_TYPE.ADMIN,
-    icon: "VscHistory",
+    icon: "VscRocket",
+  },
+  {
+    id: 8,
+    name: "Category Manager",
+    path: "/dashboard/category-manager",
+    type: ACCOUNT_TYPE.ADMIN,
+    icon: "VscRemote",
   },
 ];

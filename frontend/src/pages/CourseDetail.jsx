@@ -212,7 +212,7 @@ function CourseDetail() {
 
                         {/* PRICE: Mobile View */}
                         <div className='flex w-full flex-col gap-4 py-4 lg:hidden'>
-                            {ACCOUNT_TYPE.STUDENT === user.accountType
+                            {ACCOUNT_TYPE.INSTRUCTOR !== user?.accountType
                                 ? <>
                                     {isEnrolled
                                         ? <IconBtn text='Go to Course' onClick={() => navigate('/dashboard/enrolled-courses')} customClasses='justify-center' />

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { matchPath, NavLink, useLocation } from 'react-router-dom'
 import * as Icons from "react-icons/vsc"
 
-import { resetCourseState } from '../../../reducer/slices/courseSlice'
+import { resetCourseState, setEditCourse } from '../../../reducer/slices/courseSlice'
 
 function SidebarLink({ link, iconName }) {
     const Icon = Icons[iconName]
@@ -29,7 +29,10 @@ function SidebarLink({ link, iconName }) {
             ></span>
 
             {/* ICON and NAME */}
-            <div className='flex item-center gap-x-2 flex-col md:flex-row'>
+            <div
+                className='flex item-center gap-x-2 flex-col md:flex-row'
+                onClick={() => dispatch(setEditCourse(false))}
+            >
                 <Icon className="md:text-lg text-3xl" />
                 <span className="hidden md:block">{link.name}</span>
             </div>

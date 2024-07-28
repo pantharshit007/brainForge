@@ -133,7 +133,8 @@ function RatingSlider() {
             const res = await fetchRatingAndReview(dispatch, navigate);
             setReviews(res);
 
-            testData && setReviews([...testData, ...res])
+            // now in use from now on..
+            // testData && setReviews([...testData, ...res])
         }
         getRatingAndReview();
     }, []);

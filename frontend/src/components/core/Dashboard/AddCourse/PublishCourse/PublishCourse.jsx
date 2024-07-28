@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import IconBtn from '../../../../common/IconBtn'
-import { resetCourseState, setStep } from '../../../../../reducer/slices/courseSlice'
+import { resetCourseState, setEditCourse, setStep } from '../../../../../reducer/slices/courseSlice'
 import { COURSE_STATUS, toastPosition } from '../../../../../utils/constant'
 import toast from 'react-hot-toast'
 import { updateCourse } from '../../../../../services/backendCallFunction/courseAPI'
@@ -57,6 +57,8 @@ function PublishCourse() {
         // check if no changes are made
         if (alreadyPublished || alreadyDrafted) {
             gotToCourse()
+            dispatch(setStep(1));
+            dispatch(setEditCourse(null));
             toast.success('Course Status: ' + courseStatus, toastPosition)
             return
         }

@@ -50,7 +50,7 @@ function CourseDetailCard({ course, handleBuyCourse, handleAddToCart, isEnrolled
 
                 {/* BUTTON */}
                 <div className='flex flex-col gap-4 '>
-                    {ACCOUNT_TYPE.STUDENT === user.accountType
+                    {ACCOUNT_TYPE.INSTRUCTOR !== user?.accountType
                         ? <>
                             {isEnrolled
                                 ? <IconBtn text='Go to Course' onClick={() => navigate('/dashboard/enrolled-courses')} customClasses='justify-center' />

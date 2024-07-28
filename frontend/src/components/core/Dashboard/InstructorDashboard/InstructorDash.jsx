@@ -83,7 +83,7 @@ function InstructorDash() {
                     {/* CHART */}
                     {(courseData?.length > 0 && totalStudentEnrolled > 0)
                         ? <DashboardChart instructorData={instructorData} currentChart={currentChart} />
-                        : (<div className="flex-1 rounded-md bg-richblack-800">
+                        : (<div className="flex-1 flex justify-center items-center h-full rounded-md bg-richblack-800">
                             <p className="mt-4 text-xl font-medium text-richblack-50">
                                 Not Enough Data To Visualize
                             </p>
@@ -129,7 +129,7 @@ function InstructorDash() {
                 {courseData?.length > 0
                     // If Instructor has already created some courses
                     ? <div className='my-4 flex space-x-6'>
-                        {courseData?.map(course => {
+                        {courseData?.slice(0, 3)?.map(course => {
                             return (
                                 <div key={course._id} className='w-1/3'>
                                     {/* IMG */}

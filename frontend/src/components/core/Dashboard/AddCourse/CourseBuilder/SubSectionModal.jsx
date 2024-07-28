@@ -40,7 +40,7 @@ function SubSectionModal({
     view = false,
     edit = false,
 }) {
-
+    const sampleLink = "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"
     const { token } = useSelector((state) => state.auth);
     const { course } = useSelector((state) => state.course);
     const dispatch = useDispatch();
@@ -156,7 +156,7 @@ function SubSectionModal({
             animate="visible"
             exit={{ opacity: 0 }}
             variants={dropIn}
-            className="fixed inset-0 z-[1000] !mt-0 grid place-items-center overflow-auto bg-opacity-10 "
+            className="fixed inset-0 z-[998] !mt-8 grid place-items-center overflow-auto bg-opacity-10 "
         >
             <div
                 onClick={(e) => e.stopPropagation()}
@@ -179,7 +179,7 @@ function SubSectionModal({
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 px-8 mx-auto py-10">
 
                     {/* UPLOAD COMPONENT */}
-                    <>
+                    <div>
                         <UploadVideo
                             name="lectureVideo"
                             label="lectureVideo"
@@ -189,7 +189,13 @@ function SubSectionModal({
                             viewData={view ? modalData.videoUrl : null}
                             editData={edit ? modalData.videoUrl : null}
                         />
-                    </>
+                        <p className='text-sm text-richblack-100 mt-1'>
+                            need Sample video?
+                            <a href={sampleLink} target='_blank' className='italic text-indigo-500'>
+                                {' here'}
+                            </a>
+                        </p>
+                    </div>
 
                     {/* TITLE */}
                     <div className="flex flex-col space-y-2">

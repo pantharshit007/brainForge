@@ -11,7 +11,6 @@ function ExploreMore() {
     const [currentCard, setCurrentCard] = useState(HomePageExplore[0].courses[0].heading);
 
     const setCard = (value) => {
-        //  TODO: console: courses currentCard when checking.
         setCurrentTab(value);
         //fetch all related courses
         const result = HomePageExplore.filter((course) => course.tag === value);

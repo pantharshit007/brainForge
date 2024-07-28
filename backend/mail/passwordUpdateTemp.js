@@ -55,7 +55,7 @@ exports.passwordUpdated = (email, name) => {
     
     <body>
         <div class="container">
-            <a href="https://github.com/pantharshit007/brainforge"><img class="logo"
+            <a href="https://brainforge.vercel.app/"><img class="logo"
                     src="https://i.ibb.co/G5cKnxf/logo.png" alt="BrainForge Logo"></a>
             <div class="message">Password Update Confirmation</div>
             <div class="body">

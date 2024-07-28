@@ -26,7 +26,6 @@ async function sendVerificationEmail(email, otp) {
         // console.log("OTP sent ✅: " + mailResponse.response)
 
     } catch (error) {
-        //TODO: show error screen
         console.log('> Error while sending v.Mail: ' + error.message);
         throw error;
     }

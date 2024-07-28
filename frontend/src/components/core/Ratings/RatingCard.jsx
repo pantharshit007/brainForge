@@ -24,11 +24,11 @@ function RatingCard({ item }) {
                     />
 
                     <span className="flex flex-col gap-x-1">
-                        <p className="text-sm text-gray-400 font-normal">
-                            {item?.course?.courseName}
-                        </p>
-                        <p className="text-sm text-gray-400 font-normal capitalize">
+                        <p className="text-sm text-gray-300 font-semibold capitalize">
                             {item?.user.firstName} {item?.user.lastName}
+                        </p>
+                        <p className="text-sm text-gray-500 font-normal">
+                            {item?.course?.courseName}
                         </p>
                     </span>
                 </div>

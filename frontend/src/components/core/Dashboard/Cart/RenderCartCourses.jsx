@@ -36,7 +36,6 @@ function RenderCartCourses() {
                                 {course?.courseName}
                             </p>
                             <p className="text-sm text-richblack-300">
-                                {/* TODO: add instructor data in course data in BE */}
                                 By {course?.instructor?.firstName + ' ' + course?.instructor?.lastName || 'Abdul Bari'}
                             </p>
 

@@ -55,6 +55,10 @@ const courseSchema = new Schema({
         enum: ["Draft", "Published"],
         default: 'Draft'
     },
+    totalLectures: {
+        type: Number,
+        default: 0
+    },
     sold: {
         type: Number,
         default: 0,

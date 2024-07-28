@@ -28,7 +28,7 @@ export const profileEndPoints = {
 // CATEGORIES ENDPOINTS
 export const categories = {
     CATEGORIES_API: BASE_URL + '/course/getAllCatogories',
-    PROTECTED_CATEGORIES_API: BASE_URL + '/course/getAllCatogorie',
+    ACTIVE_CATEGORIES_API: BASE_URL + '/course/activeCategory',
     CATALOG_DATA: BASE_URL + '/course/getCategoryPageDetails',
 }
 
@@ -71,3 +71,10 @@ export const paymentEndpoint = {
     VERIFY_PAYMENT_API: BASE_URL + "/payment/verifyPayment",
     PAYMENT_SUCCESS_EMAIL_API: BASE_URL + "/payment/sendPaymentSuccessEmail"
 };
+
+// ADMIN ENDPOINTS
+export const adminEndpoint = {
+    CREATE_CATEGORY_API: BASE_URL + "/course/createCategory",
+    DISABLE_CATEGORY_API: BASE_URL + "/course/disableCategory",
+    ADMIN_DASHBOARD_API: BASE_URL + "/profile/adminDashboard",
+}

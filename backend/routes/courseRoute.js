@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router()
 
 // middleware
-const { auth, isInstructor, isAdmin, isStudent } = require('../middleware/authMiddleware');
+const { auth, isInstructor, isAdmin, isStudent, isDemo } = require('../middleware/authMiddleware');
 
 // Cousrse controller
 const {
@@ -23,7 +23,7 @@ const { createSection, updateSection, deleteSection } = require('../controllers/
 const { createSubSection, updateSubSection, deleteSubSection } = require('../controllers/SubSectionController');
 
 // Category controller
-const { createCategory, getAllCategorys, categoryPageDetails } = require('../controllers/CategoryController');
+const { createCategory, getAllCategorys, categoryPageDetails, activeCategory, disableCategory } = require('../controllers/CategoryController');
 
 // Rating and Review controller
 const { createRating, avgRating, getAllRatingAndReview, getCourseRatingAndReview } = require('../controllers/RatingAndReviewCont');
@@ -58,7 +58,7 @@ router.put('/updateSection', auth, isInstructor, updateSection)
 // delete section router: INSTRUCTOR
 router.delete('/deleteSection', auth, isInstructor, deleteSection)
 
-// -------- Section Routes -------- //
+// -------- Sub Section Routes -------- //
 
 // add sub-section router: INSTRUCTOR
 router.post('/addSubSection', auth, isInstructor, createSubSection)
@@ -74,20 +74,22 @@ router.post('/createCategory', auth, isAdmin, createCategory)
 // fetch all category router: 
 router.get('/getAllCatogories', getAllCategorys)
 // fetch all category router: Protected
-router.get('/getAllCatogorie', auth, isInstructor, getAllCategorys)
+router.get('/activeCategory', auth, isInstructor, activeCategory)
 // fetch category based courses router
 router.post('/getCategoryPageDetails', categoryPageDetails)
+// update category active status
+router.put('/disableCategory', auth, isAdmin, disableCategory)
 
 // -------- Rating and Review Routes -------- //
 
 // add rating routes: ISSTUDENT
 router.post('/createRating', auth, isStudent, createRating)
 // Average rating routes: ISSTUDENT
-router.get('getAverageRating', avgRating)   //TODO: add auth before deploy
+router.get('getAverageRating', avgRating)
 // fetch all Rating and Review
-router.get('/getReviews', getAllRatingAndReview)    //TODO: add auth before deploy
+router.get('/getReviews', getAllRatingAndReview)
 // fetch course Specific Rating and Review
-router.get('/getCourseReviews', getCourseRatingAndReview)   //TODO: add this route in Postman
+router.get('/getCourseReviews', getCourseRatingAndReview)
 
 
 
