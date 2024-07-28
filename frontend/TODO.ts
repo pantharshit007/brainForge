@@ -47,15 +47,15 @@
 //! TODO: change tag of all the sample ID's data:images/videos: dp/sub-section videos
 /////! TODO: remove testData from enrolledCourses
 /////? TODO: remove the video from hero section and replace it with product images in a slider formation + tilt effect
-//? TODO: prod: remove package video-react from fe
+/////? TODO: prod: remove package video-react from fe
 /////! TODO: prod: make changes in auth controller so no one is able to create ADMIN account (even from postMan) and ADMIN priviledge on frontEnd.
 /////! TODO: remove all git link from emails and replace with site link.
 //? TODO: update the link in uploadVideo where we are passing video url to reactComponent for display since URL.encoded is deprecated and risky. [not sure since working fine for now]
 // TODO: remove test data from ratingSlider
-//! TODO: prod: remove otp response from BE, add isDemo also
-//! TODO: prod: remove test data from RatingSlider
+/////! TODO: prod: remove otp response from BE, add isDemo also
+/////! TODO: prod: remove test data from RatingSlider
 /////! TODO: add isDemo middleware to all demo's
 /////! TODO: add notification for wait a while for BE to boot up.
 // TODO: add loading screen before site loads properly.
-//! CHECK: check prod package.json and viteconfig, api.js [no merging]
+/////! CHECK: check prod package.json and viteconfig, api.js [no merging]
 //! TODO: Admin: create new category left to be build
