@@ -13,11 +13,21 @@ async function createCategory(req, res) {
             })
         }
 
-        await Category.create({ name, description });
+        // check if already present
+        const isAlreadyExists = await Category.findOne({ name: name })
+        if (isAlreadyExists) {
+            return res.status(400).json({
+                success: false,
+                message: 'Category already exists',
+            });
+        }
+
+        const newCategory = await Category.create({ name, description });
 
         return res.status(200).json({
             success: true,
             message: 'Category created successfully.',
+            newCategories: newCategory
         })
 
     } catch (err) {
@@ -36,7 +46,26 @@ async function getAllCategorys(req, res) {
 
         return res.status(200).json({
             success: true,
-            message: 'All tags fetched successfully',
+            message: 'All Category fetched successfully',
+            AllCategorys: allCategorys
+        });
+
+    } catch (err) {
+        console.log('> Error while fetching all Category: ' + err.message)
+        return res.status(404).json({
+            success: false,
+            message: 'Error while fetching all Category: ' + err.message
+        })
+    }
+}
+
+async function activeCategory(req, res) {
+    try {
+        const allCategorys = await Category.find({ active: true });
+
+        return res.status(200).json({
+            success: true,
+            message: 'All Active Category fetched successfully',
             AllCategorys: allCategorys
         });
 
@@ -147,8 +176,45 @@ async function categoryPageDetails(req, res) {
     }
 }
 
+// disable category
+async function disableCategory(req, res) {
+    try {
+        // array of all categoryId : activeStatus
+        const activeCategories = req.body.newData
+
+        // Step 1: Set all categories to inactive
+        await Category.updateMany({}, { $set: { active: false } });
+
+        // Step 2: Set specific categories to active
+        // Use bulkWrite to perform multiple updates in a single operation
+        const bulkUpdate = activeCategories.map(categoryId => ({
+            updateOne: {
+                filter: { _id: categoryId },
+                update: { active: true },
+            }
+        }));
+
+        const result = await Category.bulkWrite(bulkUpdate);
+
+        res.status(200).json({
+            success: true,
+            message: 'Updated category List!',
+            updatedList: result,
+        })
+
+    } catch (err) {
+        console.error('Error updating categories:', err);
+        res.status(500).json({
+            success: false,
+            message: 'Error updating categories: ' + err.message,
+        });
+    }
+}
+
 module.exports = {
     createCategory,
     getAllCategorys,
-    categoryPageDetails
+    activeCategory,
+    categoryPageDetails,
+    disableCategory,
 }

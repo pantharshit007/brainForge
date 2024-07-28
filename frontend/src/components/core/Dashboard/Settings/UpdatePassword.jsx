@@ -91,7 +91,7 @@ function UpdatePassword() {
                             placeholder="Enter New Password"
                             autoComplete='new-password'
                             className="form-style"
-                            {...register("newPassword", { required: { value: true, minlength: "8" } })}
+                            {...register("newPassword", { required: { value: true, minLength: "8" } })}
                         />
                         <span
                             onClick={() => setShowNewPassword((prev) => !prev)}

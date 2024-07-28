@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { toast } from "react-hot-toast"
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
 import { ACCOUNT_TYPE, toastPosition } from '../../../utils/constant'
@@ -91,7 +91,7 @@ function SignupForm() {
             <Tab tabData={tabData} field={accountType} setField={setAccountType} />
 
             {/* FORM */}
-            <form onSubmit={handleOnSubmit} className="flex w-full flex-col gap-y-4">
+            <form onSubmit={handleOnSubmit} className="flex w-full flex-col gap-y-3">
 
                 {/* SECTION-1: NAME */}
                 <div className="flex gap-x-4">
@@ -174,6 +174,7 @@ function SignupForm() {
                             onChange={handleOnChange}
                             placeholder="Enter Password"
                             autoComplete="new-password"
+                            minLength={8}
                             style={{
                                 boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
                             }}
@@ -208,6 +209,7 @@ function SignupForm() {
                             onChange={handleOnChange}
                             placeholder="Confirm Password"
                             autoComplete="new-password"
+                            minLength={8}
                             style={{
                                 boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
                             }}
@@ -239,6 +241,14 @@ function SignupForm() {
                 >
                     Create Account
                 </button>
+
+                {/* ALREADY HAVE AN ACCOUNT? */}
+                <div className=' mx-auto text-richblack-25 text-sm font-medium '>
+                    Already have an account?
+                    <Link to={'/login'} className='text-sm text-indigo-500 font-medium'>
+                        {' here'}
+                    </Link>
+                </div>
 
             </form>
 

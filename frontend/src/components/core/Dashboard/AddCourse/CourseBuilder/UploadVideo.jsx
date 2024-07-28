@@ -20,7 +20,8 @@ function UploadVideo({
 
     const { course } = useSelector((state) => state.course)
     const [selectedFile, setSelectedFile] = useState(null)
-    const [previewSource, setPreviewSource] = useState(viewData ? viewData : editData || "")
+    const [cloudinaryFile, setCloudinaryFile] = useState(viewData ? viewData : editData || '')
+    const [previewSource, setPreviewSource] = useState('')
 
     // setting the new image values
     const onDrop = useCallback(acceptedFiles => {
@@ -62,14 +63,17 @@ function UploadVideo({
                 className={`${isDragActive ? "bg-richblack-600" : "bg-richblack-700"}
                 flex min-h-[250px] cursor-pointer items-center justify-center rounded-md border-2 border-dotted border-richblack-500`}
             >
-                {previewSource ? (
+                {cloudinaryFile || previewSource ? (
                     // DISPLAY VIDEO UPLOADED
                     <div className="flex w-full flex-col p-6">
                         {/* PLAYER */}
                         {/* <Player aspectRatio="16:9" playsInline src={previewSource} preload="metadata" /> */}
                         <div className="relative pb-[56.25%] h-0 bg-black">
-                            <ReactPlayer url={URL.createObjectURL(previewSource)} controls={true} width="100%" height="100%"
-                                className="absolute top-0 left-0" />
+                            <ReactPlayer
+                                url={previewSource ? URL.createObjectURL(previewSource) : cloudinaryFile}
+                                controls={true} width="100%" height="100%"
+                                className="absolute top-0 left-0"
+                            />
                         </div>
 
 

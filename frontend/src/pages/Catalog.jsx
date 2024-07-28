@@ -54,8 +54,8 @@ function Catalog() {
                 <div className="mx-auto flex min-h-[260px] max-w-maxContentTab flex-col justify-center gap-4 lg:max-w-maxContent" >
                     <p className="text-sm text-richblack-300">
                         <Link to={'/'}>Home </Link> / Catalog /
-                        <span className="text-indigo-400">
-                            {" " + catalogPageData?.selectedCategory?.name}
+                        <span className="text-indigo-400 capitalize">
+                            {" " + catalogName}
                         </span>
                     </p>
 

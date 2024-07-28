@@ -6,7 +6,6 @@ exports.contactUsEmail = (
     phoneNo,
     countrycode
 ) => {
-    // TODO: change href link from repo to actual project url for all mails
     return `<!DOCTYPE html>
     <html>
     
@@ -75,7 +74,7 @@ exports.contactUsEmail = (
     
     <body>
         <div class="container">
-            <a href="https://github.com/pantharshit007/brainforge"><img class="logo"
+            <a href="https://brainforge.vercel.app/"><img class="logo"
                     src="https://i.ibb.co/G5cKnxf/logo.png" alt="BrainForge Logo"></a>
             <div class="message">Contact Form Confirmation</div>
             <div class="body">
@@ -87,6 +86,7 @@ exports.contactUsEmail = (
                 <p>Email: ${email}</p>
                 <p>Phone Number: ${phoneNo}</p>
                 <p>Message: ${message}</p>
+                <br/>
                 <p>We appreciate your interest and will get back to you shortly. </p>
             </div>
             <div class="support">If you have any further questions or need immediate assistance, please feel free to reach

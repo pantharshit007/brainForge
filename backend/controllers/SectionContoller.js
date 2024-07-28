@@ -135,16 +135,23 @@ async function deleteSection(req, res) {
             await deleteFolder(SECTION_LOCATION);
         }
 
-        // Updating the course to remove the section and then fetch the updated course
-        const updatedCourse = await Course.findByIdAndUpdate(courseId,
-            { $pull: { courseContent: sectionId } },
+        // Calculate the number of lectures in the section
+        const lectureInSection = section.subSection.length;
+
+        // Updating the course to remove the section and update totalLectures
+        const updatedCourse = await Course.findByIdAndUpdate(
+            courseId,
+            {
+                $pull: { courseContent: sectionId },
+                $inc: { totalLectures: -lectureInSection }
+            },
             { new: true }
         ).populate({
             path: "courseContent",
             populate: {
                 path: "subSection"
             }
-        })
+        });
 
         if (!updatedCourse) {
             return res.status(404).json({

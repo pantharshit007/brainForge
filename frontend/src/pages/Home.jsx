@@ -1,9 +1,7 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { FaArrowRight } from 'react-icons/fa'
 import HightlightText from '../components/core/HomePage/HightlightText'
 import CTAButton from '../components/core/HomePage/Button'
-import Banner from '../assets/Images/banner.mp4'
 import CodeBlocks from '../components/core/HomePage/CodeBlocks'
 import TimeLineSection from '../components/core/HomePage/TimeLineSection'
 import LearningLangSection from '../components/core/HomePage/LearningLangSection'
@@ -11,6 +9,7 @@ import InstructorSection from '../components/core/HomePage/InstructorSection'
 import Footer from '../components/common/Footer'
 import ExploreMore from '../components/core/HomePage/ExploreMore'
 import RatingSlider from '../components/core/Ratings/RatingSlider'
+import Hero from '../components/core/HomePage/Hero'
 
 function Home() {
     return (
@@ -18,41 +17,8 @@ function Home() {
             {/* Section 1 */}
             <div className='flex flex-col w-11/12 max-w-maxContent items-center justify-between mx-auto text-neutral-50 gap-8'>
 
-                {/* Upgrade to Instructor */}
-                <Link to='/signup'>
-                    <div className=' group mx-auto mt-16 p-1 rounded-full font-bold text-richblack-200 bg-richblack-800 transition-all duration-200 hover:scale-95 w-fit drop-shadow-[0_1.5px_rgba(255,255,255,0.25)] hover:drop-shadow-none  '>
-                        <div className=' flex flex-row items-center gap-2 rounded-full px-10 py-[5px] transition-all duration-200 group-hover:bg-richblack-900 '>
-                            <p>Become an Instructor </p>
-                            <FaArrowRight />
-                        </div>
-                    </div>
-                </Link>
-
-                {/* Main Heading */}
-                <div className='text-center text-4xl font-semibold mt-7'>
-                    Empower your future with <HightlightText text={"Coding Skills"} />
-                </div>
-
-                {/* Sub Heading */}
-                <div className='mx-auto mt-4 w-[90%] text-center text-lg font-bold text-richblack-300'>
-                    With our online coding courses, you can learn at your own pace, from anywhere in the world, and get access to a wealth of resources, including hands-on projects, quizzes, and personalized feedback from instructors.
-                </div>
-
-                {/* Click to Action Buttons */}
-                <div className='flex flex-row gap-7 mt-8'>
-                    <CTAButton active={true} linkTo={'/signup'}>
-                        Learn More
-                    </CTAButton>
-                    <CTAButton active={false} linkTo={'/login'}>
-                        Book a Demo
-                    </CTAButton>
-                </div>
-
-                {/* Banner Video */}
-                <div className='mx3 my-7 shadow-[10px_-5px_50px_-5px] shadow-fontPurple '>
-                    <video muted loop autoPlay src={Banner} className="shadow-[20px_20px_rgba(255,255,255)]">
-                    </video>
-                </div>
+                {/* HERO SECTION */}
+                <Hero />
 
                 {/* Code section-1 */}
                 <div>

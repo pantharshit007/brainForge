@@ -25,7 +25,12 @@ async function createSubSection(req, res) {
         }
 
         //Finding the courseName
-        const courseDetail = await Course.findById(courseId);
+        const courseDetail = await Course.findByIdAndUpdate(
+            courseId,
+            { $inc: { totalLectures: 1 } },
+            { new: true },
+        )
+
         if (!courseDetail) {
             return res.status(404).json({
                 success: false,
@@ -40,14 +45,23 @@ async function createSubSection(req, res) {
         const tag = [courseName]
 
         // upload the video on cloudinary.
-        const uploadedVideoDetails = await uploadImageToCloudinary(video, SUBSECTION_LOCATION, null, null, tag);
+        let uploadedVideoDetails = await uploadImageToCloudinary(video, SUBSECTION_LOCATION, null, null, tag);
+
+        if (!uploadedVideoDetails?.success) {
+            return res.status(404).json({
+                success: false,
+                message: uploadedVideoDetails?.message
+            })
+        }
+
+        uploadedVideoDetails = uploadedVideoDetails.result
 
         //create a new Sub-Section in dB
         const newSubSection = await SubSection.create({
             title,
             description,
             timeDuration: `${uploadedVideoDetails.duration}`,
-            videoUrl: uploadedVideoDetails.secure_url
+            videoUrl: uploadedVideoDetails?.secure_url
         });
 
         // Update the corresponding section with the newly created sub-section and update the total time duration
@@ -116,11 +130,20 @@ async function updateSubSection(req, res) {
         let newDuration = oldDuration;
         if (req.files && req.files.video !== undefined) {
             const video = req.files.video;
-            const updateVideoDetails = await uploadImageToCloudinary(video, SUBSECTION_LOCATION);
+            let updateVideoDetails = await uploadImageToCloudinary(video, SUBSECTION_LOCATION);
 
-            subSectionDetails.videoUrl = updateVideoDetails.secure_url;
-            subSectionDetails.timeDuration = `${updateVideoDetails.duration}`
-            newDuration = parseFloat(updateVideoDetails.duration);
+            if (!updateVideoDetails?.success) {
+                return res.status(404).json({
+                    success: false,
+                    message: updateVideoDetails?.message
+                })
+            }
+
+            updateVideoDetails = updateVideoDetails.result
+
+            subSectionDetails.videoUrl = updateVideoDetails?.secure_url;
+            subSectionDetails.timeDuration = `${updateVideoDetails?.duration}`
+            newDuration = parseFloat(updateVideoDetails?.duration);
         }
 
         await subSectionDetails.save();
@@ -183,6 +206,12 @@ async function deleteSubSection(req, res) {
 
         // deleting sub-section from dB
         const updatedSubSection = await SubSection.findByIdAndDelete(subSectionId);
+
+        // update the totalLectures
+        await Course.findByIdAndUpdate(
+            courseId,
+            { $inc: { totalLectures: -1 } },
+        )
 
         if (!updatedSubSection) {
             console.log('> Sub-Section Not Found: ' + sectionId);

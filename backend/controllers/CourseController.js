@@ -68,7 +68,6 @@ async function createCourse(req, res) {
         //fetching Instructo's data: userId is the same as instructorID since user is Instructore here
         const instructorDetails = await User.findById(userId);
         // console.log('Instructor Details: ' + instructorDetails);
-        //TODO: to check if both id's are same or not : no need since already authenticated via middleware
 
         //though it's stupid to check since the ID is already authenticated before comming here.
         if (!instructorDetails) {
@@ -88,7 +87,15 @@ async function createCourse(req, res) {
         }
 
         //upload thumbnail Image to cloudinary
-        const thumbnailImage = await uploadImageToCloudinary(thumbnail, THUMBNAIL_LOCATION, null, null, imageTag);
+        let thumbnailImage = await uploadImageToCloudinary(thumbnail, THUMBNAIL_LOCATION, null, null, imageTag);
+
+        if (!thumbnailImage?.success) {
+            return res.status(404).json({
+                success: false,
+                message: thumbnailImage?.message || 'Error uploading thumbnail'
+            })
+        }
+        thumbnailImage = thumbnailImage.result
 
         //creating entry for a new Course in dB
         const newCourse = await Course.create({
@@ -98,7 +105,7 @@ async function createCourse(req, res) {
             whatYouWillLearn,
             price,
             category: categoryDetails._id,
-            thumbnail: thumbnailImage.secure_url,
+            thumbnail: thumbnailImage?.secure_url,
             status,
             tag,
             instructions,
@@ -395,8 +402,19 @@ async function updateCourse(req, res) {
         // update thumbnail: If send from FE via req.files
         if (req.files && req.files.thumbnailImage) {
             const thumbnail = req.files.thumbnailImage;
-            const thumbnailImage = await uploadImageToCloudinary(thumbnail, THUMBNAIL_LOCATION, null, null, imageTag);
-            courseDetails.thumbnail = thumbnailImage.secure_url;
+            let thumbnailImage = await uploadImageToCloudinary(thumbnail, THUMBNAIL_LOCATION, null, null, imageTag);
+
+            if (!thumbnailImage?.success) {
+                return res.status(404).json({
+                    success: false,
+                    message: thumbnailImage?.message
+                })
+            }
+
+            thumbnailImage = thumbnailImage.result
+
+            courseDetails.thumbnail = thumbnailImage?.secure_url;
+
         }
 
         // update the fields that are send within the req body
@@ -554,10 +572,19 @@ async function markLectureAsComplete(req, res) {
         }
 
         // If not already completed, push the sub-section ID into the completed videos array
-        await CourseProgress.findOneAndUpdate(
-            { userId: userObjId, courseID: courseObjId },
-            { $push: { completedVideos: subSectionObjId } }
-        );
+        progress.completedVideos.push(subSectionObjId);
+
+        // Retrieve the course document to get the total number of lectures
+        const course = await Course.findById(courseObjId).select('totalLectures');
+        const totalLectures = course.totalLectures;
+
+        // Check if all sub-sections are completed
+        if (progress.completedVideos.length === totalLectures) {
+            progress.courseStatus = 'Completed';
+        }
+
+        // Save the updated progress document
+        await progress.save();
 
         return res.status(200).json({
             success: true,

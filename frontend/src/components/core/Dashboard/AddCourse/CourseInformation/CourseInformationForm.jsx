@@ -6,7 +6,7 @@ import { HiOutlineCurrencyRupee } from 'react-icons/hi';
 import { MdNavigateNext } from "react-icons/md"
 import toast from 'react-hot-toast';
 
-import { fetchCourseCategories } from '../../../../../services/backendCallFunction/categoryAPI'
+import { fetchCourseCategorie } from '../../../../../services/backendCallFunction/categoryAPI'
 import TagsInput from './TagsInput';
 import Upload from './Upload';
 import Instruction from './Instruction';
@@ -37,8 +37,8 @@ function CourseInformationForm() {
     useEffect(() => {
         async function getCategories() {
             setLoading(true);
-            const categories = await fetchCourseCategories(dispatch, navigate)
-            if (categories.length > 0) {
+            const categories = await fetchCourseCategorie(token, dispatch, navigate)
+            if (categories?.length > 0) {
                 setCourseCategories(categories);
             }
             setLoading(false);

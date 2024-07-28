@@ -46,7 +46,7 @@ function Template({ title, description1, description2, image, formType }) {
                             width={640}
                             height={600}
                             loading="lazy"
-                            className="lg:absolute lg:z-1 lg:top-4 -mt-8 lg:mt-0 lg:-ml-11 mx-auto"
+                            className="xl:absolute 2xl:relative lg:z-1 lg:top-4 -mt-8 lg:mt-0 lg:-ml-11 mx-auto"
                         />
                     </div>
                 </div>

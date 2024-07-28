@@ -47,7 +47,7 @@ function CourseSlider({ courses }) {
                 >
                     {courses?.map(courseContent => (
                         <SwiperSlide key={courseContent?._id}>
-                            <CourseCard course={courseContent} Height={"h-[220px] lg:h-[200px]"} slider={true} />
+                            <CourseCard course={courseContent} Height={"max-md:h-[110px] h-[220px] lg:h-[200px]"} slider={true} />
                         </SwiperSlide>
                     ))}
 

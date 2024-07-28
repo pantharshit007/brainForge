@@ -31,13 +31,13 @@ function About() {
                     <div className="sm:h-[70px] lg:h-[150px]"></div>
                     <div className="absolute bottom-0 left-[50%] grid w-[100%] translate-x-[-50%] translate-y-[30%] grid-cols-3 gap-3 lg:gap-5">
                         <Tilt transitionSpeed={2500} scale={1.04} tiltMaxAngleX={8} tiltMaxAngleY={10}>
-                            <img src={BannerImage1} alt="BannerImage1" /></Tilt>
+                            <img src={BannerImage1} alt="BannerImage1" loading='lazy' /></Tilt>
 
                         <Tilt transitionSpeed={2500} scale={1.04} tiltMaxAngleX={8} tiltMaxAngleY={10}>
-                            <img src={BannerImage2} alt="BannerImage2" /></Tilt>
+                            <img src={BannerImage2} alt="BannerImage2" loading='lazy' /></Tilt>
 
                         <Tilt transitionSpeed={2500} scale={1.04} tiltMaxAngleX={8} tiltMaxAngleY={10}>
-                            <img src={BannerImage3} alt="BannerImage3" /></Tilt>
+                            <img src={BannerImage3} alt="BannerImage3" loading='lazy' /></Tilt>
 
                     </div>
                 </div>
@@ -75,6 +75,7 @@ function About() {
                             <div>
                                 <img src={FoundingStory}
                                     alt="FoundingStory"
+                                    loading='lazy'
                                     className="shadow-[0_0_20px_0] shadow-[#008cff]" />
                             </div>
                         </Tilt>

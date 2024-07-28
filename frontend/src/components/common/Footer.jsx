@@ -54,7 +54,7 @@ const Footer = () => {
                                     );
                                 })}
                             </div>
-                            <div className="flex gap-3 text-lg">
+                            <div className="flex gap-3 text-lg ">
                                 <FaFacebook />
                                 <FaGoogle />
                                 <FaTwitter />
@@ -95,7 +95,7 @@ const Footer = () => {
                         </div>
 
                         {/* Column-3 */}
-                        <div className="w-[48%] lg:w-[30%] mb-7 lg:pl-0">
+                        <div className="w-[48%] lg:w-[30%] mb-7 lg:pl-0 max-md:hidden">
 
                             {/* Plans */}
                             <h1 className="text-richblack-50 font-semibold text-[16px]">
@@ -138,7 +138,7 @@ const Footer = () => {
                     </div>
 
                     {/* Section 2 */}
-                    <div className="lg:w-[50%] flex flex-wrap flex-row justify-between pl-3 lg:pl-5 gap-3">
+                    <div className="lg:w-[50%] flex flex-wrap flex-row justify-between pl-3 lg:pl-5 gap-3 max-md:hidden">
                         {FooterLink2.map((ele, i) => {
                             return (
                                 <div key={i} className="w-[48%] lg:w-[30%] mb-7 lg:pl-0">
@@ -173,9 +173,8 @@ const Footer = () => {
                             return (
                                 <div
                                     key={i}
-                                    className={` ${BottomFooter.length - 1 === i
-                                        ? ""
-                                        : "border-r border-richblack-700 cursor-pointer hover:text-richblack-50 transition-all duration-200"
+                                    className={` ${BottomFooter.length - 1 !== i &&
+                                        "border-r border-richblack-700 cursor-pointer hover:text-richblack-50 transition-all duration-200"
                                         } px-3 `}
                                 >
                                     <Link to={ele.split(" ").join("-").toLocaleLowerCase()}>
@@ -187,7 +186,14 @@ const Footer = () => {
                     </div>
 
                     {/* right side */}
-                    <div className="text-center">Made with ❤️ <HightlightText text={" pantharshit007"} />  © 2024 brainForge</div>
+                    <div className="text-center my-auto cursor-default">
+                        Made with
+                        <span className="text-fontPurple"> ❤️</span>
+                        <a href="https://github.com/pantharshit007" target="_blank" rel="noopener noreferrer" className="cursor-none">
+                            <HightlightText text={" pantharshit007 "} />
+                        </a>
+                        © 2024 brainForge
+                    </div>
                 </div>
             </div>
         </div>

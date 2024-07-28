@@ -4,6 +4,12 @@ export const ACCOUNT_TYPE = {
     ADMIN: "Admin",
 }
 
+export const USER_ROLE = {
+    ALL: "Everyone",
+    STUDENT: "Student",
+    INSTRUCTOR: "Instructor",
+}
+
 export const COURSE_STATUS = {
     DRAFT: "Draft",
     PUBLISHED: "Published",

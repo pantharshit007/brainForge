@@ -10,7 +10,7 @@ function InstructorSection() {
             <div className='flex flex-col lg:flex-row gap-20 items-center'>
                 {/* Instructor Image */}
                 <div className='lg:w-[50%] '>
-                    <img src={Instructor} alt="Instructor"
+                    <img src={Instructor} alt="Instructor" loading='lazy'
                         className="shadow-white shadow-[-20px_-20px_0_0]" />
                 </div>
                 {/* Description */}

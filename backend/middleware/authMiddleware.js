@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const userSchema = require('../models/User');
 require('dotenv').config();
 const JWT_SECRET = process.env.JWT_SECRET;
+const BLOCKED_EMAIL = process.env.BLOCKED_EMAIL ? process.env.BLOCKED_EMAIL.split(',') : [];
 
 //Authentication Middleware
 async function auth(req, res, next) {
@@ -10,7 +11,7 @@ async function auth(req, res, next) {
         if (authHeader === undefined) {
             return res.status(401).json({
                 success: false,
-                message: "Token is missing"
+                message: "Token is missing!"
             });
         }
 
@@ -55,7 +56,7 @@ async function auth(req, res, next) {
 //isStudent
 async function isStudent(req, res, next) {
     try {
-        // we have 2 methods one is using the data from auth middle ware via Token or using dB
+        // we have 2 methods one is using the data from auth middleware via Token or using dB
         const userDetails = req.user;
         if (userDetails.accountType !== 'Student') {
             return res.status(401).json({
@@ -118,10 +119,31 @@ async function isAdmin(req, res, next) {
     }
 }
 
+// check demo courses
+async function isDemo(req, res, next) {
+    try {
+
+        if (BLOCKED_EMAIL.includes(req.user.email)) {
+            return res.status(401).json({
+                success: false,
+                message: "Not Authorized on Demo Account",
+            });
+        }
+        next()
+
+    } catch (err) {
+        console.error("Error in isDemo middleware:", err);
+        res.status(500).json({
+            success: false,
+            message: "Internal Server Error",
+        });
+    }
+}
 
 module.exports = {
     auth,
     isStudent,
     isInstructor,
     isAdmin,
+    isDemo
 }

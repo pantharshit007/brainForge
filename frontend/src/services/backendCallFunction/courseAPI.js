@@ -22,8 +22,6 @@ const {
     ADD_RATING_API,
     LECTURE_COMPLETION_API,
     GET_REVIEW_API,
-    CREATE_CATEGORY_API,
-    ADD_COURSE_TO_CATEGORY_API,
 } = courseEndpoint;
 
 //CREATE COURSE BACKEND CALL
@@ -443,7 +441,7 @@ export async function addReviewAndRating(token, data) {
 }
 
 // FETCH REVIEW AND RATING BACKEND CALL
-export async function fetchRatingAndReview() {
+export async function fetchRatingAndReview(dispatch, navigate) {
     let res = null;
     try {
         // BACKEND URL: /getReviews
@@ -459,5 +457,10 @@ export async function fetchRatingAndReview() {
     } catch (err) {
         console.log('> FETCH RATING & REVIEW API ERROR: ', err?.response?.data?.message);
         toast.error(err?.response?.data?.message || 'Failed in Fetching rating & review:', errorToastPosition);
+
+        // IF TOKEN EXPIRES
+        if (err?.response?.status === 408) {
+            dispatch(loginTimeOut(err?.response?.data?.message, navigate))
+        }
     }
 }

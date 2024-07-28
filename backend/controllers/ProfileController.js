@@ -96,7 +96,12 @@ async function deleteProfile(req, res) {
         const username = email.split('@')[0]
         const PFP_LOCATION = USER_PFP + '/@' + username
 
-        await deleteFolder(PFP_LOCATION)
+        try {
+            await deleteFolder(PFP_LOCATION)
+        } catch (err) {
+            console.log('Failed to delete PFP (delete Acc):', err.message)
+        }
+
 
         //TODO: before removing user remove user from all the enrolled Course
         // we can use courseId from user.courses within a for loop to remove user from respective courses.
@@ -174,12 +179,21 @@ async function updateProfilePicture(req, res) {
 
         // upload image to cloudinary 
         const tag = ['dp']
-        const uploadedImg = await uploadImageToCloudinary(displayPicture, PFP_LOCATION, 1000, 1000, tag)
+        let uploadedImg = await uploadImageToCloudinary(displayPicture, PFP_LOCATION, 1000, 1000, tag)
+
+        if (!uploadedImg?.success) {
+            return res.status(404).json({
+                success: false,
+                message: uploadedImg?.message
+            })
+        }
+
+        uploadedImg = uploadedImg.result
 
         // update User schema with new Img url
         const updateProfileImg = await User.findByIdAndUpdate(
             { _id: userId },
-            { image: uploadedImg.secure_url },
+            { image: uploadedImg?.secure_url },
             { new: true },
         )
 
@@ -187,7 +201,7 @@ async function updateProfilePicture(req, res) {
         return res.status(200).json({
             success: true,
             message: 'Profile Picture updated!',
-            data: updateProfileImg  //TODO: ToRemove later
+            data: updateProfileImg
         })
 
     } catch (err) {
@@ -232,6 +246,7 @@ async function getEnrolledCourses(req, res) {
             }).select("completedVideos courseStatus").lean();
 
             course.courseProgress = courseProgressCount ? courseProgressCount?.completedVideos.length : 0;
+            course.courseStatus = courseProgressCount?.courseStatus
 
             return course
         })
@@ -293,6 +308,31 @@ async function instructorDashboard(req, res) {
             success: false,
             message: 'Failed fetching Instructor Data: ' + err.message
         })
+    }
+}
+
+// fetch all existing users: Student & Instructor
+async function existingUser(req, res) {
+    try {
+        const adminId = req.user.id;
+
+        const userData = await User.find(
+            { accountType: { $ne: 'Admin' } },
+            '_id accountType firstName lastName email'
+        );
+
+        return res.status(200).json({
+            success: true,
+            message: 'User Data fetched!',
+            userData: userData
+        })
+
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({
+            success: false,
+            message: 'Failed to fetch user data: ' + err.message,
+        });
     }
 }
 
@@ -378,5 +418,6 @@ module.exports = {
     getAllUsersDetail,
     updateProfilePicture,
     getEnrolledCourses,
-    instructorDashboard
+    instructorDashboard,
+    existingUser
 }

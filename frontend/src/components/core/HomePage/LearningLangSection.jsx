@@ -20,13 +20,13 @@ function LearningLangSection() {
                 </div>
                 {/* Images */}
                 <div className="flex flex-col lg:flex-row  items-center justify-center mt-5 ">
-                    <img src={know_your_progress} alt="Know_Your_Progress"
+                    <img src={know_your_progress} alt="Know_Your_Progress" loading='lazy'
                         className='object-contain lg:-mr-32'
                     />
-                    <img src={Compare_with_others} alt="Compare_with_others"
+                    <img src={Compare_with_others} alt="Compare_with_others" loading='lazy'
                         className='object-contain lg:mt-0 -mt-6'
                     />
-                    <img src={Plan_your_lessons} alt="Plan_your_lessons"
+                    <img src={Plan_your_lessons} alt="Plan_your_lessons" loading='lazy'
                         className='object-contain lg:-ml-36 -mt-14'
                     />
                 </div>

@@ -1,5 +1,5 @@
 const otpTemplate = (otp) => {
-	return `<!DOCTYPE html>
+    return `<!DOCTYPE html>
     <html>
     <head>
         <meta charset="UTF-8">
@@ -9,7 +9,7 @@ const otpTemplate = (otp) => {
         <div style="font-family: Helvetica, Arial, sans-serif; min-width: 100%; overflow: auto; line-height: 2">
             <div style="margin: 50px; width: 80%; padding: 20px 0">
                 <div style="border-bottom: 1px solid #eee">
-                    <a href="https://github.com/pantharshit007/brainforge" style="color: #00466a; text-decoration: none; font-weight: 600">
+                    <a href="https://brainforge.vercel.app/" style="color: #00466a; text-decoration: none; font-weight: 600">
                         <img style="max-width: 200px;" src="https://i.ibb.co/G5cKnxf/logo.png" alt="BrainForge Logo"/>
                     </a>
                 </div>

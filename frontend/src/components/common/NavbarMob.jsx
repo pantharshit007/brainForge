@@ -52,7 +52,7 @@ function NavbarMob({ isOpen, NavbarLinks, subLinks }) {
                 animate="visible"
                 exit={{ opacity: 0 }}
                 variants={dropIn}
-                className='absolute h-screen flex flex-col text-white bg-richblack-700 shadow-sm shadow-richblack-25 z-[100] min-w-[260px] right-1 pt-20'
+                className='absolute h-[100vh] flex flex-col text-white bg-richblack-700 shadow-sm shadow-richblack-25 z-[100] min-w-[260px] right-1 pt-20'
             >
 
                 {/* DASHBOARD */}
@@ -128,7 +128,7 @@ function NavbarMob({ isOpen, NavbarLinks, subLinks }) {
 
                 {/* Login and Logout Buttons */}
                 <div
-                    className={`flex w-[95%] mx-auto justify-center items-center gap-x-8 py-3 mb-2 rounded-md ${token !== null && 'bg-richblack-800'}`}
+                    className={`flex w-[95%] mx-auto justify-center items-center gap-x-8 py-3 mb-7 rounded-md ${token !== null && 'bg-richblack-800'}`}
                     onClick={() => dispatch(setIsOpen(!isOpen))}
                 >
                     {/* IMG-Logout */}
