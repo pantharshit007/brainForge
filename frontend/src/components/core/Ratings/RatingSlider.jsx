@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { motion, useMotionValue, animate, } from 'framer-motion'
 import useMeasure from 'react-use-measure'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 import RatingCard from './RatingCard';
 import { fetchRatingAndReview } from '../../../services/backendCallFunction/courseAPI';
@@ -123,13 +125,15 @@ function RatingSlider() {
     const [mustFinish, setMustFinish] = useState(false) //for smoother transition from fast->slow 
     const [reRender, setReRender] = useState(false)
 
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     useEffect(() => {
         async function getRatingAndReview() {
-            const res = await fetchRatingAndReview();
+            const res = await fetchRatingAndReview(dispatch, navigate);
             setReviews(res);
 
-            testData && setReviews(testData)
+            testData && setReviews([...testData, ...res])
         }
         getRatingAndReview();
     }, []);
