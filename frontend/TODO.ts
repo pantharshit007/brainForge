@@ -54,8 +54,12 @@
 ///// TODO: remove test data from ratingSlider
 /////! TODO: prod: remove otp response from BE, add isDemo also
 /////! TODO: prod: remove test data from RatingSlider
+// TODO: remove test data from ratingSlider
+/////! TODO: prod: remove otp response from BE, add isDemo also
+/////! TODO: prod: remove test data from RatingSlider
 /////! TODO: add isDemo middleware to all demo's
 /////! TODO: add notification for wait a while for BE to boot up.
 // TODO: add loading screen before site loads properly.
+/////! CHECK: check prod package.json and viteconfig, api.js [no merging]
 /////! CHECK: check prod package.json and viteconfig, api.js [no merging]
 //! TODO: Admin: create new category left to be build
