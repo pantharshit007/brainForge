@@ -122,8 +122,7 @@ async function isAdmin(req, res, next) {
 // check demo courses
 async function isDemo(req, res, next) {
     try {
-
-        if (BLOCKED_EMAIL.includes(req.user.email)) {
+        if (BLOCKED_EMAIL.includes(req.user?.email || req.body.email)) {
             return res.status(401).json({
                 success: false,
                 message: "Not Authorized on Demo Account",
@@ -132,7 +131,7 @@ async function isDemo(req, res, next) {
         next()
 
     } catch (err) {
-        console.error("Error in isDemo middleware:", err);
+        console.error("Error in isDemo middleware:", err.message);
         res.status(500).json({
             success: false,
             message: "Internal Server Error",
