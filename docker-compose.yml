@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend-app
+    env_file:
+      - ./frontend/.env
+    depends_on:
+      - backend
+    ports:
+      - "5173:5173"
+    command: npm run dev
+    stdin_open: true
+    tty: true
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend-app
+    ports:
+      - "4000:4000"
+    env_file:
+      - ./backend/.env
+    # Command is commented out since the backend will be started through the frontend's `npm run dev`
+    command: npm run dev
+
+networks:
+  default:
+    driver: bridge

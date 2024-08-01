@@ -26,6 +26,7 @@
 ///// TODO: fix catalog card desgin for mobile.
 // TODO: fix the side bar in videoDetailSide bar in Mobile view: make it close when in lesser dimention screens
 // TODO: fix in subsection creation dialog box it overlaps/clash with navbar due to z index issue.
+// TODO: fix the instructor dashboard matrics.
 
 //? <<<<<<< BACKEND TODO >>>>>>>> //
 //  TODO BACKEND: Check if cookies are even working on the backend side and twik with their expiry time.

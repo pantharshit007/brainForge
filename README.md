@@ -106,6 +106,20 @@ For detailed API documentation and endpoints, refer to the [API Documentation](/
    `cd ./backend`
 4. Install dependencies: `npm install`
 
+### Using Docker (preferd)
+
+> Setup env variable in both frontend and backend directory run this from root
+
+```
+docker-compose up --build
+```
+
+> If already built the image, start the container
+
+```
+docker-compose up
+```
+
 ## Usage
 
 1. Navigate to the `backend` directory and create a `.env` file by copying the contents of `env.example` and filling in your information.
