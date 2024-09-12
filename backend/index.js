@@ -15,12 +15,21 @@ require('dotenv').config()
 const PORT = process.env.PORT || 3000
 const FE_URL = process.env.FE_URL
 
+const allowedOrigins = FE_URL.split(',').map(url => url.trim());
+
 app.use(express.json());
 app.use(cookieParser())
 app.use(
     //only listen on this port for FE and postman
     cors({
-        origin: FE_URL,
+        origin: function (origin, callback) {
+            // Check if the origin is in the list of allowed origins
+            if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+                callback(null, true);
+            } else {
+                callback(new Error('Not allowed by CORS'));
+            }
+        },
         credentials: true,
         maxAge: 14400,
     })
